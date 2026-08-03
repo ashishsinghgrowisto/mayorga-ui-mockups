@@ -1809,6 +1809,54 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-phone .lc__badge{font-size:10px;padding:4px 8px}
 #stage.is-phone .lc__pick{font-size:11px}
 
+/* ============================================================
+   SUCCESS STATE — replaces the three columns after Save Now
+   ============================================================ */
+#subx[data-done] .subx__prog,
+#subx[data-done] .subx__cols,
+#subx[data-done] .subx__nav{display:none !important}
+/* the panel is driven by the section's state, not by [hidden] — a display
+   declaration would otherwise beat the attribute and leak it onto page load */
+.subx__done{display:none}
+#subx[data-done] .subx__done{display:grid;place-items:center;
+  min-height:var(--subx-colh,420px);padding:8px 0 4px}
+.subx__done__card{width:100%;max-width:520px;background:var(--brown);color:var(--cream);
+  border-radius:20px;padding:30px 28px 26px;text-align:center;
+  box-shadow:0 20px 50px rgba(110,55,40,.22);animation:subxPop .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes subxPop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.subx__done__tick{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 14px;
+  border-radius:50%;background:var(--yellow);color:var(--brown)}
+.subx__done__h{margin:0 0 9px;font:900 clamp(26px,3.4vw,36px)/1.05 var(--font-display);
+  letter-spacing:.5px;text-transform:uppercase}
+.subx__done__h em{font-style:normal;color:var(--yellow)}
+.subx__done__p{margin:0 auto 16px;max-width:400px;font-size:13.5px;line-height:1.55;
+  letter-spacing:.2px;opacity:.85}
+.subx__done__rows{display:flex;flex-direction:column;gap:5px;margin:0 0 18px;text-align:left;
+  max-height:85px;overflow-y:auto;padding-right:4px;
+  scrollbar-width:thin;scrollbar-color:rgba(226,216,194,.45) rgba(0,0,0,.22)}
+.subx__done__rows::-webkit-scrollbar{width:7px}
+.subx__done__rows::-webkit-scrollbar-track{background:rgba(0,0,0,.22);border-radius:4px}
+.subx__done__rows::-webkit-scrollbar-thumb{background:rgba(226,216,194,.45);border-radius:4px}
+.subx__done__btns{display:flex;flex-direction:column;align-items:center;gap:11px}
+.subx__done__cart{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  max-width:280px;height:48px;border:0;border-radius:24px;background:var(--yellow);color:var(--brown);
+  font:800 14px/1 var(--font-body);letter-spacing:.6px;cursor:pointer;transition:.18s var(--ease)}
+.subx__done__cart:hover{background:#ffc659;transform:translateY(-1px)}
+.subx__done__cart svg{transition:transform .18s var(--ease)}
+.subx__done__cart:hover svg{transform:translateX(3px)}
+.subx__done__more{background:none;border:0;padding:4px 2px;color:var(--cream);cursor:pointer;
+  font:700 12.5px/1 var(--font-body);letter-spacing:.4px;text-decoration:underline;
+  text-underline-offset:3px;opacity:.85;transition:.16s var(--ease)}
+.subx__done__more:hover{opacity:1;color:var(--yellow)}
+.subx__done__fine{margin:16px 0 0;font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;opacity:.55}
+#stage.is-phone #subx[data-done] .subx__done{min-height:var(--subx-colh,auto);padding:0}
+#stage.is-phone .subx__done__card{padding:24px 18px 20px;border-radius:16px}
+#stage.is-phone .subx__done__tick{width:46px;height:46px;margin-bottom:12px}
+#stage.is-phone .subx__done__h{font-size:26px}
+#stage.is-phone .subx__done__p{font-size:12.5px;margin-bottom:14px}
+#stage.is-phone .subx__done__rows{max-height:82px;margin-bottom:15px}
+#stage.is-phone .subx__done__cart{height:46px;font-size:13px}
+
 /* ---- picker search ---- */
 .subx__srch{position:relative;display:flex;align-items:center;gap:7px;margin:0 0 9px;
   background:rgba(255,255,255,.75);border:1px solid rgba(110,55,40,.22);border-radius:20px;
@@ -2399,7 +2447,7 @@ function openDrawer(sel){closeAll();$(sel).classList.add('on');$('#overlay').cla
 /* ==================================================================
    CART
    ================================================================== */
-function addToCart(slug,size,grind,qty,plan,freq){
+function addToCart(slug,size,grind,qty,plan,freq,quiet){
   const p=bySlug(slug); if(!p||p.oos)return;
   size=size||'2lb'; grind=grind||'Whole Bean'; qty=qty||1; plan=plan||'one';
   freq=plan==='sub'?(freq||'Deliver every month'):'';
@@ -2408,7 +2456,10 @@ function addToCart(slug,size,grind,qty,plan,freq){
   const key=slug+'|'+size+'|'+grind+'|'+plan+'|'+freq;
   const ex=S.cart.find(l=>l.key===key);
   if(ex)ex.q+=qty; else S.cart.push({key,slug,n:p.n,img:p.img,size,grind,plan,freq,unit,q:qty});
-  renderCart(); toast(`${p.n} added to cart`); openDrawer('#cartDrawer');
+  renderCart();
+  /* the subscription builder adds several lines at once and shows its own
+     success state, so it opts out of the per-line toast and drawer */
+  if(!quiet){toast(`${p.n} added to cart`); openDrawer('#cartDrawer');}
 }
 function renderCart(){
   const n=S.cart.reduce((a,l)=>a+l.q,0);
@@ -2706,6 +2757,29 @@ function subxSection(){
       </section>
     </div>
 
+    <!-- ============ SUCCESS STATE ============================================
+         Shown after Save Now. The builder itself is reset behind it, so
+         "Subscribe more" drops the user back into a clean step 1. Nothing is
+         persisted, so a refresh restarts the builder too.
+         ==================================================================== -->
+    <div class="subx__done" id="subxDone" hidden>
+      <div class="subx__done__card">
+        <span class="subx__done__tick" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3 class="subx__done__h" id="subxDoneH"></h3>
+        <p class="subx__done__p" id="subxDoneP"></p>
+        <div class="subx__done__rows" id="subxDoneRows"></div>
+        <div class="subx__done__btns">
+          <button class="subx__done__cart" id="subxDoneCart" type="button">View cart
+            <svg viewBox="0 0 14 10" width="13" height="10" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546" clip-rule="evenodd"/></svg>
+          </button>
+          <button class="subx__done__more" id="subxDoneMore" type="button">Subscribe more coffees</button>
+        </div>
+        <p class="subx__done__fine">Skip, pause or cancel anytime · free shipping on qualifying orders</p>
+      </div>
+    </div>
+
     <!-- mobile-only stepper nav -->
     <div class="subx__nav">
       <button class="subx__back" id="subxBack" type="button">
@@ -2877,6 +2951,49 @@ function subxEditFromList(i){
     subxFlipOpen(it.coffee);
     subxScrollToCard(it.coffee);
   });
+}
+/* ---- commit → success state → clean form ------------------------------- */
+const SUBX_START=()=>[{coffee:'cubanoroast',size:1,grind:0,qty:1,plan:'one',freq:null}];
+function subxReset(){
+  SUBX.step=1; SUBX.tab='Popular'; SUBX.q='';
+  SUBX.flip=null; SUBX.editIdx=-1; SUBX.liFlip=null;
+  SUBX.draft={size:1,grind:0,qty:1};
+  SUBX.items=SUBX_START();
+  const sb=$('#subxSearch'); if(sb)sb.value='';
+  subxRenderAll();
+}
+function subxFinish(){
+  const t=subxTotals(), n=SUBX.items.length;
+  /* snapshot the plan before the reset wipes it */
+  const snap=SUBX.items.map(it=>{const p=bySlug(it.coffee), f=itFreq(it);
+    return {n:p?.n||'',sz:SUB_SIZES[it.size].n.replace(' bag',''),qty:it.qty,freq:f?f.l:null};});
+  /* one cart line per coffee, each on its own plan; no per-line toast/drawer */
+  SUBX.items.forEach(it=>{const f=itFreq(it);
+    addToCart(it.coffee,SIZES[SUB_SIZES[it.size].i].n,GRINDS[it.grind],it.qty,
+      f?'sub':'one',f?f.l:'',true);});
+
+  $('#subxDoneH').innerHTML=t.subs
+    ? `You’re one step away from saving <em>${money(t.year)}</em>`
+    : `Your coffee is in the cart`;
+  $('#subxDoneP').textContent=t.subs
+    ? `${n} coffee${n>1?'s':''} in your cart${t.subs<n?`, ${t.subs} on subscription`:''} — ${money(t.saving)} off every delivery. Check out to lock it in.`
+    : `Subscribe next time and take 10% off every delivery.`;
+  $('#subxDoneRows').innerHTML=snap.map(s=>`
+    <span class="rc${s.freq?'':' rc--one'}">
+      <span class="rc__n"><b>${s.n}</b><i>${s.sz}${s.qty>1?` · ×${s.qty}`:''}</i></span>
+      <span class="rc__f">${s.freq||'One-time'}</span>
+    </span>`).join('');
+
+  subxReset();                       /* the form restarts behind the panel */
+  $('#subx').dataset.done='1';
+  $('#subxDone').hidden=false;
+  requestAnimationFrame(subxFitViewport);
+  toast(t.subs?`Added — ${money(t.saving)} saved on every delivery`:'Added to your cart');
+}
+function subxDoneClose(){
+  const sec=$('#subx'); if(sec)delete sec.dataset.done;
+  const d=$('#subxDone'); if(d)d.hidden=true;
+  requestAnimationFrame(subxFitViewport);
 }
 function subxRemoveItem(i){
   const [gone]=SUBX.items.splice(i,1);
@@ -3819,16 +3936,9 @@ document.addEventListener('click',e=>{
     if(it){it.qty=Math.min(9,Math.max(1,it.qty+d));subxRenderCoffee();subxUpdate();}return;}
   const sxd=A('[data-subx-del]');
   if(sxd&&!sxd.disabled){subxRemoveItem(+sxd.dataset.subxDel);return;}
-  if(A('#subxGo')&&!$('#subxGo').disabled){
-    /* every coffee goes in with its OWN plan and its own schedule */
-    SUBX.items.forEach(it=>{const f=itFreq(it);
-      addToCart(it.coffee,SIZES[SUB_SIZES[it.size].i].n,GRINDS[it.grind],it.qty,
-        f?'sub':'one',f?f.l:'');});
-    const t=subxTotals();
-    toast(t.subs
-      ? `Added — ${t.subs} subscribed, saving ${money(t.saving)} every delivery`
-      : `Added ${SUBX.items.length} item${SUBX.items.length>1?'s':''} to your cart`);
-    return;}
+  if(A('#subxGo')&&!$('#subxGo').disabled){subxFinish();return;}
+  if(A('#subxDoneCart')){openDrawer('#cartDrawer');return;}
+  if(A('#subxDoneMore')){subxDoneClose();return;}
   if(A('#subxBack')){subxGoStep(SUBX.step-1);return;}
   if(A('#subxNext')){subxGoStep(SUBX.step+1);return;}
   /* clicking a completed or current step jumps back to it */
