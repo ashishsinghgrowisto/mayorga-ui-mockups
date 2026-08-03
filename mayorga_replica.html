@@ -1809,6 +1809,25 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-phone .lc__badge{font-size:10px;padding:4px 8px}
 #stage.is-phone .lc__pick{font-size:11px}
 
+/* ---- picker search ---- */
+.subx__srch{position:relative;display:flex;align-items:center;gap:7px;margin:0 0 9px;
+  background:rgba(255,255,255,.75);border:1px solid rgba(110,55,40,.22);border-radius:20px;
+  padding:0 10px 0 12px;height:36px;color:rgba(110,55,40,.6);transition:.16s var(--ease)}
+.subx__srch:focus-within,.subx__srch.on{border-color:var(--brown);background:#fff;color:var(--brown)}
+.subx__srch svg{flex:0 0 auto}
+.subx__srch input{flex:1 1 auto;min-width:0;border:0;background:none;outline:none;color:var(--brown);
+  font:400 13px/1 var(--font-body);letter-spacing:.2px;height:100%}
+.subx__srch input::placeholder{color:rgba(110,55,40,.55)}
+.subx__srch input::-webkit-search-cancel-button{display:none}
+.subx__srch button{flex:0 0 auto;width:20px;height:20px;display:grid;place-items:center;border:0;border-radius:50%;
+  background:rgba(110,55,40,.12);color:var(--brown);font:400 15px/1 var(--font-body);cursor:pointer}
+.subx__srch button:hover{background:var(--red);color:#fff}
+.subx__none{margin:6px 0 0;font-size:12.5px;line-height:1.5;opacity:.8}
+.subx__none button{background:none;border:0;padding:0;color:var(--red);font:700 12.5px/1 var(--font-body);
+  cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+#stage.is-phone .subx__srch{height:34px;margin-bottom:8px}
+#stage.is-phone .subx__srch input{font-size:12.5px}
+
 /* ---- step 3: savings only ---- */
 .sv__hero{background:rgba(0,0,0,.2);border-radius:12px;padding:13px 14px;text-align:center;margin-bottom:12px}
 .sv__hero .k{display:block;font:700 10px/1 var(--font-body);letter-spacing:1.2px;text-transform:uppercase;opacity:.72}
@@ -1850,8 +1869,23 @@ ul,ol{list-style:none;margin:0;padding:0}
 .subx__ulfoot .v{text-align:right;font:800 19px/1 var(--font-body);letter-spacing:.2px}
 .subx__ulfoot .v i{display:block;font:400 10px/1 var(--font-body);font-style:normal;letter-spacing:.8px;
   text-transform:uppercase;opacity:.6;margin-top:4px}
-/* the dark panel keeps a one-line recap of the list */
-.subx__reca{margin:0 0 10px;font-size:11px;line-height:1.45;letter-spacing:.2px;opacity:.75}
+/* the dark panel lists each coffee with the schedule it will arrive on */
+.subx__reca{display:flex;flex-direction:column;gap:5px;margin:0 0 11px}
+.rc{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:9px;
+  background:rgba(0,0,0,.18);border-radius:9px;padding:6px 9px}
+.rc__n{min-width:0}
+.rc__n b{display:block;font:700 12px/1.25 var(--font-body);letter-spacing:.2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc__n i{display:block;font:400 9.5px/1.2 var(--font-body);font-style:normal;opacity:.62;margin-top:2px}
+.rc__f{flex:0 0 auto;font:800 9.5px/1 var(--font-body);letter-spacing:.5px;text-transform:uppercase;
+  color:var(--brown);background:var(--yellow);border-radius:20px;padding:5px 8px;white-space:nowrap}
+.rc--one .rc__f{background:rgba(226,216,194,.18);color:var(--cream);opacity:.8}
+.rc--empty{display:block;background:none;padding:0;font-size:11px;line-height:1.45;opacity:.7}
+#stage.is-phone .subx__reca{max-height:118px;overflow-y:auto;padding-right:3px;
+  scrollbar-width:thin;scrollbar-color:rgba(226,216,194,.45) rgba(0,0,0,.18)}
+#stage.is-phone .rc{padding:5px 8px}
+#stage.is-phone .rc__n b{font-size:11.5px}
+#stage.is-phone .rc__f{font-size:9px;padding:4px 7px}
 .subx__go:disabled{opacity:.5;cursor:not-allowed;transform:none}
 #stage.is-phone .subx__reca{font-size:10.5px}
 #stage.is-phone .subx__ulfoot{margin-top:9px;padding-top:9px}
@@ -2616,6 +2650,12 @@ function subxSection(){
         <h3 class="subx__col__hd"><span class="n">1</span>Choose your coffees</h3>
         <span class="subx__lbl">Select a roast</span>
         <div class="subx__tabs" id="subxRoast" role="tablist"></div>
+        <!-- search cuts across every roast, so a known coffee is one type away -->
+        <div class="subx__srch">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          <input id="subxSearch" type="search" placeholder="Search all coffees" aria-label="Search coffees" autocomplete="off" spellcheck="false">
+          <button type="button" id="subxSearchX" data-srch-clear aria-label="Clear search" hidden>×</button>
+        </div>
         <p class="subx__hint" id="subxPickHint"></p>
         <div class="subx__col__body"><div class="subx__list" id="subxCoffeeRow"></div></div>
       </section>
@@ -2650,7 +2690,8 @@ function subxSection(){
 
         <div class="subx__sum">
           <p class="subx__sum__hd"><span>Ready when you are</span><span class="subx__count" id="subxCount"></span></p>
-          <p class="subx__reca" id="subxRecap"></p>
+          <!-- one row per coffee so the plan and its schedule read at a glance -->
+          <div class="subx__reca" id="subxRecap"></div>
           <button class="subx__go" id="subxGo" type="button"><span id="subxGoTxt">Add to cart</span>
             <svg viewBox="0 0 14 10" width="14" height="10" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546" clip-rule="evenodd"/></svg>
           </button>
@@ -2716,6 +2757,7 @@ function subxSection(){
    them. Steps 1 and 2 always edit items[sel]; step 3 edits the whole plan. */
 const SUBX_MAX=4;
 const SUBX={step:1,tab:'Popular',
+  q:'',               /* search text — when set it cuts across every roast */
   flip:null,          /* slug whose PICKER card is showing its variant side */
   editIdx:-1,         /* >=0 when the flipped picker card edits a list line */
   draft:{size:1,grind:0,qty:1},
@@ -2865,14 +2907,24 @@ function subxRenderStep(){
 
 /* ① roast tabs + product rows */
 function subxRenderRoast(){
+  const searching=!!SUBX.q.trim();
   $('#subxRoast').innerHTML=SUB_TABS.map(t=>{
     const n=subxTabList(t).length;
-    return `<button type="button" role="tab" data-subx-tab="${t}" aria-selected="${t===SUBX.tab}" ${n?'':'disabled'}>${t}</button>`;
+    return `<button type="button" role="tab" data-subx-tab="${t}"
+      aria-selected="${!searching&&t===SUBX.tab}" ${n?'':'disabled'}>${t}</button>`;
   }).join('');
+}
+/* what the picker shows: search results across every roast, or the roast tab */
+function subxVisibleList(){
+  const q=SUBX.q.trim().toLowerCase();
+  if(!q)return subxTabList(SUBX.tab);
+  return PRODUCTS.filter(p=>!p.oos&&
+    (p.n+' '+p.r+' '+(p.origin||'')).toLowerCase().includes(q));
 }
 /* ① the picker — a two-sided card per coffee */
 function subxRenderCoffee(){
-  const list=subxTabList(SUBX.tab), full=SUBX.items.length>=SUBX_MAX;
+  const list=subxVisibleList(), full=SUBX.items.length>=SUBX_MAX;
+  const q=SUBX.q.trim();
   $('#subxCoffeeRow').innerHTML=list.map(p=>{
     const idx=inPlanIdx(p.h), inList=idx>=0, it=inList?SUBX.items[idx]:null;
     const g=it?((SUB_GRINDS.find(x=>x.i===it.grind)||{}).n||GRINDS[it.grind]):'';
@@ -2896,13 +2948,27 @@ function subxRenderCoffee(){
         <div class="pc__face pc__back"></div>
       </div>
     </div>`;}).join('');
+  if(!list.length)$('#subxCoffeeRow').innerHTML=
+    `<p class="subx__none">No coffee matches “${q.replace(/[<>&]/g,'')}”. <button type="button" data-srch-clear>Clear search</button></p>`;
   const hint=$('#subxPickHint'), n=SUBX.items.length;
-  if(hint)hint.textContent=full
-    ? `List full — ${SUBX_MAX} coffees max. Tap one in the list to change or remove it.`
-    : n
-      ? `${n} in your list — tap a coffee to choose its size and grind`
-      : `Tap a coffee to choose its size and grind`;
+  if(hint)hint.textContent=q
+    ? `${list.length} match${list.length===1?'':'es'} across every roast${full?` · list full (${SUBX_MAX} max)`:''}`
+    : full
+      ? `List full — ${SUBX_MAX} coffees max. Tap one in the list to change or remove it.`
+      : n
+        ? `${n} in your list — tap a coffee to choose its size and grind`
+        : `Tap a coffee to choose its size and grind`;
+  const x=$('#subxSearchX'); if(x)x.hidden=!q;
+  const box=$('#subxSearch'); if(box&&box.value!==SUBX.q)box.value=SUBX.q;
+  $('.subx__srch')?.classList.toggle('on',!!q);
   subxReflip();   /* a re-render must not throw away a card mid-flip */
+}
+/* search input · clear */
+function subxSearch(v){
+  SUBX.q=v||'';
+  if(SUBX.flip)subxFlipClose(true);
+  subxRenderRoast(); subxRenderCoffee();
+  requestAnimationFrame(subxFitViewport);
 }
 /* restore a turned-over card after the picker is re-rendered (no animation) */
 function subxReflip(){
@@ -2996,7 +3062,7 @@ function subxRenderList(){
   const foot=$('#subxListFoot');
   if(foot)foot.innerHTML=n
     ? `<span class="k">${n} coffee${n>1?'s':''} · ${t.bags} bag${t.bags>1?'s':''} · ${t.lbs} lb</span>
-       <span class="v">${t.subs?'−'+money(t.saving):'—'}<i>${t.subs?'saved per delivery':'no frequency set'}</i></span>`
+       <span class="v">${t.subs?money(t.saving):'—'}<i>${t.subs?'saved per delivery':'no frequency set'}</i></span>`
     : `<span class="k">Nothing added yet</span><span class="v">—<i>saved per delivery</i></span>`;
   const hint=$('#subxListHint'), todo=n-t.subs;
   if(hint)hint.textContent=!n
@@ -3131,16 +3197,21 @@ function subxUpdate(){
 function subxSummary(){
   const t=subxTotals(), n=SUBX.items.length;
   $('#subxCount').textContent=n?(n===1?'1 coffee':`${n} coffees`):'empty';
-  $('#subxRecap').textContent=n
-    ? SUBX.items.map(it=>{const f=itFreq(it);
-        return `${bySlug(it.coffee)?.n}${it.qty>1?` ×${it.qty}`:''} · ${f?f.l.toLowerCase():'one-time'}`;
-      }).join('  ·  ')
-    : 'Add a coffee in step 1 to see what you save';
-  $('#svYear').textContent=t.year?'−'+money(t.year):'−$0.00';
+  /* one line per coffee: what it is, and how often it arrives */
+  $('#subxRecap').innerHTML=n
+    ? SUBX.items.map(it=>{
+        const p=bySlug(it.coffee), f=itFreq(it);
+        const sz=SUB_SIZES[it.size].n.replace(' bag','');
+        return `<span class="rc${f?'':' rc--one'}">
+          <span class="rc__n"><b>${p?.n||''}</b><i>${sz}${it.qty>1?` · ×${it.qty}`:''}</i></span>
+          <span class="rc__f">${f?f.l:'One-time'}</span>
+        </span>`;}).join('')
+    : `<span class="rc rc--empty">Add a coffee in step 1 to see what you save</span>`;
+  $('#svYear').textContent=money(t.year);
   $('#svYearNote').textContent=t.subs
     ? `a year across ${t.subs} subscribed coffee${t.subs>1?'s':''}`
     : 'a year — set a frequency to start saving';
-  $('#svEach').textContent=t.saving?'−'+money(t.saving):'−$0.00';
+  $('#svEach').textContent=money(t.saving);
   $('#svCount').textContent=n?`${t.subs} of ${n}`:'0';
   $('#svDel').textContent=t.dels.length
     ? (t.dels.length===1?`${t.dels[0]}`:`${t.dels[0]}–${t.dels[t.dels.length-1]}`)
@@ -3152,11 +3223,7 @@ function subxSummary(){
       : `Free shipping applies on qualifying orders, and you can skip or reschedule any delivery.`;
   const go=$('#subxGo');
   if(go)go.disabled=!n;
-  $('#subxGoTxt').textContent=!n
-    ? 'Add a coffee to start'
-    : t.subs
-      ? `Add to cart · save ${money(t.saving)}`
-      : 'Add to cart';
+  $('#subxGoTxt').textContent=!n?'Add a coffee to start':'Save Now';
 }
 
 /* ==================================================================
@@ -3700,8 +3767,11 @@ document.addEventListener('click',e=>{
     w.setAttribute('aria-pressed',S.wish.has(s));toast(S.wish.has(s)?'Saved to wishlist':'Removed from wishlist');return;}
 
   /* ---- subscription builder ---- */
+  if(A('[data-srch-clear]')){subxSearch('');$('#subxSearch')?.focus();return;}
   const sxt=A('[data-subx-tab]');
-  if(sxt){SUBX.tab=sxt.dataset.subxTab;subxRenderRoast();subxRenderCoffee();subxUpdate();
+  if(sxt){SUBX.tab=sxt.dataset.subxTab;SUBX.q='';   /* browsing by roast clears a search */
+    const sb=$('#subxSearch'); if(sb)sb.value='';
+    subxRenderRoast();subxRenderCoffee();subxUpdate();
     requestAnimationFrame(subxFitViewport);return;}
   /* ---- flip card: open · change draft variant · commit · close ---- */
   const pcOpen=A('[data-pc]');
@@ -3821,6 +3891,7 @@ document.addEventListener('change',e=>{
   if(t.dataset.size!==undefined){S.pdp.size=+t.dataset.size;refreshPdpPrice();return;}
   if(t.dataset.grind!==undefined){S.pdp.grind=+t.dataset.grind;refreshPdpPrice();return;}
   if(t.name==='plan'){S.pdp.plan=t.value;refreshPdpPrice();return;}
+  if(t.id==='subxSearch'){subxSearch(t.value);return;}
   /* subscription builder — select fallbacks for the same controls */
   if(t.dataset.subxRoast!==undefined){SUBX.tab=t.dataset.subxRoast;subxRenderAll();return;}
   if(t.dataset.dSize!==undefined){SUBX.draft.size=+t.dataset.dSize;subxRenderBack();return;}
@@ -3847,6 +3918,17 @@ function runSearch(q){
 $('#searchInput').addEventListener('input',e=>runSearch(e.target.value));
 $('#searchSugg').addEventListener('click',e=>{const b=e.target.closest('[data-sq]');if(!b)return;
   $('#searchInput').value=b.dataset.sq;runSearch(b.dataset.sq);});
+
+/* subscription builder search — delegated, because the section is re-rendered */
+document.addEventListener('input',e=>{
+  if(e.target&&e.target.id==='subxSearch')subxSearch(e.target.value);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target&&e.target.id==='subxSearch'){
+    if(e.key==='Enter')e.preventDefault();
+    if(e.key==='Escape'){e.stopPropagation();subxSearch('');}
+  }
+});
 
 /* boot */
 buildScroller();
