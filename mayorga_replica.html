@@ -1638,6 +1638,92 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-phone #subx:not([data-step="3"]) .subx__per{margin-top:9px}
 #stage.is-phone #subx:not([data-step="3"]) .subx__per .v{font-size:25px}
 
+/* ============================================================
+   CERTIFICATE OF ANALYSIS SECTION (PDP)
+   Two panels, not a card grid: WHO tested it on the left, WHAT came back
+   on the right. Because the results run as one continuous document, the
+   uneven group sizes (1,1,1,2,6,2 rows) never leave a hole, and neither
+   panel is pinned to the other's height.
+   ============================================================ */
+.lab{background:var(--tan);padding:50px 0 54px}
+.lab__wrap{display:grid;gap:22px;align-items:start}
+/* ---------- left: the report's identity ---------- */
+.lab__side{min-width:0}
+.lab__side .h2{margin:0 0 9px}
+.lab__side .h2 em{font-style:normal;color:var(--red)}
+.lab__sub{margin:0 0 16px;font-size:13.5px;line-height:1.6;letter-spacing:.2px;opacity:.78}
+.lab__kv{margin:0 0 12px;padding:0}
+.lab__kv div{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:8px 0;border-bottom:1px solid rgba(110,55,40,.13)}
+.lab__kv div:last-child{border-bottom:0}
+.lab__kv dt{flex:0 0 auto;font:700 9.5px/1.3 var(--font-body);letter-spacing:1px;text-transform:uppercase;
+  opacity:.55}
+.lab__kv dd{margin:0;min-width:0;text-align:right;font:700 12.5px/1.4 var(--font-body);letter-spacing:.2px;
+  overflow-wrap:break-word}
+.lab__kv--dark{background:var(--brown);color:var(--cream);border-radius:13px;padding:6px 15px;margin-bottom:14px}
+.lab__kv--dark div{border-bottom-color:rgba(226,216,194,.16);padding:9px 0}
+.lab__kv--dark dt{opacity:.6}
+.lab__kv--dark dd{font-weight:800}
+/* ---------- right: the results, as a document ---------- */
+.lab__doc{min-width:0;background:#fff;border:1px solid rgba(110,55,40,.14);border-radius:16px;
+  overflow:hidden;box-shadow:0 3px 14px rgba(110,55,40,.06)}
+.lab__doc__hd{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;background:rgba(110,55,40,.05);border-bottom:1px solid rgba(110,55,40,.12);
+  font:700 9.5px/1 var(--font-body);letter-spacing:1.1px;text-transform:uppercase;opacity:.6}
+.lab__grp{padding:0 20px}
+.lab__grp__h{margin:0;padding:14px 0 8px;font:800 10px/1.4 var(--font-body);letter-spacing:.9px;
+  text-transform:uppercase;color:var(--red);overflow-wrap:break-word}
+.lab__grp+.lab__grp .lab__grp__h{border-top:1px solid rgba(110,55,40,.1);padding-top:15px}
+.lab__grp__rows{margin:0 0 4px}
+.lab__grp__rows div{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:7px 0}
+.lab__grp__rows dt{min-width:0;font-size:13.5px;line-height:1.45;letter-spacing:.2px;overflow-wrap:break-word}
+.lab__grp__rows dd{margin:0;flex:0 0 auto;max-width:54%;text-align:right;
+  font:800 13.5px/1.45 var(--font-body);letter-spacing:.2px;font-variant-numeric:tabular-nums;
+  overflow-wrap:break-word}
+.lab__grp__rows div.stack{display:block}
+.lab__grp__rows div.stack dd{max-width:100%;text-align:left;margin-top:3px;font-size:13px}
+.lab__doc__ft{padding:13px 20px 15px;border-top:1px solid rgba(110,55,40,.12);
+  background:rgba(110,55,40,.03)}
+.lab__doc__ft p{margin:0 0 4px;font-size:10.5px;line-height:1.5;letter-spacing:.2px;opacity:.6}
+.lab__doc__ft p:last-child{margin-bottom:0}
+/* ---------- certificate link ---------- */
+.lab__dl{display:inline-flex;align-items:center;gap:12px;background:var(--brown);color:var(--cream);
+  border-radius:26px;padding:11px 20px 11px 13px;text-decoration:none;transition:.18s var(--ease)}
+.lab__dl:hover{background:var(--red);transform:translateY(-1px)}
+.lab__dl__ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  background:rgba(226,216,194,.16);flex:0 0 auto}
+.lab__dl__ic svg{width:16px;height:16px}
+.lab__dl__t b{display:block;font:800 13px/1.2 var(--font-body);letter-spacing:.4px}
+.lab__dl__t i{display:block;font-style:normal;font-size:10.5px;letter-spacing:.6px;opacity:.7;margin-top:3px}
+/* the PDP trust chip links into this section */
+.trust a{display:flex;flex-direction:column;align-items:center;gap:4px;color:inherit;text-decoration:none}
+.trust a:hover b{color:var(--red)}
+/* ---------- desktop / tablet ---------- */
+#stage.vp-desktop .lab__wrap{grid-template-columns:minmax(280px,34%) minmax(0,1fr);gap:34px}
+@media (max-width:900px){
+  #stage.vp-desktop .lab__wrap{grid-template-columns:minmax(0,1fr);gap:22px}
+  #stage.vp-desktop .lab__kv{columns:2;column-gap:26px}
+  #stage.vp-desktop .lab__kv div{break-inside:avoid}
+  #stage.vp-desktop .lab__kv--dark{columns:auto}
+}
+/* ---------- phone ---------- */
+#stage.is-phone .lab{padding:30px 0 34px}
+#stage.is-phone .lab__wrap{grid-template-columns:minmax(0,1fr);gap:16px}
+#stage.is-phone .lab__sub{font-size:12.5px;margin-bottom:13px}
+#stage.is-phone .lab__kv div{padding:7px 0;gap:10px}
+#stage.is-phone .lab__kv dt{font-size:9px}
+#stage.is-phone .lab__kv dd{font-size:12px}
+#stage.is-phone .lab__kv--dark{padding:5px 13px}
+#stage.is-phone .lab__doc__hd{padding:11px 14px;font-size:9px}
+#stage.is-phone .lab__grp{padding:0 14px}
+#stage.is-phone .lab__grp__h{font-size:9.5px;letter-spacing:.7px;padding:12px 0 7px}
+#stage.is-phone .lab__grp__rows div{padding:7px 0;gap:12px}
+#stage.is-phone .lab__grp__rows dt{font-size:12.5px}
+#stage.is-phone .lab__grp__rows dd{font-size:12.5px;max-width:50%}
+#stage.is-phone .lab__doc__ft{padding:11px 14px 13px}
+#stage.is-phone .lab__doc__ft p{font-size:10px}
+#stage.is-phone .lab__dl{width:100%;justify-content:center}
+
 #stage.is-phone .qa-scrim{align-items:flex-end;padding:0}
 #stage.is-phone .qa{max-height:100%;max-width:none;border-radius:18px 18px 0 0}
 #stage.is-phone .qa::before{display:block}
@@ -3525,6 +3611,112 @@ function pdpPrice(){
   const raw=base+SIZES[S.pdp.size].d;
   return S.pdp.plan==='sub'?+(raw*0.9).toFixed(2):raw;
 }
+/* ==================================================================
+   LAB REPORT / CERTIFICATE OF ANALYSIS — PDP credibility section
+   Every figure below is transcribed from the real Eurofins certificate
+   (report 5447022-0, Muy Macho lot WO22819, issued 17-Jul-2026). Nothing
+   here is invented: a lab claim is only worth what its source is.
+   ================================================================== */
+const COA_PDF='Muy_Macho_July_26_COA%20(1).pdf';
+const COA={
+  lab:'Eurofins Food Integrity & Innovation',
+  report:'5447022-0', status:'Final',
+  product:'Muy Macho', sample:'ORG. MUY MACHO_MAYORGA', euroSample:'16757108',
+  lot:'WO22819', project:'MAYORGA_OR-20260708-0003',
+  received:'09 Jul 2026', started:'09 Jul 2026', issued:'17 Jul 2026',
+  scope:'Finished product testing', serving:'15 g',
+  /* the certificate's own identification block, label for label */
+  meta:[
+    ['Sample Name','ORG. MUY MACHO_MAYORGA'],
+    ['Lot Number','Muy Macho WO22819'],
+    ['Description','Finished Product Testing'],
+    ['Sample Serving Size','15 g'],
+    ['Receipt Date','09-Jul-2026'],
+    ['Receipt Condition','Ambient temperature'],
+    ['Date Started','09-Jul-2026'],
+    ['Eurofins Sample','16757108']
+  ],
+  /* Analysis | Result — the certificate's own two columns, its own group
+     headings and its own wording. Nothing added, nothing renamed. */
+  panel:[
+    ['Pesticides - USDA NOP List on Organic Produce Package *',
+      [['Pesticides - USDA NOP List','Pesticides- USDA NOP List on Organic Produce Package']]],
+    ['Pesticides USDA NOP (Quechers-GC-MS/MS) *',
+      [['Screened pesticides','Not Detected at LOQ']]],
+    ['Pesticides USDA NOP (Quechers-LC-MS/MS) *',
+      [['Screened pesticides','Not Detected at LOQ']]],
+    ['Yeast and Mold Plate Count *',
+      [['Yeast Plate Count','&lt;10 CFU/g'],['Mold Plate Count','&lt;10 CFU/g']]],
+    ['Mycotoxins in Raw Materials',
+      [['Aflatoxin B1','&lt;0.500 ppb'],['Aflatoxin B2','&lt;0.500 ppb'],
+       ['Aflatoxin G1','&lt;0.500 ppb'],['Aflatoxin G2','&lt;0.500 ppb'],
+       ['Ochratoxin A','&lt;1.00 ppb'],['Sum of Aflatoxins B1, B2, G1, and G2','&lt;2.00 ppb']]],
+    ['Glyphosate and AMPA',
+      [['Glyphosate','&lt;100 ng/g'],['AMPA','&lt;100 ng/g']]]
+  ],
+  /* the certificate's own footnotes, verbatim */
+  notes:[
+    '* This analysis or component is not ISO accredited.',
+    'These results apply only to the items tested. Measurement uncertainty for individual analyses can be obtained upon request.'
+  ]
+};
+/* The section is a straight reading of the certificate: identification block,
+   then one card per analysis group with its Analysis | Result pairs, then the
+   lab's own footnotes and the PDF. No accordions, no forms, no commentary —
+   every line on screen exists on the certificate. */
+function labSection(){
+  const c=COA;
+  const rows=c.panel.reduce((a,g)=>a+g[1].length,0);
+  /* Two panels side by side: WHO tested it (left) and WHAT came back (right).
+     Neither is forced to the other's height, and the results run as one
+     continuous document — the way a certificate reads — so uneven group
+     sizes create no gaps. */
+  return `
+<section class="lab" id="lab"><div class="page-width">
+  <div class="lab__wrap">
+
+    <aside class="lab__side">
+      <p class="eyebrow">Certificate of analysis</p><hr class="eyebrow-hr">
+      <h2 class="h-display h2">Tested by <em>Eurofins</em></h2>
+      <p class="lab__sub">${rows} results, reproduced from report ${c.report}
+        exactly as the laboratory issued it.</p>
+
+      <dl class="lab__kv lab__kv--dark">
+        <div><dt>Report Number</dt><dd>${c.report}</dd></div>
+        <div><dt>Report Date</dt><dd>17-Jul-2026</dd></div>
+        <div><dt>Report Status</dt><dd>${c.status}</dd></div>
+        <div><dt>Laboratory</dt><dd>Eurofins Food Chemistry Testing Madison</dd></div>
+      </dl>
+
+      <dl class="lab__kv">
+        ${c.meta.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
+      </dl>
+
+      <a class="lab__dl" href="${COA_PDF}" target="_blank" rel="noopener">
+        <span class="lab__dl__ic">${IC.shield}</span>
+        <span class="lab__dl__t"><b>View the full certificate</b><i>PDF · 2 pages</i></span>
+      </a>
+    </aside>
+
+    <div class="lab__doc">
+      <div class="lab__doc__hd"><span>Analysis</span><span>Result</span></div>
+      ${c.panel.map(([g,list])=>`
+      <div class="lab__grp">
+        <h3 class="lab__grp__h">${g}</h3>
+        <dl class="lab__grp__rows">
+          ${list.map(([a,r])=>
+            /* the NOP package row's result is a sentence, not a figure —
+               let it sit under its label instead of squeezing right */
+            `<div${r.replace(/&lt;/g,'<').length>26?' class="stack"':''}><dt>${a}</dt><dd>${r}</dd></div>`).join('')}
+        </dl>
+      </div>`).join('')}
+      <div class="lab__doc__ft">${c.notes.map(n=>`<p>${n}</p>`).join('')}</div>
+    </div>
+
+  </div>
+</div></section>`;
+}
+
 function pagePDP(){
   const p=bySlug('cubanoroast');
   const price=pdpPrice(), listPrice=bySlug('cubanoroast').p+14+SIZES[S.pdp.size].d;
@@ -3626,7 +3818,7 @@ function pagePDP(){
       <ul class="trust">
         <li>${IC.leaf}<b>100% Arabica</b><span>Shade Grown</span></li>
         <li>${IC.home}<b>Family Owned</b><span>Since 1997</span></li>
-        <li>${IC.shield}<b>Tested</b><span>Mold &amp; Mycotoxins</span></li>
+        <li><a href="#lab" data-lab-jump>${IC.shield}<b>Lab tested</b><span>See the report</span></a></li>
         <li>${IC.truck}<b>Free Shipping</b><span>on orders $45+</span></li>
       </ul>
     </div>
@@ -3634,6 +3826,8 @@ function pagePDP(){
 </div></section>
 
 <div class="pattern-strip"></div>
+
+${labSection()}
 
 <section class="collection"><div class="page-width">
   <div class="collection__head"><h2 class="h-display h2">Try Our Best Sellers</h2></div>
@@ -3883,6 +4077,31 @@ document.addEventListener('click',e=>{
 
   const ds=A('[data-dsub]');
   if(ds){const p=$('#dsub'+ds.dataset.dsub);p.classList.toggle('on');ds.querySelector('.chev')?.classList.toggle('on');return;}
+
+  /* ---- lab report: jump link + lot lookup ---- */
+  if(A('[data-lab-jump]')){
+    e.preventDefault();
+    const sec=$('#lab');
+    /* desktop scrolls #viewport, the phone frame scrolls #scroller — take
+       whichever one actually overflows rather than assuming */
+    const sc=[document.getElementById('scroller'),$('#viewport'),document.scrollingElement]
+      .find(el=>el&&el.scrollHeight>el.clientHeight+1);
+    if(sec&&sc){
+      const align=(smooth)=>{
+        const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
+        /* the phone frame is CSS-scaled, so screen pixels are not content
+           pixels — convert before scrolling or the jump lands short */
+        const box=sc.getBoundingClientRect();
+        const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
+        const d=Math.round((sec.getBoundingClientRect().top-hdr-12)*k);
+        if(Math.abs(d)>3)sc.scrollBy({top:d,behavior:smooth?'smooth':'auto'});};
+      align(true);
+      /* the sticky header resizes and images above settle mid-flight, so
+         correct once the animation has landed */
+      setTimeout(()=>align(false),1200);
+      setTimeout(()=>align(false),1900);
+    }
+    return;}
 
   /* wishlist */
   const w=A('[data-wish]');
