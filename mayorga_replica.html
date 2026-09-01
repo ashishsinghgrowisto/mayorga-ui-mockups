@@ -1640,89 +1640,106 @@ ul,ol{list-style:none;margin:0;padding:0}
 
 /* ============================================================
    CERTIFICATE OF ANALYSIS SECTION (PDP)
-   Two panels, not a card grid: WHO tested it on the left, WHAT came back
-   on the right. Because the results run as one continuous document, the
-   uneven group sizes (1,1,1,2,6,2 rows) never leave a hole, and neither
-   panel is pinned to the other's height.
+   Four readings on one row, provenance on one line, and the certificate's
+   own rows behind the ⓘ on each card. Nothing here is sample metadata —
+   that is what the PDF is for. Compact by design: the section is meant to
+   be read at a glance, not scrolled through.
    ============================================================ */
-.lab{background:var(--tan);padding:50px 0 54px}
-.lab__wrap{display:grid;gap:22px;align-items:start}
-/* ---------- left: the report's identity ---------- */
-.lab__side{min-width:0}
-.lab__side .h2{margin:0 0 9px}
-.lab__side .h2 em{font-style:normal;color:var(--red)}
-.lab__sub{margin:0 0 16px;font-size:13.5px;line-height:1.6;letter-spacing:.2px;opacity:.78}
-.lab__kv{margin:0 0 12px;padding:0}
-.lab__kv div{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
-  padding:8px 0;border-bottom:1px solid rgba(110,55,40,.13)}
-.lab__kv div:last-child{border-bottom:0}
-.lab__kv dt{flex:0 0 auto;font:700 9.5px/1.3 var(--font-body);letter-spacing:1px;text-transform:uppercase;
-  opacity:.55}
-.lab__kv dd{margin:0;min-width:0;text-align:right;font:700 12.5px/1.4 var(--font-body);letter-spacing:.2px;
-  overflow-wrap:break-word}
-.lab__kv--dark{background:var(--brown);color:var(--cream);border-radius:13px;padding:6px 15px;margin-bottom:14px}
-.lab__kv--dark div{border-bottom-color:rgba(226,216,194,.16);padding:9px 0}
-.lab__kv--dark dt{opacity:.6}
-.lab__kv--dark dd{font-weight:800}
-/* ---------- right: the results, as a document ---------- */
-.lab__doc{min-width:0;background:#fff;border:1px solid rgba(110,55,40,.14);border-radius:16px;
-  overflow:hidden;box-shadow:0 3px 14px rgba(110,55,40,.06)}
-.lab__doc__hd{display:flex;align-items:center;justify-content:space-between;
-  padding:12px 20px;background:rgba(110,55,40,.05);border-bottom:1px solid rgba(110,55,40,.12);
-  font:700 9.5px/1 var(--font-body);letter-spacing:1.1px;text-transform:uppercase;opacity:.6}
-.lab__grp{padding:0 20px}
-.lab__grp__h{margin:0;padding:14px 0 8px;font:800 10px/1.4 var(--font-body);letter-spacing:.9px;
-  text-transform:uppercase;color:var(--red);overflow-wrap:break-word}
-.lab__grp+.lab__grp .lab__grp__h{border-top:1px solid rgba(110,55,40,.1);padding-top:15px}
-.lab__grp__rows{margin:0 0 4px}
-.lab__grp__rows div{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:7px 0}
-.lab__grp__rows dt{min-width:0;font-size:13.5px;line-height:1.45;letter-spacing:.2px;overflow-wrap:break-word}
-.lab__grp__rows dd{margin:0;flex:0 0 auto;max-width:54%;text-align:right;
-  font:800 13.5px/1.45 var(--font-body);letter-spacing:.2px;font-variant-numeric:tabular-nums;
-  overflow-wrap:break-word}
-.lab__grp__rows div.stack{display:block}
-.lab__grp__rows div.stack dd{max-width:100%;text-align:left;margin-top:3px;font-size:13px}
-.lab__doc__ft{padding:13px 20px 15px;border-top:1px solid rgba(110,55,40,.12);
-  background:rgba(110,55,40,.03)}
-.lab__doc__ft p{margin:0 0 4px;font-size:10.5px;line-height:1.5;letter-spacing:.2px;opacity:.6}
-.lab__doc__ft p:last-child{margin-bottom:0}
+.lab{background:var(--tan);padding:44px 0 46px}
+/* ---------- header bar ---------- */
+.lab__bar{display:grid;gap:14px;align-items:end;margin-bottom:18px}
+.lab__bar__t .eyebrow{margin-bottom:7px}
+.lab__bar__t .h2{margin:0}
+.lab__bar__t .h2 em{font-style:normal;color:var(--red)}
+.lab__prov{margin:0;font-size:12.5px;line-height:1.6;letter-spacing:.2px;opacity:.72}
+.lab__prov__i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;
+  background:var(--brown);color:var(--cream);font:800 10px/1 var(--font-body);vertical-align:-2px}
+/* ---------- reading cards ---------- */
+.lab__cards{display:grid;gap:12px}
+.lab__c{position:relative;background:#fff;border:1px solid rgba(110,55,40,.14);border-radius:14px;
+  padding:14px 15px 15px;box-shadow:0 2px 10px rgba(110,55,40,.05);min-width:0;
+  transition:border-color .16s var(--ease),box-shadow .16s var(--ease)}
+.lab__c.open{border-color:rgba(110,55,40,.45);box-shadow:0 6px 20px rgba(110,55,40,.12)}
+.lab__c__top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
+.lab__c__ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  background:rgba(46,125,50,.1);color:#2e7d32}
+.lab__c__ic svg{width:15px;height:15px}
+.lab__c__i{flex:0 0 auto;width:22px;height:22px;border:1.5px solid rgba(110,55,40,.3);border-radius:50%;
+  background:none;color:var(--brown);font:800 11px/1 var(--font-body);cursor:pointer;
+  transition:.15s var(--ease)}
+.lab__c__i:hover{background:var(--brown);border-color:var(--brown);color:var(--cream)}
+.lab__c.open .lab__c__i{background:var(--brown);border-color:var(--brown);color:var(--cream)}
+.lab__c__k{display:block;font:700 9.5px/1.3 var(--font-body);letter-spacing:1.05px;text-transform:uppercase;
+  opacity:.6;margin-bottom:5px}
+.lab__c__v{display:block;font:800 17px/1.2 var(--font-body);letter-spacing:.2px;color:#2e7d32}
+.lab__c__n{display:block;margin-top:5px;font-size:11px;line-height:1.4;letter-spacing:.2px;opacity:.6}
+/* ---------- the popover opened by the ⓘ ---------- */
+.lab__pop{display:none;position:absolute;top:100%;right:-6px;width:308px;max-width:calc(100vw - 32px);
+  z-index:40;background:#fff;border:1px solid rgba(110,55,40,.2);border-radius:14px;
+  padding:12px 14px 13px;box-shadow:0 18px 44px rgba(110,55,40,.22)}
+.lab__c.open .lab__pop{display:block;animation:labPop .18s var(--ease)}
+@keyframes labPop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.lab__pop::before{content:"";position:absolute;top:-6px;right:16px;width:11px;height:11px;
+  background:#fff;border-left:1px solid rgba(110,55,40,.2);border-top:1px solid rgba(110,55,40,.2);
+  transform:rotate(45deg)}
+.lab__pop__hd{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding-bottom:8px;margin-bottom:8px;border-bottom:1px solid rgba(110,55,40,.14)}
+.lab__pop__hd b{font:800 12px/1.2 var(--font-body);letter-spacing:.6px;text-transform:uppercase}
+.lab__pop__x{width:22px;height:22px;flex:0 0 auto;display:grid;place-items:center;border:0;border-radius:50%;
+  background:rgba(110,55,40,.09);color:var(--brown);font:400 15px/1 var(--font-body);cursor:pointer}
+.lab__pop__x:hover{background:var(--red);color:#fff}
+.lab__det__g+.lab__det__g{margin-top:9px;padding-top:8px;border-top:1px solid rgba(110,55,40,.1)}
+.lab__det__h{display:block;font:800 9px/1.4 var(--font-body);letter-spacing:.8px;text-transform:uppercase;
+  color:var(--red);margin-bottom:3px;overflow-wrap:break-word}
+.lab__pop dl{margin:0}
+.lab__pop dl div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:4px 0}
+.lab__pop dt{min-width:0;font-size:12px;line-height:1.45;overflow-wrap:break-word;opacity:.85}
+.lab__pop dd{margin:0;flex:0 0 auto;max-width:52%;text-align:right;
+  font:800 12px/1.45 var(--font-body);font-variant-numeric:tabular-nums;overflow-wrap:break-word}
+.lab__pop dl div.stack{display:block}
+.lab__pop dl div.stack dd{max-width:100%;text-align:left;margin-top:2px;font-size:11.5px}
+.lab__det__note{margin:9px 0 0;font-size:9.5px;line-height:1.5;opacity:.55}
+.lab__ft{margin:14px 0 0;font-size:10.5px;line-height:1.55;letter-spacing:.2px;opacity:.55}
 /* ---------- certificate link ---------- */
-.lab__dl{display:inline-flex;align-items:center;gap:12px;background:var(--brown);color:var(--cream);
-  border-radius:26px;padding:11px 20px 11px 13px;text-decoration:none;transition:.18s var(--ease)}
+.lab__dl{display:inline-flex;align-items:center;gap:11px;justify-self:start;background:var(--brown);
+  color:var(--cream);border-radius:26px;padding:10px 19px 10px 12px;text-decoration:none;
+  transition:.18s var(--ease)}
 .lab__dl:hover{background:var(--red);transform:translateY(-1px)}
-.lab__dl__ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+.lab__dl__ic{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
   background:rgba(226,216,194,.16);flex:0 0 auto}
-.lab__dl__ic svg{width:16px;height:16px}
-.lab__dl__t b{display:block;font:800 13px/1.2 var(--font-body);letter-spacing:.4px}
-.lab__dl__t i{display:block;font-style:normal;font-size:10.5px;letter-spacing:.6px;opacity:.7;margin-top:3px}
+.lab__dl__ic svg{width:15px;height:15px}
+.lab__dl__t b{display:block;font:800 12.5px/1.2 var(--font-body);letter-spacing:.4px}
+.lab__dl__t i{display:block;font-style:normal;font-size:10px;letter-spacing:.6px;opacity:.7;margin-top:2px}
 /* the PDP trust chip links into this section */
 .trust a{display:flex;flex-direction:column;align-items:center;gap:4px;color:inherit;text-decoration:none}
 .trust a:hover b{color:var(--red)}
 /* ---------- desktop / tablet ---------- */
-#stage.vp-desktop .lab__wrap{grid-template-columns:minmax(280px,34%) minmax(0,1fr);gap:34px}
-@media (max-width:900px){
-  #stage.vp-desktop .lab__wrap{grid-template-columns:minmax(0,1fr);gap:22px}
-  #stage.vp-desktop .lab__kv{columns:2;column-gap:26px}
-  #stage.vp-desktop .lab__kv div{break-inside:avoid}
-  #stage.vp-desktop .lab__kv--dark{columns:auto}
+#stage.vp-desktop .lab__bar{grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:26px;align-items:center}
+#stage.vp-desktop .lab__cards{grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;position:relative}
+#stage.vp-desktop .lab__dl--foot{display:none}
+@media (max-width:1000px){
+  #stage.vp-desktop .lab__bar{grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+  #stage.vp-desktop .lab__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 /* ---------- phone ---------- */
-#stage.is-phone .lab{padding:30px 0 34px}
-#stage.is-phone .lab__wrap{grid-template-columns:minmax(0,1fr);gap:16px}
-#stage.is-phone .lab__sub{font-size:12.5px;margin-bottom:13px}
-#stage.is-phone .lab__kv div{padding:7px 0;gap:10px}
-#stage.is-phone .lab__kv dt{font-size:9px}
-#stage.is-phone .lab__kv dd{font-size:12px}
-#stage.is-phone .lab__kv--dark{padding:5px 13px}
-#stage.is-phone .lab__doc__hd{padding:11px 14px;font-size:9px}
-#stage.is-phone .lab__grp{padding:0 14px}
-#stage.is-phone .lab__grp__h{font-size:9.5px;letter-spacing:.7px;padding:12px 0 7px}
-#stage.is-phone .lab__grp__rows div{padding:7px 0;gap:12px}
-#stage.is-phone .lab__grp__rows dt{font-size:12.5px}
-#stage.is-phone .lab__grp__rows dd{font-size:12.5px;max-width:50%}
-#stage.is-phone .lab__doc__ft{padding:11px 14px 13px}
-#stage.is-phone .lab__doc__ft p{font-size:10px}
+#stage.is-phone .lab{padding:28px 0 32px}
+#stage.is-phone .lab__bar{gap:11px;margin-bottom:14px}
+#stage.is-phone .lab__prov{font-size:11.5px}
+#stage.is-phone .lab__cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+#stage.is-phone .lab__c{padding:12px 12px 13px}
+#stage.is-phone .lab__c__ic{width:26px;height:26px}
+#stage.is-phone .lab__c__i{width:21px;height:21px}
+#stage.is-phone .lab__c__v{font-size:14.5px}
+#stage.is-phone .lab__c__n{font-size:10px}
+#stage.is-phone .lab__c__det dt{font-size:11px}
+#stage.is-phone .lab__c__det dd{font-size:11px;max-width:50%}
 #stage.is-phone .lab__dl{width:100%;justify-content:center}
+#stage.is-phone .lab__dl--bar{display:none}
+#stage.is-phone .lab__dl--foot{margin-top:14px}
+#stage.is-phone .lab__cards{position:relative}
+/* the popover spans the two-column row; JS sets left/width */
+#stage.is-phone .lab__pop{right:auto;max-width:none;padding:11px 13px 12px}
+#stage.is-phone .lab__pop::before{right:auto;left:24px}
 
 #stage.is-phone .qa-scrim{align-items:flex-end;padding:0}
 #stage.is-phone .qa{max-height:100%;max-width:none;border-radius:18px 18px 0 0}
@@ -3625,16 +3642,13 @@ const COA={
   lot:'WO22819', project:'MAYORGA_OR-20260708-0003',
   received:'09 Jul 2026', started:'09 Jul 2026', issued:'17 Jul 2026',
   scope:'Finished product testing', serving:'15 g',
-  /* the certificate's own identification block, label for label */
-  meta:[
-    ['Sample Name','ORG. MUY MACHO_MAYORGA'],
-    ['Lot Number','Muy Macho WO22819'],
-    ['Description','Finished Product Testing'],
-    ['Sample Serving Size','15 g'],
-    ['Receipt Date','09-Jul-2026'],
-    ['Receipt Condition','Ambient temperature'],
-    ['Date Started','09-Jul-2026'],
-    ['Eurofins Sample','16757108']
+  /* four readings on the surface; every certificate row sits behind the ⓘ.
+     panel indices: 0-2 pesticides · 3 yeast/mold · 4 mycotoxins · 5 glyphosate */
+  summary:[
+    {k:'Pesticides', v:'Not Detected at LOQ', ic:'leaf',  groups:[0,1,2]},
+    {k:'Mycotoxins', v:'&lt;2.00 ppb', n:'Sum of aflatoxins', ic:'shield', groups:[4]},
+    {k:'Glyphosate &amp; AMPA', v:'&lt;100 ng/g', ic:'shield', groups:[5]},
+    {k:'Yeast &amp; mold', v:'&lt;10 CFU/g', ic:'leaf', groups:[3]}
   ],
   /* Analysis | Result — the certificate's own two columns, its own group
      headings and its own wording. Nothing added, nothing renamed. */
@@ -3664,56 +3678,84 @@ const COA={
    then one card per analysis group with its Analysis | Result pairs, then the
    lab's own footnotes and the PDF. No accordions, no forms, no commentary —
    every line on screen exists on the certificate. */
+/* the ⓘ popover: closed by default, positioned when opened, and never
+   allowed to change the size of the card it belongs to */
+function labPopClose(){
+  $$('.lab__c.open').forEach(c=>{
+    c.classList.remove('open');
+    c.querySelector('[data-lab-i]')?.setAttribute('aria-expanded','false');
+    const p=c.querySelector('.lab__pop'); if(p){p.style.left='';p.style.width='';p.style.top='';}
+  });
+}
+function labPopPlace(card){
+  const pop=card.querySelector('.lab__pop'); if(!pop)return;
+  const wrap=card.parentElement;
+  pop.style.top=(card.offsetHeight+8)+'px';
+  if(stage.classList.contains('is-phone')){
+    /* on a phone the grid is two columns, so let the popover span the row */
+    pop.style.left=(-card.offsetLeft)+'px';
+    pop.style.width=wrap.clientWidth+'px';
+  }else{
+    pop.style.left=''; pop.style.width='';
+  }
+}
 function labSection(){
   const c=COA;
   const rows=c.panel.reduce((a,g)=>a+g[1].length,0);
-  /* Two panels side by side: WHO tested it (left) and WHAT came back (right).
-     Neither is forced to the other's height, and the results run as one
-     continuous document — the way a certificate reads — so uneven group
-     sizes create no gaps. */
+  const dl=cls=>`
+      <a class="lab__dl ${cls}" href="${COA_PDF}" target="_blank" rel="noopener">
+        <span class="lab__dl__ic">${IC.shield}</span>
+        <span class="lab__dl__t"><b>Full certificate</b><i>PDF · 2 pages</i></span>
+      </a>`;
+  /* Four readings, one line of provenance, and every certificate row tucked
+     behind the ⓘ on its card. Sample metadata is deliberately absent — it
+     lives in the downloadable PDF. */
   return `
 <section class="lab" id="lab"><div class="page-width">
-  <div class="lab__wrap">
 
-    <aside class="lab__side">
-      <p class="eyebrow">Certificate of analysis</p><hr class="eyebrow-hr">
+  <div class="lab__bar">
+    <div class="lab__bar__t">
+      <p class="eyebrow">Third-party lab tested</p>
       <h2 class="h-display h2">Tested by <em>Eurofins</em></h2>
-      <p class="lab__sub">${rows} results, reproduced from report ${c.report}
-        exactly as the laboratory issued it.</p>
-
-      <dl class="lab__kv lab__kv--dark">
-        <div><dt>Report Number</dt><dd>${c.report}</dd></div>
-        <div><dt>Report Date</dt><dd>17-Jul-2026</dd></div>
-        <div><dt>Report Status</dt><dd>${c.status}</dd></div>
-        <div><dt>Laboratory</dt><dd>Eurofins Food Chemistry Testing Madison</dd></div>
-      </dl>
-
-      <dl class="lab__kv">
-        ${c.meta.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
-      </dl>
-
-      <a class="lab__dl" href="${COA_PDF}" target="_blank" rel="noopener">
-        <span class="lab__dl__ic">${IC.shield}</span>
-        <span class="lab__dl__t"><b>View the full certificate</b><i>PDF · 2 pages</i></span>
-      </a>
-    </aside>
-
-    <div class="lab__doc">
-      <div class="lab__doc__hd"><span>Analysis</span><span>Result</span></div>
-      ${c.panel.map(([g,list])=>`
-      <div class="lab__grp">
-        <h3 class="lab__grp__h">${g}</h3>
-        <dl class="lab__grp__rows">
-          ${list.map(([a,r])=>
-            /* the NOP package row's result is a sentence, not a figure —
-               let it sit under its label instead of squeezing right */
-            `<div${r.replace(/&lt;/g,'<').length>26?' class="stack"':''}><dt>${a}</dt><dd>${r}</dd></div>`).join('')}
-        </dl>
-      </div>`).join('')}
-      <div class="lab__doc__ft">${c.notes.map(n=>`<p>${n}</p>`).join('')}</div>
     </div>
-
+    <p class="lab__prov">Tap <span class="lab__prov__i">i</span> for the readings as issued.</p>
+    ${dl('lab__dl--bar')}
   </div>
+
+  <div class="lab__cards">
+    ${c.summary.map((s,i)=>`
+    <div class="lab__c" data-lab-card="${i}">
+      <div class="lab__c__top">
+        <span class="lab__c__ic">${IC[s.ic]||IC.shield}</span>
+        <button type="button" class="lab__c__i" data-lab-i="${i}"
+          aria-expanded="false" aria-label="Show the ${s.k.replace(/&amp;/g,'and')} readings">i</button>
+      </div>
+      <span class="lab__c__k">${s.k}</span>
+      <b class="lab__c__v">${s.v}</b>
+      <span class="lab__c__n">${s.n?s.n+' · ':''}${s.groups.reduce((a,g)=>a+c.panel[g][1].length,0)} ${s.groups.reduce((a,g)=>a+c.panel[g][1].length,0)===1?'reading':'readings'}</span>
+      <!-- readings live in a popover: the card itself never changes size -->
+      <div class="lab__pop" role="dialog" aria-label="${s.k.replace(/&amp;/g,'and')} readings">
+        <div class="lab__pop__hd">
+          <b>${s.k}</b>
+          <button type="button" class="lab__pop__x" data-lab-close aria-label="Close">×</button>
+        </div>
+        ${s.groups.map(g=>`
+        <div class="lab__det__g">
+          <span class="lab__det__h">${c.panel[g][0]}</span>
+          <dl>
+            ${c.panel[g][1].map(([a,r])=>
+              `<div${r.replace(/&lt;/g,'<').length>26?' class="stack"':''}><dt>${a}</dt><dd>${r}</dd></div>`).join('')}
+          </dl>
+        </div>`).join('')}
+        <p class="lab__det__note">${c.notes[0]}</p>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <!-- on a phone the certificate button belongs here, under the readings -->
+  ${dl('lab__dl--foot')}
+  <p class="lab__ft">${c.notes[1]}</p>
+
 </div></section>`;
 }
 
@@ -4078,7 +4120,19 @@ document.addEventListener('click',e=>{
   const ds=A('[data-dsub]');
   if(ds){const p=$('#dsub'+ds.dataset.dsub);p.classList.toggle('on');ds.querySelector('.chev')?.classList.toggle('on');return;}
 
-  /* ---- lab report: jump link + lot lookup ---- */
+  /* ---- lab report: the ⓘ opens a popover, the card never resizes ---- */
+  const li=A('[data-lab-i]');
+  if(li){
+    e.preventDefault();
+    const card=li.closest('.lab__c'), was=card.classList.contains('open');
+    labPopClose();
+    if(!was){card.classList.add('open');li.setAttribute('aria-expanded','true');labPopPlace(card);}
+    return;}
+  if(A('[data-lab-close]')){e.preventDefault();labPopClose();return;}
+  /* a click outside the popover closes it */
+  if(!A('.lab__pop')&&!A('[data-lab-i]')) labPopClose();
+
+  /* ---- lab report: jump link ---- */
   if(A('[data-lab-jump]')){
     e.preventDefault();
     const sec=$('#lab');
