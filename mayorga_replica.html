@@ -4366,6 +4366,26 @@ function pageNapkin(){
 /* The brief asks for a GIF of the steps from farm to roasting and packing.
    A cycling highlight does the same job without shipping a 5 MB GIF — and it
    pauses on hover so a visitor can read a step at their own pace. */
+/* Which element actually scrolls differs by mode: the phone frame scrolls
+   #scroller, desktop scrolls #viewport, native mobile scrolls the document —
+   and more than one can overflow slightly, so take the largest. */
+function pageScroller(){
+  return [document.getElementById('scroller'),$('#viewport'),document.scrollingElement]
+    .filter(Boolean).map(el=>[el,el.scrollHeight-el.clientHeight])
+    .sort((a,b)=>b[1]-a[1])[0][0];
+}
+function scrollToSection(sec,pad){
+  const sc=pageScroller(); if(!sec||!sc)return;
+  const align=smooth=>{
+    const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
+    const box=sc.getBoundingClientRect();
+    const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
+    const d=Math.round((sec.getBoundingClientRect().top-hdr-(pad||12))*k);
+    if(Math.abs(d)>3)sc.scrollBy({top:d,behavior:smooth?'smooth':'auto'});
+  };
+  align(true); setTimeout(()=>align(false),900);
+}
+
 /* --- video lightbox ---------------------------------------------------
    The iframe src is only set on first open, so the Instagram embed costs
    nothing on page load. Unsetting it on close stops playback. */
@@ -4576,7 +4596,7 @@ function pageMold(){
     <p>You can access the latest lab reports directly on each blend’s product page under the
       <strong>3rd Party Tested</strong> dropdown menu. You can also find all of our current reports right here,
       so you can see the data behind your coffee and enjoy every cup with added peace of mind.</p>
-    <div style="margin-top:22px"><a class="btn" href="#" data-pdp="cubanoroast">View a report on the product page</a></div>
+    <div style="margin-top:22px"><a class="btn" href="#" data-pdp="cubanoroast">View a lab report</a></div>
     <p class="ml-note"><b>Report library</b><span class="ml-tbd">photo pending</span><br>
       The per-blend report gallery and the screen recording of where to find reports on a product page are
       still to come — they need the assets Caro is preparing.</p>
@@ -4784,12 +4804,7 @@ document.addEventListener('click',e=>{
   /* routing */
   /* the hero play button keeps its Instagram href as a fallback, but the
      click is intercepted so the reel plays without leaving the page */
-  if(A('[data-ml-lab]')){e.preventDefault();
-    const sec=$('#mlLab'), sc=[$('#scroller'),$('#viewport'),document.scrollingElement].find(el=>el&&el.scrollHeight>el.clientHeight+1);
-    if(sec&&sc){const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
-      const box=sc.getBoundingClientRect(); const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
-      sc.scrollBy({top:Math.round((sec.getBoundingClientRect().top-hdr-12)*k),behavior:'smooth'});}
-    return;}
+  if(A('[data-ml-lab]')){e.preventDefault();scrollToSection($('#mlLab'));return;}
   if(A('[data-np-vclose]')){e.preventDefault();npVideoClose();return;}
   {const nv=A('[data-np-video]'); if(nv){e.preventDefault();npVideoOpen(nv.dataset.npVideo||NP_IG);return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
@@ -4830,29 +4845,7 @@ document.addEventListener('click',e=>{
   if(!A('.lab__pop')&&!A('[data-lab-i]')) labPopClose();
 
   /* ---- lab report: jump link ---- */
-  if(A('[data-lab-jump]')){
-    e.preventDefault();
-    const sec=$('#lab');
-    /* desktop scrolls #viewport, the phone frame scrolls #scroller — take
-       whichever one actually overflows rather than assuming */
-    const sc=[document.getElementById('scroller'),$('#viewport'),document.scrollingElement]
-      .find(el=>el&&el.scrollHeight>el.clientHeight+1);
-    if(sec&&sc){
-      const align=(smooth)=>{
-        const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
-        /* the phone frame is CSS-scaled, so screen pixels are not content
-           pixels — convert before scrolling or the jump lands short */
-        const box=sc.getBoundingClientRect();
-        const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
-        const d=Math.round((sec.getBoundingClientRect().top-hdr-12)*k);
-        if(Math.abs(d)>3)sc.scrollBy({top:d,behavior:smooth?'smooth':'auto'});};
-      align(true);
-      /* the sticky header resizes and images above settle mid-flight, so
-         correct once the animation has landed */
-      setTimeout(()=>align(false),1200);
-      setTimeout(()=>align(false),1900);
-    }
-    return;}
+  if(A('[data-lab-jump]')){e.preventDefault();scrollToSection($('#lab'));return;}
 
   /* wishlist */
   const w=A('[data-wish]');
