@@ -2391,13 +2391,19 @@ ul,ol{list-style:none;margin:0;padding:0}
 .ml-tbd{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:11px;background:rgba(167,52,57,.10);
   color:var(--red);font:800 9.5px/1.5 var(--font-body);letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
 
+/* the shared product row carries its own 64px rhythm; match the story sections
+   so every gap down the page is identical */
+.np .collection{padding:76px 0}
+
 @media (max-width:1023.98px){
+  .np .collection{padding:48px 0}
   .ml-hero,.ml-split{grid-template-columns:minmax(0,1fr);gap:26px}
   .ml-hero__t{padding:30px 22px 34px}
   .ml-hero__m{min-height:260px}
   .ml-g3{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){ .ml-g3{grid-template-columns:minmax(0,1fr)} }
+#stage.is-sp .np .collection{padding:48px 0}
 #stage.is-sp .ml-hero,#stage.is-sp .ml-split{grid-template-columns:minmax(0,1fr);gap:24px}
 #stage.is-sp .ml-hero__t{padding:28px 20px 32px}
 #stage.is-sp .ml-hero__m{min-height:220px}
@@ -4545,7 +4551,7 @@ function pageMold(){
       <p>Mycotoxins are naturally occurring compounds that certain types of mold can produce. Their presence
         depends on factors including the type of mold and the conditions in which it grows.</p></div>
   </div>
-  <div class="np-body" style="max-width:760px;margin-top:32px">
+  <div class="np-body" style="margin-top:32px">
     <p>As more people look for mold free coffee brands, concerns about mold and mycotoxins often come down to
       how their presence in coffee could affect health and wellness.</p>
     <p>We understand why that matters, which is why we independently test our coffee for mold and mycotoxins,
