@@ -4479,7 +4479,6 @@ const ML_MEANS=[
 ];
 
 function pageMold(){
-  const card3=['cubanoroast','artesano-blend','buenosdias'].map(bySlug).filter(Boolean);
   return `
 <div class="np">
 
@@ -4621,10 +4620,13 @@ function pageMold(){
   </div>
 </div></section>
 
-<!-- ============ 8 · EXPLORE BEST SELLERS ============ -->
-<section class="collection np-sec--panel"><div class="page-width">
+<!-- ============ 8 · EXPLORE BEST SELLERS ============
+     Same component as the homepage row: .collection + carousel(card), so the
+     arrows, card sizing and add-to-cart all behave identically. -->
+<section class="collection"><div class="page-width">
   <div class="collection__head"><h2 class="h-display h2">Explore Best Sellers</h2></div>
-  <div class="grid">${card3.map(card).join('')}</div>
+  ${carousel('moldCar',BEST,card)}
+  <div class="center" style="margin-top:26px"><a class="btn btn--secondary" href="#" data-go="plp">View Collection</a></div>
 </div></section>
 
 <!-- ============ 9 · QUALITY IN EVERY ROAST ============ -->
