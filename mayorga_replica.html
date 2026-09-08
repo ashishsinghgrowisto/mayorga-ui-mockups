@@ -2345,6 +2345,62 @@ ul,ol{list-style:none;margin:0;padding:0}
   .np-duo,.np-vals,.np-jr{grid-template-columns:minmax(0,1fr)}
   .np-val{min-height:0}
 }
+
+/* ============================================================
+   PAGE: MOLD & MYCOTOXINS — editorial education LP
+   Built on the .np-* story tokens: one idea per block, generous
+   air, alternating panels. Cards are a single shared primitive.
+   ============================================================ */
+.ml-hero{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);align-items:stretch;
+  border-radius:var(--radius-lg);overflow:hidden;background:var(--panel)}
+.ml-hero__t{padding:54px 50px;display:flex;flex-direction:column;justify-content:center}
+.ml-hero__t h1{margin:0 0 16px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px,3.5vw,52px);line-height:.94;letter-spacing:.02em;max-width:20ch}
+.ml-hero__t p{margin:0 0 26px;font-size:16.5px;line-height:27px;max-width:48ch}
+.ml-hero__cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ml-hero__m{position:relative;min-height:360px;background:var(--ink)}
+.ml-hero__m img{width:100%;height:100%;object-fit:cover;display:block}
+.ml-play{position:absolute;inset:0;width:100%;border:0;padding:0;display:grid;place-items:center;
+  background:rgba(46,25,18,.20);transition:.2s var(--ease);cursor:pointer}
+.ml-play:hover{background:rgba(46,25,18,.34)}
+.ml-play svg{width:70px;height:70px}
+.ml-play svg circle{fill:rgba(0,0,0,.44)}
+.ml-play svg polygon{fill:#F6F1E6}
+.ml-play span{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#F6F1E6;
+  font:800 11.5px/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+
+/* one shared card primitive: badges, risk conditions, safeguards, outcomes */
+.ml-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ml-c{background:#fff;border:1px solid rgba(110,55,40,.14);border-radius:var(--radius-lg);padding:24px 22px}
+.ml-c--panel{background:var(--panel);border-color:transparent}
+.ml-c>svg{width:25px;height:25px;color:var(--red);display:block}
+.ml-c__n{display:block;font:800 11px/1 var(--font-body);letter-spacing:.16em;color:var(--red)}
+.ml-c h4{margin:11px 0 8px;font-size:14.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;line-height:1.35}
+.ml-c p{margin:0;font-size:14.5px;line-height:23px;opacity:.86}
+.ml-c--flat{display:flex;gap:13px;align-items:flex-start;padding:20px}
+.ml-c--flat>svg{flex:0 0 24px}
+.ml-c--flat b{display:block;font-size:14.5px;line-height:21px;font-weight:800}
+
+.ml-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.ml-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--ink);aspect-ratio:16/10}
+.ml-media img{width:100%;height:100%;object-fit:cover;display:block}
+.ml-note{margin:20px 0 0;padding:16px 18px;background:#fff;border-left:3px solid var(--red);
+  border-radius:0 var(--radius) var(--radius) 0;font-size:14.5px;line-height:23px}
+.ml-note b{font-weight:800}
+.ml-tbd{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:11px;background:rgba(167,52,57,.10);
+  color:var(--red);font:800 9.5px/1.5 var(--font-body);letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
+
+@media (max-width:1023.98px){
+  .ml-hero,.ml-split{grid-template-columns:minmax(0,1fr);gap:26px}
+  .ml-hero__t{padding:30px 22px 34px}
+  .ml-hero__m{min-height:260px}
+  .ml-g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){ .ml-g3{grid-template-columns:minmax(0,1fr)} }
+#stage.is-sp .ml-hero,#stage.is-sp .ml-split{grid-template-columns:minmax(0,1fr);gap:24px}
+#stage.is-sp .ml-hero__t{padding:28px 20px 32px}
+#stage.is-sp .ml-hero__m{min-height:220px}
+#stage.is-sp .ml-g3{grid-template-columns:minmax(0,1fr)}
 </style>
 </head>
 <body>
@@ -2416,6 +2472,7 @@ html.mg-locked,html.mg-locked body{overflow:hidden !important}
     <button data-page="plp" aria-pressed="false">PLP · All Coffee</button>
     <button data-page="pdp" aria-pressed="false">PDP · Cubano Roast</button>
     <button data-page="napkin" aria-pressed="false">About · The Napkin</button>
+    <button data-page="mold" aria-pressed="false">LP · Mold &amp; Mycotoxins</button>
   </div>
   <div class="seg" id="vpSeg">
     <button data-vp="desktop" aria-pressed="true">Desktop</button>
@@ -2628,7 +2685,7 @@ const NAV=[
    promo:{img:'files/coffee-subscription.jpg?format=webp&quality=75&v=1747671018',t:'Build your subscription',cta:'Subscribe & Save 10%'}},
  {label:'Orgullo Latino Blog',cols:null},
  {label:'About',cols:[
-   {title:'Our Story',links:['The Napkin','Our Purpose','Familia Mayorga','Our Partners','Direct Supply Chain']},
+   {title:'Our Story',links:['The Napkin','Mold &amp; Mycotoxins','Our Purpose','Familia Mayorga','Our Partners','Direct Supply Chain']},
    {title:'Guides',links:['Espresso Listo Recipe Guide','Chia Seed Recipes','Coffee Brewing Guide','Educational Videos']},
    {title:'Help',links:['FAQs','Contact','Rewards','Become a Wholesale Partner']}
  ],promo:{img:'files/Purpose_regular_thumbnail.png?v=1781614389',t:'Coffee with Purpose',cta:'Our Story',to:'napkin'}}
@@ -4313,7 +4370,7 @@ function pageNapkin(){
 /* --- video lightbox ---------------------------------------------------
    The iframe src is only set on first open, so the Instagram embed costs
    nothing on page load. Unsetting it on close stops playback. */
-const NP_EMBED=NP_IG.replace(/\/?$/,'/')+'embed';
+const npEmbed=u=>(u||NP_IG).replace(/\/?$/,'/')+'embed';
 
 /* #stage carries an identity transform, which makes it — not the window —
    the containing block for position:fixed. So inset:0 would stretch the
@@ -4333,9 +4390,10 @@ function npVideoFit(){
   v.style.height=Math.round(Math.min(window.innerHeight*k,stage.offsetHeight-top))+'px';
 }
 let npScrollY=0;
-function npVideoOpen(){
+function npVideoOpen(url){
   const v=$('#npVid'); if(!v)return;
-  const f=$('#npVidFrame'); if(f&&!f.src)f.src=NP_EMBED;
+  const f=$('#npVidFrame'); if(f)f.src=npEmbed(url);
+  const out=v.querySelector('.np-vid__out a'); if(out)out.href=url||NP_IG;
   npScrollY=window.scrollY||0;
   v.classList.add('on');
   npVideoFit();
@@ -4365,6 +4423,205 @@ function stopJourney(){if(npTimer){clearInterval(npTimer);npTimer=null;}
   $$('.np-vlock').forEach(el=>el.classList.remove('np-vlock'));}
 
 /* ==================================================================
+   PAGE: MOLD & MYCOTOXINS  (/pages/mold-free-coffee)
+   Copy is lifted from the approved LP brief. Photography reuses the
+   story-page frames already inlined above; the brief's remaining IMG
+   slots are marked "photo pending" rather than filled with stand-ins.
+   ================================================================== */
+const ML_REEL='https://www.instagram.com/p/DcEsucWOAJJ/';
+const ML_IC={
+ flask:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v5.5L4.5 18A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>',
+ drop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.8s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></svg>',
+ box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5v-9Z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>',
+ spore:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="9" r="3.2"/><circle cx="16" cy="14" r="2.6"/><circle cx="14.5" cy="7" r="1.7"/><circle cx="7.5" cy="16.5" r="1.7"/></svg>',
+ fire:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c3.6 0 6-2.4 6-5.6 0-4.4-4.2-5.9-3.2-11.4-3 1.4-5 4.2-5 7 0 1.4-.9 2-1.7 2C7 13 6 14.2 6 15.6 6 18.6 8.4 21 12 21Z"/></svg>'
+};
+const ML_RISK=[
+ [ML_IC.drop,'Drying','After harvest, coffee needs to be dried to an appropriate moisture level. If it stays too wet or dries unevenly, conditions can become favorable for mold growth.'],
+ [ML_IC.box,'Storage','Coffee can absorb moisture from its environment even after it has been properly dried. Controlling humidity during storage helps keep it dry and reduces the risk of mold.'],
+ [IC.truck,'Transportation','Coffee can encounter changing temperatures and humidity as it moves through the supply chain. Keeping it properly protected from moisture helps maintain its quality along the way.']
+];
+const ML_STEPS=[
+ [IC.leaf,'Carefully Grown','Our organic mold free coffee starts with 100% USDA Organic, specialty-grade coffee. 100% USDA Organic means no synthetic pesticides were used at any point in the supply chain, while specialty-grade standards help ensure we start with high-quality coffee.'],
+ [IC.pin,'Direct Relationships','We work directly with more than 6,000 smallholder producers across Latin America, giving us visibility into how our coffee is grown, dried, and stored before it reaches our facility.'],
+ [ML_IC.drop,'Properly Dried','After harvest, coffee is carefully dried to reduce excess moisture, one of the primary conditions mold needs to grow.'],
+ [ML_IC.box,'Carefully Stored &amp; Handled','Once dried, coffee is kept protected from excess moisture and humidity during storage and transportation to help prevent mold from developing.'],
+ [ML_IC.flask,'Independently Tested','When our green coffee reaches us, samples are sent to an independent third-party lab to confirm they’re free of mold and mycotoxins before roasting.'],
+ [ML_IC.fire,'Roasted in Small Batches','Once testing is complete, our coffee is roasted in small batches at our Rockville, Maryland, facility. Faster roast-to-ship timelines reduce the window for contamination while helping us deliver fresher coffee.']
+];
+const ML_MEANS=[
+ [ML_IC.flask,'Mold &amp; Mycotoxin Free','Our mold and mycotoxin free coffee is independently lab-tested to verify it meets our standards.'],
+ [IC.leaf,'100% USDA Organic','Our coffee is always organic, with no synthetic pesticides at any point in the supply chain.'],
+ [IC.pin,'Direct &amp; Traceable','Our direct relationships with producers give us visibility into how our coffee is grown, dried, and stored before it reaches us.']
+];
+
+function pageMold(){
+  const card3=['cubanoroast','artesano-blend','buenosdias'].map(bySlug).filter(Boolean);
+  return `
+<div class="np">
+
+<!-- ============ 1 · HERO ============ -->
+<section class="np-sec" style="padding-top:44px"><div class="page-width">
+  <div class="ml-hero">
+    <div class="ml-hero__t">
+      <p class="np-eyebrow">Mold &amp; mycotoxins</p>
+      <h1>Mold Free Coffee: What You Should Know</h1>
+      <p>There’s a lot of fear around mold and mycotoxins in coffee, but there’s also a lot of
+        misinformation. Keep reading to learn what they are, how they can affect coffee, and the steps
+        we take to provide mold free coffee backed by independent testing.</p>
+      <div class="ml-hero__cta">
+        <a class="btn" href="#" data-go="plp">Shop Organic Coffee</a>
+        <a class="btn btn--secondary" href="#" data-ml-lab>See Our Lab Results</a>
+      </div>
+    </div>
+    <div class="ml-hero__m">
+      <img src="${NP_IMG['step2.jpg']}" alt="Coffee drying at origin">
+      <button class="ml-play" type="button" data-np-video="${ML_REEL}" aria-haspopup="dialog"
+        aria-label="Watch: mold and mycotoxins explained">${IC.play}<span>Watch — “Mold!?… no, ur good”</span></button>
+    </div>
+  </div>
+
+  <div class="ml-g3" style="margin-top:20px">
+    <div class="ml-c ml-c--flat">${ML_IC.flask}<b>Third Party Tested for Mold &amp; Mycotoxins</b></div>
+    <div class="ml-c ml-c--flat">${IC.leaf}<b>100% USDA Certified Organic</b></div>
+    <div class="ml-c ml-c--flat">${IC.pin}<b>Grown Using Regenerative Farming</b></div>
+  </div>
+</div></section>
+
+<!-- ============ 2 · DOES COFFEE HAVE MOLD? ============ -->
+<section class="np-sec np-sec--panel"><div class="page-width">
+  <div class="np-body" style="max-width:760px">
+    <p class="np-eyebrow">The industry norm</p>
+    <h2 class="h-display h2 np-h">Does Coffee Have Mold?</h2>
+    <p class="np-lede">Mold is rare in high-quality coffee that’s properly processed and handled, but concerns
+      around mold and mycotoxins have become a common marketing message in the coffee industry.</p>
+    <p>The reality is that it typically takes poor handling, excess moisture, or improper storage to create
+      conditions where mold can develop. Even though the risk is low, independent testing is one of the ways we
+      uphold our quality standards and verify that our coffee is mold-free. For you, that means added confidence
+      and peace of mind in every cup.</p>
+  </div>
+  <h3 class="np-eyebrow" style="margin:34px 0 0">Conditions that can increase the risk of mold</h3>
+  <div class="ml-g3" style="margin-top:16px">
+    ${ML_RISK.map(([ic,t,d])=>`<div class="ml-c">${ic}<h4>${t}</h4><p>${d}</p></div>`).join('')}
+  </div>
+</div></section>
+
+<!-- ============ 3 · WHAT ARE THEY ============ -->
+<section class="np-sec"><div class="page-width">
+  <div class="np-body" style="max-width:760px">
+    <p class="np-eyebrow">The difference</p>
+    <h2 class="h-display h2 np-h">What Are Mold and Mycotoxins in Coffee?</h2>
+    <p class="np-lede">Mold and mycotoxins are often talked about together, but they’re not the same thing.
+      Understanding the difference helps put concerns around coffee into context.</p>
+  </div>
+  <div class="np-duo">
+    <div class="np-duo__c"><h3>Mold</h3>
+      <p>Mold is a type of fungus that can grow on agricultural products, including coffee, when conditions
+        such as moisture allow it to develop.</p></div>
+    <div class="np-duo__c"><h3>Mycotoxins</h3>
+      <p>Mycotoxins are naturally occurring compounds that certain types of mold can produce. Their presence
+        depends on factors including the type of mold and the conditions in which it grows.</p></div>
+  </div>
+  <div class="np-body" style="max-width:760px;margin-top:32px">
+    <p>As more people look for mold free coffee brands, concerns about mold and mycotoxins often come down to
+      how their presence in coffee could affect health and wellness.</p>
+    <p>We understand why that matters, which is why we independently test our coffee for mold and mycotoxins,
+      as well as pesticides and glyphosate. We also make the results publicly available so you can see the data
+      for yourself and enjoy your coffee with added peace of mind.</p>
+  </div>
+</div></section>
+
+<!-- ============ 4 · QUALITY STARTS BEFORE THE LAB ============ -->
+<section class="np-sec np-sec--panel"><div class="page-width">
+  <div class="np-body" style="max-width:760px">
+    <p class="np-eyebrow">Before the lab</p>
+    <h2 class="h-display h2 np-h">Quality Starts Before the Lab</h2>
+    <p class="np-lede">We want you to feel confident about the coffee you drink every day, which is why we take
+      its quality and what goes into it seriously. That work starts at origin, where proper growing, drying,
+      storage, and handling all play an important role in reducing the risk of mold.</p>
+    <p>Third-party testing provides the final confirmation, but it’s only one part of the process.</p>
+  </div>
+  <div class="ml-g3" style="margin-top:28px">
+    ${ML_STEPS.map(([ic,t,d],i)=>`<div class="ml-c">${ic}<span class="ml-c__n" style="margin-top:10px">Step ${i+1}</span><h4 style="margin-top:6px">${t}</h4><p>${d}</p></div>`).join('')}
+  </div>
+</div></section>
+
+<!-- ============ 5 · HOW WE TEST ============ -->
+<section class="np-sec"><div class="page-width">
+  <div class="ml-split">
+    <div class="np-body">
+      <p class="np-eyebrow">The process</p>
+      <h2 class="h-display h2 np-h">How We Test Our Coffee</h2>
+      <p class="np-lede">Once our green coffee leaves origin, it makes its way to our facility, where we take
+        samples and send them to an independent laboratory for third-party testing.</p>
+      <p>Having the analysis performed outside of Mayorga ensures there’s no bias in the results and gives us
+        independent verification that the coffee meets our standards.</p>
+      <p>Once testing is complete, we receive a detailed lab report documenting the results for the coffee
+        tested. And we don’t keep that information to ourselves. We make our most recent lab verifications
+        publicly available so you can review the results for yourself.</p>
+    </div>
+    <div class="ml-media">
+      <img src="${NP_IMG['hero.jpg']}" alt="Green coffee sampled at the Mayorga facility">
+      <button class="ml-play" type="button" data-np-video="${ML_REEL}" aria-haspopup="dialog"
+        aria-label="Watch how we test our coffee">${IC.play}<span>Watch the testing story</span></button>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ 6 · SEE OUR LAB RESULTS ============ -->
+<section class="np-sec np-sec--panel" id="mlLab"><div class="page-width">
+  <div class="np-body" style="max-width:760px">
+    <p class="np-eyebrow">Transparency</p>
+    <h2 class="h-display h2 np-h">See Our Lab Results</h2>
+    <p class="np-lede">If you want to see the results for any of the blends you enjoy, we make them easy to find.</p>
+    <p>You can access the latest lab reports directly on each blend’s product page under the
+      <strong>3rd Party Tested</strong> dropdown menu. You can also find all of our current reports right here,
+      so you can see the data behind your coffee and enjoy every cup with added peace of mind.</p>
+    <div style="margin-top:22px"><a class="btn" href="#" data-pdp="cubanoroast">View a report on the product page</a></div>
+    <p class="ml-note"><b>Report library</b><span class="ml-tbd">photo pending</span><br>
+      The per-blend report gallery and the screen recording of where to find reports on a product page are
+      still to come — they need the assets Caro is preparing.</p>
+  </div>
+</div></section>
+
+<!-- ============ 7 · WHAT THIS MEANS ============ -->
+<section class="np-sec"><div class="page-width">
+  <div class="np-body" style="max-width:760px">
+    <p class="np-eyebrow">The takeaway</p>
+    <h2 class="h-display h2 np-h">What This Means for Your Coffee</h2>
+    <p class="np-lede" style="margin:0">All of these steps come back to one thing: giving you mold free coffee you
+      can feel confident drinking every day. From the standards we follow at origin to independent lab testing,
+      we put the work in so you have greater transparency and reassurance about what’s in your cup.</p>
+  </div>
+  <div class="np-vals">
+    ${ML_MEANS.map(([ic,t,d],i)=>`<div class="np-val np-val--${i+1}">${ic}<h3>${t}</h3><p>${d}</p></div>`).join('')}
+  </div>
+</div></section>
+
+<!-- ============ 8 · EXPLORE BEST SELLERS ============ -->
+<section class="collection np-sec--panel"><div class="page-width">
+  <div class="collection__head"><h2 class="h-display h2">Explore Best Sellers</h2></div>
+  <div class="grid">${card3.map(card).join('')}</div>
+</div></section>
+
+<!-- ============ 9 · QUALITY IN EVERY ROAST ============ -->
+<section class="np-sec"><div class="page-width">
+  <div class="np-close">
+    <div class="np-close__t">
+      <p class="np-eyebrow">Find your roast</p>
+      <h2 class="h-display h2">Quality in Every Roast</h2>
+      <p>From light and bright to bold and dark, every Mayorga blend is made with 100% USDA Organic,
+        specialty-grade coffee and the same commitment to quality you’ve seen throughout this page. Explore our
+        organic mold free coffee and find the perfect roast for your daily cafecito.</p>
+      <div><a class="btn" href="#" data-go="plp">Shop Organic Coffee</a></div>
+    </div>
+    <div class="np-ph"><img src="${NP_IMG['bags.jpg']}" alt="Mayorga coffee bags" loading="lazy"></div>
+  </div>
+</div></section>
+
+</div>`;}
+
+/* ==================================================================
    RENDER + ROUTER
    ================================================================== */
 function renderFilters(){
@@ -4375,10 +4632,11 @@ function renderFilters(){
 }
 function render(){
   main.innerHTML=S.page==='home'?pageHome():S.page==='plp'?pagePLP()
-                :S.page==='napkin'?pageNapkin():pagePDP();
+                :S.page==='napkin'?pageNapkin():S.page==='mold'?pageMold():pagePDP();
   renderFooter(); renderCart(); initCarousels();
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
+  if(S.page==='mold')stopJourney();
   if(S.page==='pdp')updatePdpShip();
   $$('#pageSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.page===S.page));
   scrollTopAll();
@@ -4526,13 +4784,20 @@ document.addEventListener('click',e=>{
   /* routing */
   /* the hero play button keeps its Instagram href as a fallback, but the
      click is intercepted so the reel plays without leaving the page */
+  if(A('[data-ml-lab]')){e.preventDefault();
+    const sec=$('#mlLab'), sc=[$('#scroller'),$('#viewport'),document.scrollingElement].find(el=>el&&el.scrollHeight>el.clientHeight+1);
+    if(sec&&sc){const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
+      const box=sc.getBoundingClientRect(); const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
+      sc.scrollBy({top:Math.round((sec.getBoundingClientRect().top-hdr-12)*k),behavior:'smooth'});}
+    return;}
   if(A('[data-np-vclose]')){e.preventDefault();npVideoClose();return;}
-  if(A('[data-np-video]')){e.preventDefault();npVideoOpen();return;}
+  {const nv=A('[data-np-video]'); if(nv){e.preventDefault();npVideoOpen(nv.dataset.npVideo||NP_IG);return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
   const pd=A('[data-pdp]'); if(pd){e.preventDefault();S.pdp={size:0,grind:0,qty:1,media:0,plan:'sub'};go('pdp');return;}
   /* the About column routes to the brand story; everything else lands on the PLP */
   const nl=A('[data-nav-link]'); if(nl){e.preventDefault();
-    go(/^(the napkin|our purpose|direct supply chain)$/i.test(nl.dataset.navLink)?'napkin':'plp');return;}
+    const L=nl.dataset.navLink;
+    go(/mold/i.test(L)?'mold':/^(the napkin|our purpose|direct supply chain)$/i.test(L)?'napkin':'plp');return;}
 
   /* header */
   if(A('#burger')){openDrawer('#menuDrawer');return;}
