@@ -2592,6 +2592,18 @@ html.mg-locked,html.mg-locked body{overflow:hidden !important}
   <!-- ============ FOOTER ============ -->
   <footer class="footer" id="footer"></footer>
 
+  <!-- the video opens in place: centred on desktop, full-screen on the phone -->
+<div class="np-vid" id="npVid" role="dialog" aria-modal="true" aria-label="Video">
+  <div class="np-vid__scrim" data-np-vclose></div>
+  <div class="np-vid__box">
+    <button class="np-vid__x" type="button" data-np-vclose aria-label="Close video">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 2l12 12M14 2 2 14"/></svg>
+    </button>
+    <iframe id="npVidFrame" title="Mayorga video" allowfullscreen
+      allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
+  </div>
+  <p class="np-vid__out">Trouble playing? <a href="https://www.instagram.com/p/DbJ6fUGlHh2/" target="_blank" rel="noopener">Open on Instagram</a></p>
+</div>
   <div class="toast" id="toast"></div>
 </div>
 </div>
@@ -4230,19 +4242,6 @@ function pageNapkin(){
   </div>
 </section>
 
-<!-- the video opens in place: centred on desktop, full-screen on the phone -->
-<div class="np-vid" id="npVid" role="dialog" aria-modal="true" aria-label="Watch the story">
-  <div class="np-vid__scrim" data-np-vclose></div>
-  <div class="np-vid__box">
-    <button class="np-vid__x" type="button" data-np-vclose aria-label="Close video">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 2l12 12M14 2 2 14"/></svg>
-    </button>
-    <iframe id="npVidFrame" title="The Napkin — Martin Mayorga" allowfullscreen
-      allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
-  </div>
-  <p class="np-vid__out">Trouble playing? <a href="${NP_IG}" target="_blank" rel="noopener">Open on Instagram</a></p>
-</div>
-
 <!-- ============ 2 · THE OTHER SIDE OF COFFEE ============ -->
 <section class="np-sec"><div class="page-width">
   <div class="np-split">
@@ -4637,6 +4636,7 @@ function render(){
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
   if(S.page==='mold')stopJourney();
+  npVideoClose();          /* the dialog is shared, so never let it outlive a route change */
   if(S.page==='pdp')updatePdpShip();
   $$('#pageSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.page===S.page));
   scrollTopAll();
