@@ -2358,7 +2358,12 @@ ul,ol{list-style:none;margin:0;padding:0}
 .ml-hero__t h1{margin:0 0 16px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;
   font-size:clamp(32px,3.5vw,52px);line-height:.94;letter-spacing:.02em;max-width:20ch}
 .ml-hero__t p{margin:0 0 26px;font-size:16.5px;line-height:27px;max-width:48ch}
-.ml-hero__cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ml-hero__cta{display:flex;flex-wrap:nowrap;gap:10px;align-items:stretch}
+/* .btn is nowrap at 15px/30px padding, so the pair overflows the hero column
+   and wraps. Share the row instead and let the label break inside the pill. */
+.ml-hero__cta .btn{flex:1 1 0;min-width:0;height:auto;min-height:var(--btn-h);
+  padding:10px 16px;white-space:normal;text-align:center;line-height:1.2;
+  font-size:12.5px;letter-spacing:.06em}
 .ml-hero__m{position:relative;min-height:360px;background:var(--ink)}
 .ml-hero__m img{width:100%;height:100%;object-fit:cover;display:block}
 .ml-play{position:absolute;inset:0;width:100%;border:0;padding:0;display:grid;place-items:center;
