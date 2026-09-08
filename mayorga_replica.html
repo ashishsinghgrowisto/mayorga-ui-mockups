@@ -2391,21 +2391,22 @@ ul,ol{list-style:none;margin:0;padding:0}
 .ml-tbd{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:11px;background:rgba(167,52,57,.10);
   color:var(--red);font:800 9.5px/1.5 var(--font-body);letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
 
-/* the shared product row carries its own rhythm (64px on desktop via
-   #stage.vp-desktop .collection, which outranks a plain .np .collection);
-   match the story sections so every gap down the page is identical */
-#stage.vp-desktop .np .collection{padding:76px 0}
-.np .collection{padding:76px 0}
+/* This LP runs tighter than the story page: 48px a side, so every gap down
+   the page is a consistent 96px. The product row needs the id-level selector
+   to beat #stage.vp-desktop .collection, which would otherwise force 64px. */
+.ml .np-sec{padding:48px 0}
+#stage.vp-desktop .ml .collection{padding:48px 0}
+.ml .collection{padding:48px 0}
 
 @media (max-width:1023.98px){
-  .np .collection{padding:48px 0}
+  .ml .collection{padding:48px 0}
   .ml-hero,.ml-split{grid-template-columns:minmax(0,1fr);gap:26px}
   .ml-hero__t{padding:30px 22px 34px}
   .ml-hero__m{min-height:260px}
   .ml-g3{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){ .ml-g3{grid-template-columns:minmax(0,1fr)} }
-#stage.is-sp .np .collection{padding:48px 0}
+#stage.is-sp .ml .collection{padding:48px 0}
 #stage.is-sp .ml-hero,#stage.is-sp .ml-split{grid-template-columns:minmax(0,1fr);gap:24px}
 #stage.is-sp .ml-hero__t{padding:28px 20px 32px}
 #stage.is-sp .ml-hero__m{min-height:220px}
@@ -4489,7 +4490,7 @@ const ML_MEANS=[
 
 function pageMold(){
   return `
-<div class="np">
+<div class="np ml">
 
 <!-- ============ 1 · HERO ============ -->
 <section class="np-sec" style="padding-top:44px"><div class="page-width">
