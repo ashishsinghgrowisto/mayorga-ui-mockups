@@ -2268,6 +2268,7 @@ ul,ol{list-style:none;margin:0;padding:0}
 
 /* ---------- 5. WHAT WE STAND FOR ---------- */
 .np-vals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:36px}
+.np-vals--3{grid-template-columns:repeat(3,minmax(0,1fr))}  /* three cards, full width */
 .np-val{padding:26px 22px 24px;border-radius:var(--radius-lg);display:flex;flex-direction:column;min-height:236px}
 .np-val svg{width:26px;height:26px;flex:0 0 auto}
 .np-val h3{margin:16px 0 8px;font-family:var(--font-display);font-weight:400;font-size:23px;line-height:1.06;
@@ -4615,7 +4616,7 @@ function pageMold(){
       can feel confident drinking every day. From the standards we follow at origin to independent lab testing,
       we put the work in so you have greater transparency and reassurance about what’s in your cup.</p>
   </div>
-  <div class="np-vals">
+  <div class="np-vals np-vals--3">
     ${ML_MEANS.map(([ic,t,d],i)=>`<div class="np-val np-val--${i+1}">${ic}<h3>${t}</h3><p>${d}</p></div>`).join('')}
   </div>
 </div></section>
