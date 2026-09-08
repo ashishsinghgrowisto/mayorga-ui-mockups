@@ -4379,7 +4379,11 @@ function scrollToSection(sec,pad){
   const align=smooth=>{
     const hdr=$('.header-wrap')?.getBoundingClientRect().bottom||0;
     const box=sc.getBoundingClientRect();
-    const k=(box.height&&sc.clientHeight)?sc.clientHeight/box.height:1;
+    /* screen px -> content px. Use WIDTH, not height: for the document element
+       rect.height is the whole document while clientHeight is the viewport, so a
+       height ratio reads as a 0.07 "scale" and shrinks every jump to nothing.
+       Widths agree in both modes, and the phone frame scales uniformly. */
+    const k=(box.width&&sc.clientWidth)?sc.clientWidth/box.width:1;
     const d=Math.round((sec.getBoundingClientRect().top-hdr-(pad||12))*k);
     if(Math.abs(d)>3)sc.scrollBy({top:d,behavior:smooth?'smooth':'auto'});
   };
