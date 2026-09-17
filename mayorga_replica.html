@@ -2409,6 +2409,15 @@ ul,ol{list-style:none;margin:0;padding:0}
 .ml-blend img{width:100%;aspect-ratio:1/1;object-fit:contain;display:block}
 .ml-blend span{display:block;margin-top:8px;font-size:11.5px;font-weight:800;letter-spacing:.05em;
   text-transform:uppercase;line-height:1.3}
+/* the blends live in a dialog now: 3x2 on desktop, 2x3 on the phone */
+.ml-modal__box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(920px,calc(100% - 32px));max-height:86vh;overflow-y:auto;background:var(--cream);
+  border-radius:var(--radius-lg);padding:30px 26px 26px;box-shadow:0 30px 80px rgba(0,0,0,.45);
+  animation:npPop .22s var(--ease)}
+.ml-modal__h{margin:0 44px 18px 0;font-size:16.5px;line-height:26px;font-weight:800}
+.ml-modal .ml-blends{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:0}
+.ml-modal .np-vid__x{background:var(--brown);color:var(--cream)}
+.ml-modal .np-vid__x:hover{background:var(--red)}
 .ml-note{margin:20px 0 0;padding:16px 18px;background:#fff;border-left:3px solid var(--red);
   border-radius:0 var(--radius) var(--radius) 0;font-size:14.5px;line-height:23px}
 .ml-note b{font-weight:800}
@@ -2429,6 +2438,8 @@ ul,ol{list-style:none;margin:0;padding:0}
   .ml-hero__m{min-height:260px}
   .ml-g3{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ml-blends{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ml-modal .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ml-modal__box{padding:26px 18px 20px}
 }
 @media (max-width:600px){ .ml-g3{grid-template-columns:minmax(0,1fr)}
   .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr))} }
@@ -2438,6 +2449,8 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-sp .ml-hero__m{min-height:220px}
 #stage.is-sp .ml-g3{grid-template-columns:minmax(0,1fr)}
 #stage.is-sp .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr))}
+#stage.is-sp .ml-modal .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr))}
+#stage.is-sp .ml-modal__box{padding:26px 16px 18px}
 </style>
 </head>
 <body>
@@ -2640,6 +2653,17 @@ html.mg-locked,html.mg-locked body{overflow:hidden !important}
       allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
   </div>
   <p class="np-vid__out">Trouble playing? <a href="https://www.instagram.com/p/DbJ6fUGlHh2/" target="_blank" rel="noopener">Open on Instagram</a></p>
+</div>
+
+<div class="np-vid ml-modal" id="mlLabs" role="dialog" aria-modal="true" aria-label="Lab results by blend">
+  <div class="np-vid__scrim" data-ml-close></div>
+  <div class="ml-modal__box">
+    <button class="np-vid__x" type="button" data-ml-close aria-label="Close">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 2l12 12M14 2 2 14"/></svg>
+    </button>
+    <h3 class="ml-modal__h">Choose a blend to open its lab results</h3>
+    <div class="ml-blends" id="mlBlendGrid"></div>
+  </div>
 </div>
   <div class="toast" id="toast"></div>
 </div>
@@ -4443,8 +4467,8 @@ const npEmbed=u=>{u=u||NP_IG;
    overlay over the whole PAGE. Measure it once the overlay is visible: if it
    really is viewport-sized, leave CSS alone; otherwise pin it to the visible
    slice of the stage, converting screen px to content px via the frame scale. */
-function npVideoFit(){
-  const v=$('#npVid'); if(!v||!v.classList.contains('on'))return;
+function overlayFit(v){
+  if(!v||!v.classList.contains('on'))return;
   v.style.cssText='';
   const r=v.getBoundingClientRect();
   if(Math.abs(r.top)<4&&Math.abs(r.height-window.innerHeight)<4)return;
@@ -4454,6 +4478,27 @@ function npVideoFit(){
   v.style.left='0px'; v.style.width=stage.offsetWidth+'px';
   v.style.top=Math.round(top)+'px';
   v.style.height=Math.round(Math.min(window.innerHeight*k,stage.offsetHeight-top))+'px';
+}
+function npVideoFit(){ overlayFit($('#npVid')); }
+
+/* the six blend shots open in a dialog from the lab-results CTA */
+function mlLabsOpen(){
+  const v=$('#mlLabs'); if(!v)return;
+  const g=$('#mlBlendGrid');
+  if(g&&!g.children.length){
+    g.innerHTML=ML_BLENDS.map(([slug,name,id])=>
+      `<a class="ml-blend" href="#" data-pdp="${slug}"><img src="${GD(id,420)}" alt="${name}" loading="lazy"><span>${name}</span></a>`).join('');
+  }
+  npScrollY=window.scrollY||0;
+  v.classList.add('on'); overlayFit(v);
+  [$('#scroller'),document.documentElement].forEach(el=>el?.classList.add('np-vlock'));
+  v.querySelector('.np-vid__x')?.focus();
+}
+function mlLabsClose(){
+  const v=$('#mlLabs'); if(!v||!v.classList.contains('on'))return;
+  v.classList.remove('on'); v.style.cssText='';
+  $$('.np-vlock').forEach(el=>el.classList.remove('np-vlock'));
+  if(npScrollY)window.scrollTo(0,npScrollY);
 }
 let npScrollY=0;
 function npVideoOpen(url,wide){
@@ -4476,7 +4521,7 @@ function npVideoClose(){
   $$('.np-vlock').forEach(el=>el.classList.remove('np-vlock'));
   if(npScrollY)window.scrollTo(0,npScrollY);
 }
-window.addEventListener('resize',npVideoFit);
+window.addEventListener('resize',()=>{npVideoFit();overlayFit($('#mlLabs'));});
 
 let npTimer=null;
 function startJourney(){
@@ -4653,17 +4698,12 @@ function pageMold(){
       <p>You can access the latest lab reports directly on each blend’s product page under the
         <strong>3rd Party Tested</strong> dropdown menu. You can also find all of our current reports right here,
         so you can see the data behind your coffee and enjoy every cup with added peace of mind.</p>
-      <div style="margin-top:22px"><a class="btn" href="#" data-pdp="cubanoroast">View a lab report</a></div>
+      <div style="margin-top:22px"><a class="btn" href="#" data-ml-labs aria-haspopup="dialog">View Lab Reports</a></div>
     </div>
     <figure class="np-split__media">
       <div class="ml-media"><img src="${GD('1Xrovh97CTaJM6u9Qn2VpXjpbucizp6VE',1100)}"
         alt="Where to find lab reports on a product page" loading="lazy"></div>
     </figure>
-  </div>
-  <p class="ml-lead">Choose a blend to open its lab results.</p>
-  <div class="ml-blends">
-    ${ML_BLENDS.map(([slug,name,id])=>`<a class="ml-blend" href="#" data-pdp="${slug}">
-      <img src="${GD(id,420)}" alt="${name}" loading="lazy"><span>${name}</span></a>`).join('')}
   </div>
 </div></section>
 
@@ -4699,7 +4739,7 @@ function render(){
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
   if(S.page==='mold')stopJourney();
-  npVideoClose();          /* the dialog is shared, so never let it outlive a route change */
+  npVideoClose(); mlLabsClose();   /* shared dialogs must never outlive a route change */
   if(S.page==='pdp')updatePdpShip();
   $$('#pageSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.page===S.page));
   scrollTopAll();
@@ -4848,6 +4888,8 @@ document.addEventListener('click',e=>{
   /* the hero play button keeps its Instagram href as a fallback, but the
      click is intercepted so the reel plays without leaving the page */
   if(A('[data-ml-lab]')){e.preventDefault();scrollToSection($('#mlLab'));return;}
+  if(A('[data-ml-close]')){e.preventDefault();mlLabsClose();return;}
+  if(A('[data-ml-labs]')){e.preventDefault();mlLabsOpen();return;}
   if(A('[data-np-vclose]')){e.preventDefault();npVideoClose();return;}
   {const nv=A('[data-np-video]'); if(nv){e.preventDefault();npVideoOpen(nv.dataset.npVideo||NP_IG,nv.hasAttribute('data-np-wide'));return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
@@ -5026,6 +5068,7 @@ document.addEventListener('submit',e=>{
   if(e.target.id==='newsForm'){e.target.reset();toast('Thanks — you’re on the list');}
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;
+  if($('#mlLabs')?.classList.contains('on')){mlLabsClose();return;}
   if($('#npVid')?.classList.contains('on')){npVideoClose();return;}
   closeAll();});
 
