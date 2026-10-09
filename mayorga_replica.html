@@ -2459,6 +2459,146 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-sp .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr))}
 #stage.is-sp .ml-modal .ml-blends{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr))}
 #stage.is-sp .ml-modal__box{padding:20px 14px 16px}
+
+/* ============================================================
+   GIFT PACK PDP  +  BUILD-YOUR-OWN 3-PACK
+   The gift PDP keeps the standard PDP skeleton (gallery / info
+   column / accordion / sticky ATC) and adds the three component
+   products underneath, because a bundle buyer is really making
+   three product decisions at once.
+   ============================================================ */
+.gp-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--brown);color:var(--cream);
+  border-radius:20px;padding:6px 14px;font:800 11px/1 "Nunito Sans",sans-serif;letter-spacing:.9px;
+  text-transform:uppercase;margin-bottom:12px}
+.gp-tag{margin:0 0 14px;font-size:17px;line-height:26px;font-weight:800;color:var(--brown)}
+.gp-incl{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.gp-incl li{display:flex;align-items:center;gap:12px;padding:9px 12px;background:var(--panel);
+  border-radius:12px;font-size:13.5px;line-height:19px}
+.gp-incl img{width:34px;height:34px;object-fit:contain;flex:0 0 auto}
+.gp-incl b{font-weight:800}
+.gp-incl span{opacity:.75}
+.gp-save{display:inline-block;margin-left:10px;background:var(--yellow);color:var(--brown);
+  border-radius:14px;padding:4px 10px;font:800 11.5px/1 "Nunito Sans",sans-serif;vertical-align:middle}
+
+/* ---- Meet the blends: one spec card per component product ---- */
+.gp-blends{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
+.gp-blend{display:flex;flex-direction:column;background:var(--panel);border-radius:var(--radius-lg);
+  overflow:hidden;border:1px solid rgba(110,55,40,.10)}
+.gp-blend__media{background:#fff;padding:18px;text-align:center}
+.gp-blend__media img{width:100%;max-width:190px;height:180px;object-fit:contain}
+.gp-blend__body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1 1 auto}
+.gp-blend__body h3{margin:0 0 12px;font:900 21px/1.1 "Londrina Solid","Nunito Sans",sans-serif;
+  letter-spacing:.4px;text-transform:uppercase;color:var(--brown)}
+.gp-spec{margin:0 0 11px}
+.gp-spec dt{font:800 10px/1 "Nunito Sans",sans-serif;letter-spacing:1.1px;text-transform:uppercase;
+  opacity:.55;margin-bottom:4px}
+.gp-spec dd{margin:0;font-size:13.5px;line-height:20px}
+.gp-blend__cta{margin-top:auto;padding-top:14px;font-size:12.5px;font-weight:800;text-decoration:underline}
+
+/* ---- Tasting profile chips ---- */
+.gp-prof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:26px}
+.gp-prof__col h4{margin:0 0 12px;font:800 14px/1.2 "Nunito Sans",sans-serif;color:var(--brown)}
+.gp-chips{display:flex;flex-wrap:wrap;gap:8px}
+.gp-chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid rgba(110,55,40,.16);
+  border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:700}
+.gp-chip i{font-style:normal;font-size:15px;line-height:1}
+
+/* ---- Farmer tabs ---- */
+.gp-farms__tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 24px}
+.gp-ftab{border:1.5px solid rgba(110,55,40,.22);background:transparent;color:var(--brown);border-radius:22px;
+  padding:9px 18px;font:800 12.5px/1 "Nunito Sans",sans-serif;cursor:pointer;transition:.16s}
+.gp-ftab[aria-pressed="true"]{background:var(--brown);border-color:var(--brown);color:var(--cream)}
+.gp-farm{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:38px;align-items:center;
+  background:var(--panel);border-radius:var(--radius-lg);padding:32px}
+.gp-farm__eyebrow{margin:0 0 6px;font:800 11px/1 "Nunito Sans",sans-serif;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--red)}
+.gp-farm h3{margin:0 0 14px;font:900 clamp(26px,3vw,34px)/1 "Londrina Solid","Nunito Sans",sans-serif;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--brown)}
+.gp-farm p{margin:0 0 18px;font-size:15px;line-height:25px}
+.gp-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.gp-stat{background:#fff;border-radius:14px;padding:16px 18px}
+.gp-stat b{display:block;font:900 24px/1 "Londrina Solid","Nunito Sans",sans-serif;color:var(--red);
+  letter-spacing:.4px}
+.gp-stat span{display:block;margin-top:5px;font-size:11.5px;line-height:15px;font-weight:700;opacity:.65}
+
+/* ---- Third party tested strip ---- */
+.gp-coa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.gp-coa a{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(110,55,40,.14);
+  border-radius:14px;padding:16px 18px;text-decoration:none;color:inherit;transition:.16s}
+.gp-coa a:hover{border-color:var(--brown);transform:translateY(-2px)}
+.gp-coa svg{width:22px;height:22px;flex:0 0 auto;color:var(--red)}
+.gp-coa b{display:block;font-size:13.5px}
+.gp-coa small{display:block;font-size:11.5px;opacity:.6;margin-top:2px}
+
+/* ============================================================
+   BUILD YOUR OWN — pick exactly three 12 oz bags
+   ============================================================ */
+.by-hero{text-align:center;max-width:720px;margin:0 auto}
+.by-hero p{font-size:16.5px;line-height:27px}
+.by-group{margin-top:38px}
+.by-group__h{display:flex;align-items:baseline;gap:12px;margin:0 0 18px}
+.by-group__h h3{margin:0;font:900 22px/1 "Londrina Solid","Nunito Sans",sans-serif;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--brown)}
+.by-group__h span{font-size:12.5px;opacity:.6}
+.by-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.by-card{position:relative;display:flex;flex-direction:column;text-align:left;background:#fff;
+  border:1.5px solid rgba(110,55,40,.14);border-radius:var(--radius-lg);padding:14px 14px 16px;cursor:pointer;
+  font:inherit;color:inherit;transition:.16s cubic-bezier(.2,.7,.2,1)}
+.by-card:hover{border-color:var(--brown);transform:translateY(-2px)}
+.by-card[aria-pressed="true"]{border-color:var(--red);box-shadow:0 0 0 2px var(--red) inset}
+.by-card[disabled]{opacity:.42;cursor:not-allowed;transform:none}
+.by-card__img{background:var(--panel);border-radius:12px;padding:10px;margin-bottom:12px}
+.by-card__img img{width:100%;height:132px;object-fit:contain;display:block}
+.by-card__n{font:800 14px/19px "Nunito Sans",sans-serif;margin:0 0 3px}
+.by-card__r{margin:0;font-size:12px;opacity:.65}
+.by-card__p{margin:10px 0 0;font-weight:800;font-size:14.5px}
+.by-tick{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:var(--red);
+  color:#fff;display:none;align-items:center;justify-content:center;font:900 13px/1 "Nunito Sans",sans-serif}
+.by-card[aria-pressed="true"] .by-tick{display:flex}
+
+/* The summary rides along the bottom so the count, the running total and the
+   add button are never more than a glance away while picking. */
+.by-bar{position:sticky;bottom:0;z-index:40;margin-top:40px;background:var(--brown);color:var(--cream);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:16px 22px;
+  display:grid;grid-template-columns:auto 1fr auto auto;gap:20px;align-items:center;
+  box-shadow:0 -10px 34px rgba(110,55,40,.26)}
+.by-slots{display:flex;gap:10px}
+.by-slot{width:54px;height:54px;border-radius:12px;border:1.5px dashed rgba(226,216,194,.45);
+  display:grid;place-items:center;background:rgba(0,0,0,.12);font:800 11px/1 "Nunito Sans",sans-serif;
+  color:rgba(226,216,194,.6);overflow:hidden;position:relative}
+.by-slot img{width:100%;height:100%;object-fit:contain;padding:4px}
+.by-slot--on{border-style:solid;border-color:var(--yellow);background:rgba(226,216,194,.1)}
+.by-slot__x{position:absolute;top:2px;right:2px;width:17px;height:17px;border:0;border-radius:50%;
+  background:var(--red);color:#fff;font:900 10px/1 "Nunito Sans",sans-serif;cursor:pointer;display:grid;
+  place-items:center;padding:0}
+.by-bar__msg{font-size:13.5px;line-height:19px}
+.by-bar__msg b{display:block;font-size:15px}
+.by-bar__price{text-align:right;line-height:1.25}
+.by-bar__price .now{font:900 23px/1 "Londrina Solid","Nunito Sans",sans-serif;letter-spacing:.5px}
+.by-bar__price .was{margin-left:8px;font-size:13px;opacity:.65;text-decoration:line-through}
+.by-bar__price small{display:block;font-size:11.5px;color:var(--yellow);font-weight:800;margin-top:3px}
+.by-bar .btn{white-space:nowrap}
+.by-bar .btn[disabled]{opacity:.45;cursor:not-allowed}
+.by-grind{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13px}
+.by-grind select{height:40px;border-radius:20px;border:1.5px solid rgba(110,55,40,.25);background:#fff;
+  color:var(--brown);padding:0 14px;font:700 13px/1 "Nunito Sans",sans-serif}
+
+@media (max-width:1023.98px){
+  .gp-blends,.gp-prof,.gp-coa{grid-template-columns:minmax(0,1fr)}
+  .gp-farm{grid-template-columns:minmax(0,1fr);gap:24px;padding:24px}
+  .by-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .by-bar{grid-template-columns:1fr auto;gap:12px;padding:14px 16px}
+  .by-bar__msg{display:none}
+  .by-bar .btn{grid-column:1/-1;width:100%}
+}
+#stage.is-sp .gp-blends,#stage.is-sp .gp-prof,#stage.is-sp .gp-coa{grid-template-columns:minmax(0,1fr)}
+#stage.is-sp .gp-farm{grid-template-columns:minmax(0,1fr);gap:24px;padding:24px}
+#stage.is-sp .by-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#stage.is-sp .by-bar{grid-template-columns:1fr auto;gap:12px;padding:14px 16px}
+#stage.is-sp .by-bar__msg{display:none}
+#stage.is-sp .by-bar .btn{grid-column:1/-1;width:100%}
+#stage.is-sp .by-slot{width:46px;height:46px}
+
 </style>
 </head>
 <body>
@@ -2531,6 +2671,8 @@ html.mg-locked,html.mg-locked body{overflow:hidden !important}
     <button data-page="pdp" aria-pressed="false">PDP · Cubano Roast</button>
     <button data-page="napkin" aria-pressed="false">About · The Napkin</button>
     <button data-page="mold" aria-pressed="false">LP · Mold &amp; Mycotoxins</button>
+    <button data-page="gift" aria-pressed="false">PDP · Gift Pack</button>
+    <button data-page="build" aria-pressed="false">Build Your Own</button>
   </div>
   <div class="seg" id="vpSeg">
     <button data-vp="desktop" aria-pressed="true">Desktop</button>
@@ -2716,7 +2858,10 @@ const PRODUCTS=[
  {h:'artesano-blend',n:'Artesano Blend',r:'Medium Roast',ri:1,p:17.99,rate:4.7,rev:133,
   img:'files/Artesano5LB5.png?format=webp&quality=75&v=1763996040',origin:'Latin America'},
  {h:'dulce-de-leche',n:'Dulce de Leche',r:'Medium Roast',ri:1,p:31.99,rate:4.7,rev:101,
-  img:'products/2lbDulcedeleche_frontmockup.png?format=webp&quality=75&v=1652729342',origin:'Latin America'}
+  img:'products/2lbDulcedeleche_frontmockup.png?format=webp&quality=75&v=1652729342',origin:'Latin America'},
+ /* seasonal blend, listed in the 2026 gift-pack brief but not yet on the live PLP */
+ {h:'winter-blend',n:'Winter Blend',r:'Dark Roast',ri:2,p:17.99,rate:4.8,rev:64,
+  img:'files/Nov2024_Mayan_blend_2lb_front_1.png?format=webp&quality=75&v=1733194217',origin:'Peru · Honduras · Nicaragua'}
 ];
 const bySlug=s=>PRODUCTS.find(p=>p.h===s);
 const BEST=['cubanoroast','muy-macho','buenosdias','artesano-blend','mayan-blend','decafcubano'].map(bySlug);
@@ -2841,6 +2986,7 @@ const money=n=>'$'+n.toFixed(2);
    ================================================================== */
 const S={page:'home',vp:'desktop',cart:[],wish:new Set(),
   pdp:{size:0,grind:0,qty:1,media:0,plan:'sub'},
+  gift:{media:0,grind:0,qty:1}, build:{picks:[],grind:0},
   qa:{slug:null,size:0,grind:0,qty:1,plan:'sub',freq:'Deliver every month'},
   plp:{filters:new Set(),sort:'Featured',page:1}};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -4740,9 +4886,380 @@ function renderFilters(){
     <div class="opts">${g.opts.map(([o,n])=>{const key=g.name+':'+o;return `<label class="fopt"><input type="checkbox" data-filter="${key}" ${S.plp.filters.has(key)?'checked':''}>${o}<span class="n">(${n})</span></label>`;}).join('')}</div>
   </details>`).join('');
 }
+/* ==================================================================
+   GIFT PACKS
+   Two routes share this data: the fixed "Top Sellers Gift Pack" PDP
+   and the build-your-own page. Every blend spec, farm stat and COA
+   link below is transcribed from the 2026 Gift Pack page brief —
+   nothing here is invented.
+   ================================================================== */
+const COA_LINK={
+  'cubanoroast':'https://drive.google.com/file/d/1WfULSHe0ONWeQpb6OmAxkTJhTnlWQlYs/view',
+  'artesano-blend':'https://drive.google.com/file/d/1I5E5ULLfQNOZNT_1-8B9Dnk8ApO7I3Jg/view',
+  'buenosdias':'https://drive.google.com/file/d/1217BSnWJXdL0DKrWUqK0Ts0ioMWWm6zE/view',
+  'muy-macho':'https://drive.google.com/file/d/13FNq6PCqfhA6qjgVOeC-aKvllGMIgGVo/view'
+};
+
+const FARMS={
+ peru:{eyebrow:'Churupampa',h:'Peru',
+  copy:'When a life-changing medical condition forced Eber Tocto to return home, he found new purpose in the coffee his family had grown for generations. In 2014, that vision became Finca Churupampa. Today, 393 producers work together to grow exceptional organic coffee while sharing techniques that improve harvests and create new opportunities for farming families across the region.',
+  stats:[['393','Farmers'],['July – September','Harvest season'],['1,300–2,200 (masl)','Avg. altitude'],['100%','Organic certified']],
+  cta:'Meet the Churupampa Co-Op',url:'https://mayorgacoffee.com/pages/peru'},
+ honduras:{eyebrow:'Capucas',h:'Honduras',
+  copy:'Founded in 1999 by José Omar Rodríguez Interiano, Capucas began with 54 producers working together to create better opportunities for their community. What started in José’s home without electricity, warehouses, or drying patios has grown into a thriving cooperative of more than 800 producers. Through women-led initiatives, investments in processing and education, and innovative solutions to challenges like coffee leaf rust, Capucas continues to strengthen both its coffee and its community.',
+  stats:[['876','Farmers'],['November – March','Harvest season'],['1,220–1,650 (masl)','Avg. altitude'],['100%','Organic certified']],
+  cta:'Meet the Capucas Co-Op',url:'https://mayorgacoffee.com/pages/honduras'},
+ nicaragua:{eyebrow:'25 de Marzo',h:'Nicaragua',
+  copy:'Founded in 2008 by 32 coffee producers, the 25 de Marzo Cooperative was created to build a more honest future for Nicaragua’s small coffee farmers. What began as a shared vision has grown into a cooperative of over 100 organic producers. Their collection center, opened in 2022, represents years of hard work and a lasting commitment to independence, quality, and community.',
+  stats:[['100','Farmers'],['October – March','Harvest season'],['950–1,210 (masl)','Avg. altitude'],['100%','Organic certified']],
+  cta:'Meet the 25 de Marzo Co-Op',url:'https://mayorgacoffee.com/pages/nicaragua-cipae'},
+ colombia:{eyebrow:'Finca Santa María',h:'Colombia',
+  copy:'Colombia is one of the world’s most iconic coffee origins, and Finca Santa María brings that legacy to life through a distinctly women-led approach. Located in the Santander region, the farm is owned and operated by Mildred Muñoz alongside women from the Aratoca community. From caring for the soil to pruning, harvesting, and processing, women are present at every step, producing exceptional organic coffee.',
+  stats:[['25','Farmers'],['October – January','Harvest season'],['1,600–1,900 (masl)','Avg. altitude'],['100%','Organic certified']],
+  cta:'Meet Finca Santa María',url:'https://mayorgacoffee.com/pages/colombia'},
+ guatemala:{eyebrow:'Finca La Hermosa',h:'Guatemala',
+  copy:'What started as Max and Claudia’s vision for a more sustainable future has grown into the Acatenango Valley’s first coffee cooperative. After transforming an abandoned farm into a thriving organic operation, they brought neighboring producers together to improve quality, access new markets, and earn better prices. Today, La Hermosa unites 54 small-scale producers while balancing exceptional coffee with long-term care for the surrounding landscape.',
+  stats:[['54','Farmers'],['November – March','Harvest season'],['1,525–1,985 (masl)','Avg. altitude'],['100%','Organic certified']],
+  cta:'Meet the La Hermosa Co-Op',url:'https://mayorgacoffee.com/pages/guatemala'}
+};
+
+const GIFT={
+  name:'Top Sellers Gift Pack',
+  tagline:'Three Mayorga favorites, all in one pack',
+  rate:4.9, rev:214,
+  farms:['peru','honduras','nicaragua','colombia','guatemala'],
+  intro:[
+   'Not sure where to start? The Top Sellers Gift Pack brings together three of Mayorga’s most-loved blends: Cubano Roast, Artesano, and Buenos Días. With roast profiles ranging from light and bright to dark and bold, it’s an easy way to explore a little bit of everything, enjoy the variety, and find your new favorite.',
+   'Already know and love Mayorga? It also makes an easy gift for sharing your favorites with someone else.'],
+  outro:'All three are made with USDA Organic, specialty-grade Arabica coffee sourced through our direct partnerships with coffee producers across Latin America.',
+  blends:[
+   {h:'cubanoroast',n:'Cubano Roast',roast:'Dark Roast',notes:'Bold / Smooth / Sweet',
+    origins:'Peru / Honduras / Nicaragua',
+    desc:'Full-bodied with hints of vanilla, sweet syrupy smokiness, and a smooth, bold finish.',
+    prof:[['🔥','Bold'],['🫧','Smooth'],['🍬','Sweet'],['🍁','Syrupy Smokiness']]},
+   {h:'artesano-blend',n:'Artesano',roast:'Medium Roast',notes:'Nutty / Chocolate / Bright',
+    origins:'Guatemala / Honduras',
+    desc:'Balanced and smooth with notes of toasted nuts and chocolate and a bright, lively finish.',
+    prof:[['🥜','Nutty'],['🍫','Chocolate'],['☀️','Bright']]},
+   {h:'buenosdias',n:'Buenos Días',roast:'Light Roast',notes:'Sweet / Bright / Passion Fruit',
+    origins:'Honduras / Colombia',
+    desc:'Bright and balanced with notes of passion fruit and a smooth, naturally sweet finish.',
+    prof:[['🍬','Sweet'],['☀️','Bright'],['🍋','Passion Fruit']]}
+  ]
+};
+/* The pack is priced off the real 12 oz line prices so the compare-at figure
+   is the honest "buy them separately" number rather than a decorative one. */
+const giftList=()=>+GIFT.blends.reduce((a,b)=>a+bySlug(b.h).p,0).toFixed(2);
+const GIFT_OFF=0.10;
+const giftPrice=()=>+(giftList()*(1-GIFT_OFF)).toFixed(2);
+const GIFT_MEDIA=[
+ 'files/BienvenidoTrio.jpg?v=1',
+ 'files/Cubano_Roast_10.png?v=1741038078',
+ 'files/Artesano5LB5.png?v=1763996040',
+ 'files/Dec2024_Buenos_dias_2lb_front.png?v=1733954286',
+ 'files/Jul2024_Website_Banner__Coffee_Drinking.png?v=1721131435'
+];
+
+function farmPanel(key){
+  const f=FARMS[key];
+  return `<div class="gp-farm">
+    <div>
+      <p class="gp-farm__eyebrow">${f.eyebrow}</p>
+      <h3>${f.h}</h3>
+      <p>${f.copy}</p>
+      <a class="btn" href="${f.url}" target="_blank" rel="noopener">${f.cta}</a>
+    </div>
+    <div class="gp-stats">
+      ${f.stats.map(([a,b])=>`<div class="gp-stat"><b>${a}</b><span>${b}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+function farmBlock(keys,id){
+  return `<div class="gp-farms" id="${id}">
+    <div class="gp-farms__tabs" role="tablist">
+      ${keys.map((k,i)=>`<button class="gp-ftab" data-farm="${id}:${k}" aria-pressed="${i===0}">${FARMS[k].h}</button>`).join('')}
+    </div>
+    <div data-farm-panel="${id}">${farmPanel(keys[0])}</div>
+  </div>`;
+}
+
+function pageGift(){
+  const price=giftPrice(), list=giftList();
+  const g=S.gift;
+  return `
+<div class="page-width"><nav class="breadcrumbs"><a href="#" data-go="home">Home</a> &gt; <a href="#" data-go="plp">All Coffee</a> &gt; ${GIFT.name}</nav></div>
+<section class="pdp"><div class="page-width">
+  <div class="pdp__layout">
+
+    <div class="pdp__media">
+      <div class="gallery__main" id="galMain">
+        <img src="${CDN+GIFT_MEDIA[g.media]}&width=1200" alt="${GIFT.name}">
+        <button class="gallery__nav prev" data-gift-gal="-1" aria-label="Previous image">${IC.chevL}</button>
+        <button class="gallery__nav next" data-gift-gal="1" aria-label="Next image">${IC.chevR}</button>
+        <span class="gallery__count">${g.media+1} / ${GIFT_MEDIA.length}</span>
+      </div>
+      <div class="thumbs">
+        ${GIFT_MEDIA.map((m,i)=>`<button data-gift-galto="${i}" aria-current="${i===g.media}"><img src="${CDN+m}&width=324" alt="" loading="lazy"></button>`).join('')}
+      </div>
+    </div>
+
+    <div class="pdp__info">
+      <div class="pbadges">
+        <span class="pbadge">USDA Certified Organic</span>
+        <span class="pbadge">Direct Trade</span>
+        <span class="pbadge">Specialty Grade</span>
+      </div>
+      <span class="gp-kicker">Gift Pack · 3 × 12 oz</span>
+      <h1>${GIFT.name}</h1>
+      <p class="gp-tag">${GIFT.tagline}</p>
+      <p class="price">${money(price)}<span class="compare">${money(list)}</span><span class="gp-save">Save ${money(+(list-price).toFixed(2))}</span></p>
+      <p class="tax"><a href="#">Shipping</a> calculated at checkout.</p>
+      <div class="rating">${stars(GIFT.rate)}<span>${GIFT.rate.toFixed(1)} (${GIFT.rev} reviews)</span></div>
+
+      <ul class="gp-incl">
+        ${GIFT.blends.map(b=>`<li><img src="${P(bySlug(b.h).img,120)}" alt=""><span><b>${b.n}</b> · ${b.roast}<br><span>${b.notes}</span></span></li>`).join('')}
+      </ul>
+
+      <div class="acc" style="margin-top:22px">
+        <details open><summary>Description<span class="pm">+</span></summary><div class="body">
+          ${GIFT.intro.map(p=>`<p style="margin:0 0 12px">${p}</p>`).join('')}
+          <p style="margin:0 0 6px"><strong>Includes three 12 oz. bags:</strong></p>
+          <ul>${GIFT.blends.map(b=>`<li>${b.n} — ${b.roast} — ${b.notes}</li>`).join('')}</ul>
+          <p style="margin:12px 0 0">${GIFT.outro}</p>
+        </div></details>
+        <details><summary>Origins<span class="pm">+</span></summary><div class="body">
+          <ul>${GIFT.blends.map(b=>`<li><strong>${b.n}:</strong> ${b.origins}</li>`).join('')}</ul>
+          <p style="margin:10px 0 0">Sourced directly from partner farms across Latin America through Mayorga’s own supply chain — no brokers between the farm and the roastery.</p>
+        </div></details>
+        <details><summary>Tasting Profile<span class="pm">+</span></summary><div class="body">
+          <ul>${GIFT.blends.map(b=>`<li><strong>${b.n}:</strong> ${b.prof.map(p=>p[1]).join(', ')}</li>`).join('')}</ul>
+        </div></details>
+        <details><summary>3rd Party Tested<span class="pm">+</span></summary><div class="body">
+          Every coffee is also third-party tested for mold and mycotoxins. Find the latest report for
+          ${GIFT.blends.map(b=>`<a href="${COA_LINK[b.h]}" target="_blank" rel="noopener">${b.n}</a>`).join(', ')}.
+        </div></details>
+      </div>
+
+      <div class="vgroup">
+        <p class="lg">Grind — applied to all three bags</p>
+        <div class="pills">
+          ${GRINDS.map((x,i)=>`<span><input type="radio" name="gpgrind" id="gpg${i}" ${i===g.grind?'checked':''} data-gift-grind="${i}"><label for="gpg${i}">${x}</label></span>`).join('')}
+        </div>
+      </div>
+
+      <div class="qty-wrap">
+        <p class="lg">Quantity</p>
+        <div class="qty qty--lg"><button data-gift-q="-1" aria-label="Decrease">−</button><input value="${g.qty}" readonly><button data-gift-q="1" aria-label="Increase">+</button></div>
+      </div>
+
+      <div class="buy-row">
+        <button class="btn btn--full" data-gift-add>Add gift pack to cart</button>
+        <button class="btn btn--secondary btn--full" data-gift-add data-gift-buy>Buy now</button>
+      </div>
+
+      <div class="pickup">${IC.check}<span><strong>Pickup available at Maryland Facility</strong><br>Usually ready in 24 hours<br><a href="#">View store information</a></span></div>
+
+      <ul class="trust">
+        <li>${IC.leaf}<b>100% Arabica</b><span>Shade Grown</span></li>
+        <li>${IC.home}<b>Family Owned</b><span>Since 1997</span></li>
+        <li>${IC.shield}<b>Lab tested</b><span>Mold &amp; mycotoxins</span></li>
+        <li>${IC.truck}<b>Free Shipping</b><span>on orders $45+</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<div class="pattern-strip"></div>
+
+<section class="section"><div class="page-width">
+  <h2 class="h-display h2">Meet the Blends</h2>
+  <div class="gp-blends">
+    ${GIFT.blends.map(b=>{const p=bySlug(b.h);return `
+    <article class="gp-blend">
+      <div class="gp-blend__media"><img src="${P(p.img,420)}" alt="${b.n}" loading="lazy"></div>
+      <div class="gp-blend__body">
+        <h3>${b.n}</h3>
+        <dl class="gp-spec"><dt>Roast</dt><dd>${b.roast}</dd></dl>
+        <dl class="gp-spec"><dt>Tasting notes</dt><dd>${b.notes}</dd></dl>
+        <dl class="gp-spec"><dt>Origins</dt><dd>${b.origins}</dd></dl>
+        <dl class="gp-spec"><dt>Description</dt><dd>${b.desc}</dd></dl>
+        <a class="gp-blend__cta" href="#" data-pdp="${b.h}">View ${b.n} →</a>
+      </div>
+    </article>`;}).join('')}
+  </div>
+</div></section>
+
+<section class="section"><div class="page-width">
+  <h2 class="h-display h2">Tasting Profile</h2>
+  <div class="gp-prof">
+    ${GIFT.blends.map(b=>`<div class="gp-prof__col">
+      <h4>${b.n}</h4>
+      <div class="gp-chips">${b.prof.map(([e,l])=>`<span class="gp-chip"><i>${e}</i>${l}</span>`).join('')}</div>
+    </div>`).join('')}
+  </div>
+</div></section>
+
+<section class="section"><div class="page-width">
+  <h2 class="h-display h2">3rd Party Tested</h2>
+  <p style="max-width:none;margin:10px 0 0">Every coffee is also third-party tested for mold and mycotoxins. Find the latest report for each blend in this pack.</p>
+  <div class="gp-coa">
+    ${GIFT.blends.map(b=>`<a href="${COA_LINK[b.h]}" target="_blank" rel="noopener">${IC.shield}<span><b>${b.n}</b><small>Latest mold &amp; mycotoxin report</small></span></a>`).join('')}
+  </div>
+</div></section>
+
+<section class="section"><div class="page-width">
+  <h2 class="h-display h2">Meet the Farmers Behind These Blends</h2>
+  ${farmBlock(GIFT.farms,'giftFarms')}
+</div></section>
+
+<section class="section"><div class="page-width">
+  <div class="iwt">
+    <div class="iwt__media"><img src="${CDN}files/coffee-subscription.jpg?format=webp&quality=75&v=1747671018&width=1100" alt="Build your own pack" loading="lazy"></div>
+    <div class="iwt__text">
+      <h2 class="h-display h2">Prefer to Pick Your Own Three?</h2>
+      <p>Build your own pack from any three of our Signature Blends and Single Origins — mix roast levels, stock up on favorites, or try something new.</p>
+      <a class="btn" href="#" data-go="build">Create your own pack</a>
+    </div>
+  </div>
+</div></section>
+
+<section class="collection"><div class="page-width">
+  <div class="collection__head"><h2 class="h-display h2">Try Our Best Sellers</h2></div>
+  ${carousel('giftCar',BEST,card)}
+</div></section>
+
+<div class="sticky-atc">
+  <img src="${P(bySlug('cubanoroast').img,160)}" alt="">
+  <div class="meta"><b>${GIFT.name}</b><small>3 × 12 oz · ${GRINDS[g.grind]}</small></div>
+  <strong style="font-size:17px">${money(price)}</strong>
+  <button class="btn" data-gift-add>Add to cart</button>
+  <button class="btn btn--secondary" data-gift-add data-gift-buy>Buy now</button>
+</div>`;}
+
+/* ------------------------------------------------------------------
+   BUILD YOUR OWN — exactly three 12 oz bags, no more and no less
+   ------------------------------------------------------------------ */
+const BY_SIG=['cubanoroast','decafcubano','muy-macho','buenosdias','artesano-blend','dulce-de-leche','winter-blend'];
+const BY_SO=['nicaragua','decaf-honduras','hondurascapucas','elsalvador','colombia-santamaria','peru-amazonas','bolivia','guatemala'];
+const BY_MAX=3;
+const byUnit=slug=>bySlug(slug).p;                       /* 12 oz line price */
+const bySubtotal=()=>+S.build.picks.reduce((a,s)=>a+byUnit(s),0).toFixed(2);
+const byTotal=()=>S.build.picks.length===BY_MAX?+(bySubtotal()*(1-GIFT_OFF)).toFixed(2):bySubtotal();
+
+function byCard(slug){
+  const p=bySlug(slug), on=S.build.picks.includes(slug);
+  const full=S.build.picks.length>=BY_MAX&&!on;
+  return `<button class="by-card" data-by="${slug}" aria-pressed="${on}" ${full?'disabled':''}>
+    <span class="by-tick">${S.build.picks.indexOf(slug)+1}</span>
+    <span class="by-card__img"><img src="${P(p.img,420)}" alt="${p.n}" loading="lazy"></span>
+    <span class="by-card__n">${p.n}</span>
+    <span class="by-card__r">${p.r} · 12 oz</span>
+    <span class="by-card__p">${money(byUnit(slug))}</span>
+  </button>`;
+}
+
+function byBar(){
+  const n=S.build.picks.length, sub=bySubtotal(), tot=byTotal(), done=n===BY_MAX;
+  return `
+    <div class="by-slots">
+      ${[0,1,2].map(i=>{const s=S.build.picks[i];
+        return s?`<div class="by-slot by-slot--on"><img src="${P(bySlug(s).img,160)}" alt="${bySlug(s).n}"><button class="by-slot__x" data-by-rm="${s}" aria-label="Remove ${bySlug(s).n}">✕</button></div>`
+                :`<div class="by-slot">${i+1}</div>`;}).join('')}
+    </div>
+    <div class="by-bar__msg">
+      <b>${done?'Your pack is ready':`Pick ${BY_MAX-n} more coffee${BY_MAX-n===1?'':'s'}`}</b>
+      ${done?'Bundle discount applied — 10% off all three bags.':'Choose exactly three 12 oz bags to build your pack.'}
+    </div>
+    <div class="by-bar__price">
+      <span class="now">${money(tot)}</span>${done?`<span class="was">${money(sub)}</span>`:''}
+      ${done?`<small>You save ${money(+(sub-tot).toFixed(2))}</small>`:`<small style="color:rgba(226,216,194,.6)">${n} of ${BY_MAX} selected</small>`}
+    </div>
+    <button class="btn" data-by-add ${done?'':'disabled'}>Add pack to cart</button>`;
+}
+
+function pageBuild(){
+  return `
+<div class="page-width"><nav class="breadcrumbs"><a href="#" data-go="home">Home</a> &gt; <a href="#" data-go="plp">All Coffee</a> &gt; Create Your Own</nav></div>
+
+<section class="section"><div class="page-width">
+  <div class="by-hero">
+    <span class="gp-kicker">Create Your Own · DTC only</span>
+    <h1 class="h-display h2" style="margin:0 0 12px">Mix, match, and make it yours</h1>
+    <p>Build your own Mayorga coffee pack with any three coffees from our Signature Blends and Single Origins. Mix and match different roast levels and flavor profiles, stock up on your favorites, or try something completely new.</p>
+    <p>Creating a gift? Choose three coffees you know they’ll love or build a variety pack made just for them. Includes three 12 oz. bags of your choice.</p>
+  </div>
+
+  <div class="by-group">
+    <div class="by-group__h"><h3>Signature Blends</h3><span>Pick any three across both groups</span></div>
+    <div class="by-grid">${BY_SIG.map(byCard).join('')}</div>
+  </div>
+
+  <div class="by-group">
+    <div class="by-group__h"><h3>Single Origins</h3><span>${BY_SO.length} origins</span></div>
+    <div class="by-grid">${BY_SO.map(byCard).join('')}</div>
+  </div>
+
+  <div class="by-grind">
+    <label for="byGrind"><strong>Grind</strong> — applied to all three bags</label>
+    <select id="byGrind" data-by-grind>${GRINDS.map((x,i)=>`<option ${i===S.build.grind?'selected':''}>${x}</option>`).join('')}</select>
+  </div>
+
+  <div class="by-bar" id="byBar">${byBar()}</div>
+
+  <p class="caption" style="margin-top:26px;opacity:.75;max-width:760px">All Mayorga coffees are made with USDA Organic, specialty-grade Arabica coffee sourced through our direct partnerships with coffee producers across Latin America.</p>
+</div></section>
+
+<section class="section"><div class="page-width">
+  <h2 class="h-display h2">Meet the Farmers Behind Your Coffee</h2>
+  ${farmBlock(['peru','honduras','nicaragua','colombia','guatemala'],'byFarms')}
+</div></section>
+
+<section class="collection"><div class="page-width">
+  <div class="collection__head"><h2 class="h-display h2">Prefer a Ready-Made Pack?</h2></div>
+  ${carousel('byCar',BEST,card)}
+</div></section>`;}
+
+function byRefresh(){
+  const bar=$('#byBar'); if(bar)bar.innerHTML=byBar();
+  $$('.by-card').forEach(b=>{
+    const s=b.dataset.by, on=S.build.picks.includes(s);
+    b.setAttribute('aria-pressed',on);
+    b.disabled=S.build.picks.length>=BY_MAX&&!on;
+    b.querySelector('.by-tick').textContent=S.build.picks.indexOf(s)+1;
+  });
+}
+function byToggle(slug){
+  const i=S.build.picks.indexOf(slug);
+  if(i>-1)S.build.picks.splice(i,1);
+  else if(S.build.picks.length<BY_MAX)S.build.picks.push(slug);
+  byRefresh();
+}
+/* One cart line, not three: the bundle is what the shopper bought, and the
+   discount only exists while all three bags travel together. */
+function byAdd(){
+  if(S.build.picks.length!==BY_MAX)return;
+  const names=S.build.picks.map(s=>bySlug(s).n);
+  S.cart.push({key:'bundle|'+S.build.picks.join(',')+'|'+GRINDS[S.build.grind],
+    slug:'build-your-own', n:'Create Your Own 3-Pack', img:bySlug(S.build.picks[0]).img,
+    size:names.join(' · '), grind:GRINDS[S.build.grind], plan:'one', freq:'',
+    unit:byTotal(), q:1});
+  renderCart(); toast('Your 3-pack was added to the cart');
+  S.build.picks=[]; byRefresh();
+  openDrawer('#cartDrawer');
+}
+function giftAdd(){
+  S.cart.push({key:'gift|top-sellers|'+GRINDS[S.gift.grind],
+    slug:'gift-top-sellers', n:GIFT.name, img:bySlug('cubanoroast').img,
+    size:'3 × 12 oz', grind:GRINDS[S.gift.grind], plan:'one', freq:'',
+    unit:giftPrice(), q:S.gift.qty});
+  renderCart(); toast(`${GIFT.name} added to your cart`);
+  openDrawer('#cartDrawer');
+}
+
 function render(){
   main.innerHTML=S.page==='home'?pageHome():S.page==='plp'?pagePLP()
-                :S.page==='napkin'?pageNapkin():S.page==='mold'?pageMold():pagePDP();
+                :S.page==='napkin'?pageNapkin():S.page==='mold'?pageMold()
+                :S.page==='gift'?pageGift():S.page==='build'?pageBuild():pagePDP();
   renderFooter(); renderCart(); initCarousels();
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
@@ -4900,6 +5417,21 @@ document.addEventListener('click',e=>{
   if(A('[data-ml-labs]')){e.preventDefault();mlLabsOpen();return;}
   if(A('[data-np-vclose]')){e.preventDefault();npVideoClose();return;}
   {const nv=A('[data-np-video]'); if(nv){e.preventDefault();npVideoOpen(nv.dataset.npVideo||NP_IG,nv.hasAttribute('data-np-wide'));return;}}
+  /* ---- gift pack + build-your-own ---- */
+  {const ft=A('[data-farm]'); if(ft){e.preventDefault();
+    const [id,key]=ft.dataset.farm.split(':');
+    $$(`[data-farm^="${id}:"]`).forEach(b=>b.setAttribute('aria-pressed',b===ft));
+    $(`[data-farm-panel="${id}"]`).innerHTML=farmPanel(key); return;}}
+  {const gg=A('[data-gift-gal]'); if(gg){e.preventDefault();
+    S.gift.media=(S.gift.media+ +gg.dataset.giftGal+GIFT_MEDIA.length)%GIFT_MEDIA.length; render(); return;}}
+  {const gt=A('[data-gift-galto]'); if(gt){e.preventDefault();S.gift.media=+gt.dataset.giftGalto; render(); return;}}
+  {const gq=A('[data-gift-q]'); if(gq){e.preventDefault();
+    S.gift.qty=Math.max(1,S.gift.qty+ +gq.dataset.giftQ); render(); return;}}
+  {const ga=A('[data-gift-add]'); if(ga){e.preventDefault();giftAdd();
+    if(ga.hasAttribute('data-gift-buy'))toast('Express checkout is stubbed'); return;}}
+  {const bx=A('[data-by-rm]'); if(bx){e.preventDefault();byToggle(bx.dataset.byRm); return;}}
+  {const bc=A('[data-by]'); if(bc&&!bc.disabled){e.preventDefault();byToggle(bc.dataset.by); return;}}
+  {const ba=A('[data-by-add]'); if(ba&&!ba.disabled){e.preventDefault();byAdd(); return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
   const pd=A('[data-pdp]'); if(pd){e.preventDefault();S.pdp={size:0,grind:0,qty:1,media:0,plan:'sub'};go('pdp');return;}
   /* the About column routes to the brand story; everything else lands on the PLP */
@@ -5055,6 +5587,10 @@ document.addEventListener('click',e=>{
 
 document.addEventListener('change',e=>{
   const t=e.target;
+  /* gift pack + build-your-own: grind applies to every bag in the pack */
+  if(t.dataset.giftGrind!==undefined){S.gift.grind=+t.dataset.giftGrind;
+    const sm=document.querySelector('.sticky-atc small'); if(sm)sm.textContent='3 × 12 oz · '+GRINDS[S.gift.grind];return;}
+  if(t.dataset.byGrind!==undefined){S.build.grind=Math.max(0,GRINDS.indexOf(t.value));return;}
   /* quick-add modal — patched in place, never rebuilt */
   if(t.dataset.qaSize!==undefined){S.qa.size=+t.dataset.qaSize;refreshQa();return;}
   if(t.dataset.qaGrind!==undefined){S.qa.grind=+t.dataset.qaGrind;refreshQa();return;}
