@@ -5131,9 +5131,9 @@ function pageGift(){
 <div class="sticky-atc">
   <img src="${P(bySlug('cubanoroast').img,160)}" alt="">
   <div class="meta"><b>${GIFT.name}</b><small>3 × 12 oz · ${GRINDS[g.grind]}</small></div>
-  <strong style="font-size:17px">${money(price)}</strong>
+  <strong id="stickyPrice" style="font-size:17px">${money(price)}</strong>
   <button class="btn" data-gift-add>Add to cart</button>
-  <button class="btn btn--secondary" data-gift-add data-gift-buy>Buy now</button>
+  <button class="btn btn--secondary" id="stickyBuy" data-gift-add data-gift-buy>Buy now</button>
 </div>`;}
 
 /* ------------------------------------------------------------------
