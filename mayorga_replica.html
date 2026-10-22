@@ -2524,6 +2524,10 @@ ul,ol{list-style:none;margin:0;padding:0}
 /* ---- Which certificate is on screen, with the same round arrows the
        farmer slider uses ---- */
 .lab__who{display:flex;align-items:center;justify-content:center;gap:18px;margin:22px 0 4px}
+/* the farmer arrows are absolutely positioned against their own slider; inside
+   this flex row they must sit in normal flow, or they escape to #stage — which
+   is the containing block here — and float loose in the middle of the page */
+.lab__who .gp-farms__nav{position:static;transform:none;flex:0 0 auto}
 .lab__who__t{min-width:190px;text-align:center}
 .lab__who__t span{display:block;font:700 10.5px/1 var(--font-body);letter-spacing:1.2px;
   text-transform:uppercase;opacity:.55}
