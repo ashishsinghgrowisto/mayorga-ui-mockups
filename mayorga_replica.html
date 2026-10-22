@@ -2480,55 +2480,55 @@ ul,ol{list-style:none;margin:0;padding:0}
 .gp-save{display:inline-block;margin-left:10px;background:var(--yellow);color:var(--brown);
   border-radius:14px;padding:4px 10px;font:800 11.5px/1 "Nunito Sans",sans-serif;vertical-align:middle}
 
-/* ---- Meet the blends: one spec card per component product ---- */
-.gp-blends{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
-.gp-blend{display:flex;flex-direction:column;background:var(--panel);border-radius:var(--radius-lg);
-  overflow:hidden;border:1px solid rgba(110,55,40,.10)}
-.gp-blend__media{background:#fff;padding:18px;text-align:center}
-.gp-blend__media img{width:100%;max-width:190px;height:180px;object-fit:contain}
-.gp-blend__body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1 1 auto}
-.gp-blend__body h3{margin:0 0 12px;font:900 21px/1.1 "Londrina Solid","Nunito Sans",sans-serif;
-  letter-spacing:.4px;text-transform:uppercase;color:var(--brown)}
-.gp-spec{margin:0 0 11px}
-.gp-spec dt{font:800 10px/1 "Nunito Sans",sans-serif;letter-spacing:1.1px;text-transform:uppercase;
-  opacity:.55;margin-bottom:4px}
-.gp-spec dd{margin:0;font-size:13.5px;line-height:20px}
-.gp-blend__cta{margin-top:auto;padding-top:14px;font-size:12.5px;font-weight:800;text-decoration:underline}
+/* ---- Accordion internals, matching the live PDP: ORIGIN is a two-up grid of
+       label/value cells, TASTING PROFILE is a row of outlined pills. The gift
+       pack repeats each block once per coffee, nothing else changes. ---- */
+.acc .body .acc-sub{margin:16px 0 8px;font:700 15px/1.3 var(--font-body);letter-spacing:.5px}
+.acc .body .acc-sub:first-child{margin-top:4px}
+.acc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.acc-cell{background:rgba(255,255,255,.55);border-radius:10px;padding:12px 15px}
+.acc-cell span{display:block;font:700 10px/1 var(--font-body);letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--brown);opacity:.5}
+.acc-cell b{display:block;margin-top:5px;font:400 15px/1.35 var(--font-body);letter-spacing:.4px}
+.acc-chips{display:flex;flex-wrap:wrap;gap:9px}
+.acc-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(110,55,40,.3);
+  border-radius:20px;padding:7px 14px;font-size:13.5px;letter-spacing:.3px}
+.acc-chip i{font-style:normal;font-size:15px;line-height:1}
 
-/* ---- Tasting profile chips ---- */
-.gp-prof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:26px}
-.gp-prof__col h4{margin:0 0 12px;font:800 14px/1.2 "Nunito Sans",sans-serif;color:var(--brown)}
-.gp-chips{display:flex;flex-wrap:wrap;gap:8px}
-.gp-chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid rgba(110,55,40,.16);
-  border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:700}
-.gp-chip i{font-style:normal;font-size:15px;line-height:1}
-
-/* ---- Farmer tabs ---- */
-.gp-farms__tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 24px}
-.gp-ftab{border:1.5px solid rgba(110,55,40,.22);background:transparent;color:var(--brown);border-radius:22px;
-  padding:9px 18px;font:800 12.5px/1 "Nunito Sans",sans-serif;cursor:pointer;transition:.16s}
-.gp-ftab[aria-pressed="true"]{background:var(--brown);border-color:var(--brown);color:var(--cream)}
-.gp-farm{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:38px;align-items:center;
-  background:var(--panel);border-radius:var(--radius-lg);padding:32px}
-.gp-farm__eyebrow{margin:0 0 6px;font:800 11px/1 "Nunito Sans",sans-serif;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--red)}
-.gp-farm h3{margin:0 0 14px;font:900 clamp(26px,3vw,34px)/1 "Londrina Solid","Nunito Sans",sans-serif;
+/* ---- Meet the farmers: a one-origin-at-a-time slider, copy left / photo
+       right, stat cards under the copy and arrows pinned to the edges ---- */
+.gp-farms{position:relative;margin-top:26px;padding:0 54px}
+.gp-farms__nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(110,55,40,.25);background:rgba(255,255,255,.75);color:var(--brown);cursor:pointer;
+  display:grid;place-items:center;padding:0;transition:.16s}
+.gp-farms__nav:hover{background:#fff;border-color:var(--brown)}
+.gp-farms__nav svg{width:16px;height:16px}
+.gp-farms__nav.prev{left:0}
+.gp-farms__nav.next{right:0}
+.gp-farm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:46px;align-items:center}
+.gp-farm__eyebrow{margin:0 0 8px;font:700 12px/1 var(--font-body);letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--brown);opacity:.8}
+.gp-farm h3{margin:0 0 18px;font:900 clamp(26px,3vw,34px)/1 var(--font-display),"Nunito Sans",sans-serif;
   letter-spacing:.5px;text-transform:uppercase;color:var(--brown)}
-.gp-farm p{margin:0 0 18px;font-size:15px;line-height:25px}
+.gp-farm p{margin:0 0 22px;font-size:15px;line-height:27px;letter-spacing:.3px}
 .gp-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.gp-stat{background:#fff;border-radius:14px;padding:16px 18px}
-.gp-stat b{display:block;font:900 24px/1 "Londrina Solid","Nunito Sans",sans-serif;color:var(--red);
-  letter-spacing:.4px}
-.gp-stat span{display:block;margin-top:5px;font-size:11.5px;line-height:15px;font-weight:700;opacity:.65}
+.gp-stat{background:#F6EBD8;border-radius:12px;padding:15px 18px}
+.gp-stat b{display:block;font:700 22px/1.2 var(--font-body);color:var(--red);letter-spacing:.2px}
+.gp-stat span{display:block;margin-top:3px;font-size:12.5px;line-height:17px;opacity:.7}
+.gp-farm__link{display:inline-block;margin-top:20px;font-size:14px;color:var(--brown);
+  text-decoration:underline;text-underline-offset:3px}
+.gp-farm__link:hover{color:var(--red)}
+.gp-farm__media{margin:0;border-radius:var(--radius-lg);overflow:hidden;background:var(--panel);aspect-ratio:1/1}
+.gp-farm__media img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* ---- Third party tested strip ---- */
-.gp-coa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
-.gp-coa a{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(110,55,40,.14);
-  border-radius:14px;padding:16px 18px;text-decoration:none;color:inherit;transition:.16s}
-.gp-coa a:hover{border-color:var(--brown);transform:translateY(-2px)}
-.gp-coa svg{width:22px;height:22px;flex:0 0 auto;color:var(--red)}
-.gp-coa b{display:block;font-size:13.5px}
-.gp-coa small{display:block;font-size:11.5px;opacity:.6;margin-top:2px}
+/* ---- Which certificate is on screen, with the same round arrows the
+       farmer slider uses ---- */
+.lab__who{display:flex;align-items:center;justify-content:center;gap:18px;margin:22px 0 4px}
+.lab__who__t{min-width:190px;text-align:center}
+.lab__who__t span{display:block;font:700 10.5px/1 var(--font-body);letter-spacing:1.2px;
+  text-transform:uppercase;opacity:.55}
+.lab__who__t b{display:block;margin-top:5px;font:900 20px/1.1 var(--font-display),"Nunito Sans",sans-serif;
+  letter-spacing:.5px;text-transform:uppercase}
 
 /* ============================================================
    BUILD YOUR OWN — pick exactly three 12 oz bags
@@ -2584,15 +2584,29 @@ ul,ol{list-style:none;margin:0;padding:0}
   color:var(--brown);padding:0 14px;font:700 13px/1 "Nunito Sans",sans-serif}
 
 @media (max-width:1023.98px){
-  .gp-blends,.gp-prof,.gp-coa{grid-template-columns:minmax(0,1fr)}
-  .gp-farm{grid-template-columns:minmax(0,1fr);gap:24px;padding:24px}
+/* stacked: the arrows move under the slide as a right-aligned pair */
+  .gp-farms{padding:0;display:grid;grid-template-columns:minmax(0,1fr) 40px 40px;gap:10px;
+    grid-template-areas:"panel panel panel" ". prev next"}
+  .gp-farms [data-farm-panel]{grid-area:panel}
+  .gp-farms__nav{position:static;transform:none}
+  .gp-farms__nav.prev{grid-area:prev}
+  .gp-farms__nav.next{grid-area:next}
+  .gp-farm{grid-template-columns:minmax(0,1fr);gap:22px}
+  .gp-farm__media{aspect-ratio:4/3;order:-1}
   .by-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .by-bar{grid-template-columns:1fr auto;gap:12px;padding:14px 16px}
   .by-bar__msg{display:none}
   .by-bar .btn{grid-column:1/-1;width:100%}
 }
-#stage.is-sp .gp-blends,#stage.is-sp .gp-prof,#stage.is-sp .gp-coa{grid-template-columns:minmax(0,1fr)}
-#stage.is-sp .gp-farm{grid-template-columns:minmax(0,1fr);gap:24px;padding:24px}
+/* stacked: the arrows move under the slide as a right-aligned pair */
+#stage.is-sp .gp-farms{padding:0;display:grid;grid-template-columns:minmax(0,1fr) 40px 40px;gap:10px;
+    grid-template-areas:"panel panel panel" ". prev next"}
+#stage.is-sp .gp-farms [data-farm-panel]{grid-area:panel}
+#stage.is-sp .gp-farms__nav{position:static;transform:none}
+#stage.is-sp .gp-farms__nav.prev{grid-area:prev}
+#stage.is-sp .gp-farms__nav.next{grid-area:next}
+#stage.is-sp .gp-farm{grid-template-columns:minmax(0,1fr);gap:22px}
+#stage.is-sp .gp-farm__media{aspect-ratio:4/3;order:-1}
 #stage.is-sp .by-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 #stage.is-sp .by-bar{grid-template-columns:1fr auto;gap:12px;padding:14px 16px}
 #stage.is-sp .by-bar__msg{display:none}
@@ -4923,6 +4937,30 @@ const FARMS={
   cta:'Meet the La Hermosa Co-Op',url:'https://mayorgacoffee.com/pages/guatemala'}
 };
 
+/* The PDP's ORIGIN block pairs each country with its co-op; both values already
+   live in FARMS, so the pairing is read from there rather than retyped. */
+/* PLACEHOLDER photography — genuine Mayorga origin shots pulled from The Napkin
+   deck, standing in until the client supplies the per-farm images the live PDP
+   uses. Swap FARM_PHOTO when they arrive. */
+/* The gift pack ships three coffees, so the lab section carries three
+   certificates. Identification below is read off each Eurofins PDF linked in
+   the brief; the analysis rows are identical across all three reports (same
+   project, same panel, same results), so they reuse COA.panel / COA.summary
+   rather than being retyped. */
+const COA_GIFT=[
+ {h:'cubanoroast', product:'Cubano Roast', report:'5447017-0',
+  sample:'ORG. CUBANO ROAST_MAYORGA', euroSample:'16757048', lot:'Cubano WO22838'},
+ {h:'artesano-blend', product:'Artesano', report:'5447018-0',
+  sample:'ORG. ARTESANO_MAYORGA', euroSample:'16757063', lot:'Artesano WO22842'},
+ {h:'buenosdias', product:'Buenos Días', report:'5447020-0',
+  sample:'ORG. BUENOS DIAS_MAYORGA', euroSample:'16757091', lot:'Buenos Dias WO22848'}
+].map(x=>Object.assign({},COA,x,{pdf:COA_LINK[x.h]}));
+
+const FARM_PHOTO={peru:'step1.jpg',honduras:'step2.jpg',nicaragua:'nicaragua.jpg',
+  colombia:'youth.jpg',guatemala:'step3.jpg'};
+
+const COOP=Object.fromEntries(Object.values(FARMS).map(f=>[f.h,f.eyebrow]));
+
 const GIFT={
   name:'Top Sellers Gift Pack',
   tagline:'Three Mayorga favorites, all in one pack',
@@ -4961,26 +4999,95 @@ const GIFT_MEDIA=[
 ];
 
 function farmPanel(key){
-  const f=FARMS[key];
+  const f=FARMS[key], ph=NP_IMG[FARM_PHOTO[key]];
   return `<div class="gp-farm">
-    <div>
+    <div class="gp-farm__text">
       <p class="gp-farm__eyebrow">${f.eyebrow}</p>
       <h3>${f.h}</h3>
       <p>${f.copy}</p>
-      <a class="btn" href="${f.url}" target="_blank" rel="noopener">${f.cta}</a>
+      <div class="gp-stats">
+        ${f.stats.map(([a,b])=>`<div class="gp-stat"><b>${a}</b><span>${b}</span></div>`).join('')}
+      </div>
+      <a class="gp-farm__link" href="${f.url}" target="_blank" rel="noopener">${f.cta}</a>
     </div>
-    <div class="gp-stats">
-      ${f.stats.map(([a,b])=>`<div class="gp-stat"><b>${a}</b><span>${b}</span></div>`).join('')}
-    </div>
+    <figure class="gp-farm__media">${ph?`<img src="${ph}" alt="${f.eyebrow}, ${f.h}">`:''}</figure>
   </div>`;
 }
+/* One origin at a time with arrows at the edges, the way the live PDP does it.
+   The index lives outside render() so a re-render keeps the visible slide. */
+const FARM_IX={};
 function farmBlock(keys,id){
-  return `<div class="gp-farms" id="${id}">
-    <div class="gp-farms__tabs" role="tablist">
-      ${keys.map((k,i)=>`<button class="gp-ftab" data-farm="${id}:${k}" aria-pressed="${i===0}">${FARMS[k].h}</button>`).join('')}
-    </div>
-    <div data-farm-panel="${id}">${farmPanel(keys[0])}</div>
+  if(FARM_IX[id]==null)FARM_IX[id]=0;
+  return `<div class="gp-farms" id="${id}" data-farm-keys="${keys.join(',')}">
+    <button class="gp-farms__nav prev" data-farm-nav="${id}:-1" aria-label="Previous origin">${IC.chevL}</button>
+    <div data-farm-panel="${id}">${farmPanel(keys[FARM_IX[id]])}</div>
+    <button class="gp-farms__nav next" data-farm-nav="${id}:1" aria-label="Next origin">${IC.chevR}</button>
   </div>`;
+}
+
+/* Same section as the single-product PDP — same bar, same four reading cards,
+   same ⓘ popovers and footnotes — wrapped in a slider because the pack has
+   three certificates instead of one. */
+let LAB_IX=0;
+function labBody(i){
+  const c=COA_GIFT[i];
+  const dl=cls=>`
+      <a class="lab__dl ${cls}" href="${c.pdf}" target="_blank" rel="noopener">
+        <span class="lab__dl__ic">${IC.shield}</span>
+        <b>Download Report</b>
+      </a>`;
+  return `
+  <div class="lab__bar">
+    <div class="lab__bar__t">
+      <p class="eyebrow">Third-party lab tested</p>
+      <h2 class="h-display h2">Tested by <em>Eurofins</em></h2>
+    </div>
+    <p class="lab__prov">Tap <span class="lab__prov__i">i</span> for the readings as issued.</p>
+    ${dl('lab__dl--bar')}
+  </div>
+
+  <div class="lab__scrim" data-lab-close aria-hidden="true"></div>
+
+  <div class="lab__who">
+    <button class="gp-farms__nav" data-lab-nav="-1" aria-label="Previous report">${IC.chevL}</button>
+    <div class="lab__who__t"><span>Report ${i+1} of ${COA_GIFT.length}</span><b>${c.product}</b></div>
+    <button class="gp-farms__nav" data-lab-nav="1" aria-label="Next report">${IC.chevR}</button>
+  </div>
+
+  <div class="lab__cards">
+    ${c.summary.map((s,j)=>`
+    <div class="lab__c" data-lab-card="${j}">
+      <div class="lab__c__top">
+        <span class="lab__c__ic">${IC[s.ic]||IC.shield}</span>
+        <button type="button" class="lab__c__i" data-lab-i="${j}"
+          aria-expanded="false" aria-label="Show the ${s.k.replace(/&amp;/g,'and')} readings">i</button>
+      </div>
+      <span class="lab__c__k">${s.k}</span>
+      <b class="lab__c__v">${s.v}</b>
+      <span class="lab__c__n">${s.n?s.n+' · ':''}${s.groups.reduce((a,g)=>a+c.panel[g][1].length,0)} ${s.groups.reduce((a,g)=>a+c.panel[g][1].length,0)===1?'reading':'readings'}</span>
+      <div class="lab__pop" role="dialog" aria-label="${s.k.replace(/&amp;/g,'and')} readings">
+        <div class="lab__pop__hd">
+          <b>${s.k}</b>
+          <button type="button" class="lab__pop__x" data-lab-close aria-label="Close">×</button>
+        </div>
+        ${s.groups.map(g=>`
+        <div class="lab__det__g">
+          <span class="lab__det__h">${c.panel[g][0]}</span>
+          <dl>
+            ${c.panel[g][1].map(([a,r])=>
+              `<div${r.replace(/&lt;/g,'<').length>26?' class="stack"':''}><dt>${a}</dt><dd>${r}</dd></div>`).join('')}
+          </dl>
+        </div>`).join('')}
+        <p class="lab__det__note">${c.notes[0]}</p>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  ${dl('lab__dl--foot')}
+  <p class="lab__ft">${c.notes[1]}</p>`;
+}
+function labSectionGift(){
+  return `<section class="lab" id="lab"><div class="page-width" data-lab-panel>${labBody(LAB_IX)}</div></section>`;
 }
 
 function pageGift(){
@@ -5028,11 +5135,15 @@ function pageGift(){
           <p style="margin:12px 0 0">${GIFT.outro}</p>
         </div></details>
         <details><summary>Origins<span class="pm">+</span></summary><div class="body">
-          <ul>${GIFT.blends.map(b=>`<li><strong>${b.n}:</strong> ${b.origins}</li>`).join('')}</ul>
-          <p style="margin:10px 0 0">Sourced directly from partner farms across Latin America through Mayorga’s own supply chain — no brokers between the farm and the roastery.</p>
+          ${GIFT.blends.map(b=>`<p class="acc-sub">${b.n}</p>
+          <div class="acc-grid">${b.origins.split(' / ').map(c=>`
+            <div class="acc-cell"><span>Country</span><b>${c}</b></div>
+            <div class="acc-cell"><span>Co-op</span><b>${COOP[c]||'Direct partner farm'}</b></div>`).join('')}
+          </div>`).join('')}
         </div></details>
         <details><summary>Tasting Profile<span class="pm">+</span></summary><div class="body">
-          <ul>${GIFT.blends.map(b=>`<li><strong>${b.n}:</strong> ${b.prof.map(p=>p[1]).join(', ')}</li>`).join('')}</ul>
+          ${GIFT.blends.map(b=>`<p class="acc-sub">${b.n}</p>
+          <div class="acc-chips">${b.prof.map(([e,l])=>`<span class="acc-chip"><i>${e}</i>${l}</span>`).join('')}</div>`).join('')}
         </div></details>
         <details><summary>3rd Party Tested<span class="pm">+</span></summary><div class="body">
           Every coffee is also third-party tested for mold and mycotoxins. Find the latest report for
@@ -5071,45 +5182,16 @@ function pageGift(){
 
 <div class="pattern-strip"></div>
 
-<section class="section"><div class="page-width">
-  <h2 class="h-display h2">Meet the Blends</h2>
-  <div class="gp-blends">
-    ${GIFT.blends.map(b=>{const p=bySlug(b.h);return `
-    <article class="gp-blend">
-      <div class="gp-blend__media"><img src="${P(p.img,420)}" alt="${b.n}" loading="lazy"></div>
-      <div class="gp-blend__body">
-        <h3>${b.n}</h3>
-        <dl class="gp-spec"><dt>Roast</dt><dd>${b.roast}</dd></dl>
-        <dl class="gp-spec"><dt>Tasting notes</dt><dd>${b.notes}</dd></dl>
-        <dl class="gp-spec"><dt>Origins</dt><dd>${b.origins}</dd></dl>
-        <dl class="gp-spec"><dt>Description</dt><dd>${b.desc}</dd></dl>
-        <a class="gp-blend__cta" href="#" data-pdp="${b.h}">View ${b.n} →</a>
-      </div>
-    </article>`;}).join('')}
-  </div>
-</div></section>
-
-<section class="section"><div class="page-width">
-  <h2 class="h-display h2">Tasting Profile</h2>
-  <div class="gp-prof">
-    ${GIFT.blends.map(b=>`<div class="gp-prof__col">
-      <h4>${b.n}</h4>
-      <div class="gp-chips">${b.prof.map(([e,l])=>`<span class="gp-chip"><i>${e}</i>${l}</span>`).join('')}</div>
-    </div>`).join('')}
-  </div>
-</div></section>
-
-<section class="section"><div class="page-width">
-  <h2 class="h-display h2">3rd Party Tested</h2>
-  <p style="max-width:none;margin:10px 0 0">Every coffee is also third-party tested for mold and mycotoxins. Find the latest report for each blend in this pack.</p>
-  <div class="gp-coa">
-    ${GIFT.blends.map(b=>`<a href="${COA_LINK[b.h]}" target="_blank" rel="noopener">${IC.shield}<span><b>${b.n}</b><small>Latest mold &amp; mycotoxin report</small></span></a>`).join('')}
-  </div>
-</div></section>
+${labSectionGift()}
 
 <section class="section"><div class="page-width">
   <h2 class="h-display h2">Meet the Farmers Behind These Blends</h2>
   ${farmBlock(GIFT.farms,'giftFarms')}
+</div></section>
+
+<section class="collection"><div class="page-width">
+  <div class="collection__head"><h2 class="h-display h2">Try Our Best Sellers</h2></div>
+  ${carousel('giftCar',BEST,card)}
 </div></section>
 
 <section class="section"><div class="page-width">
@@ -5123,9 +5205,10 @@ function pageGift(){
   </div>
 </div></section>
 
-<section class="collection"><div class="page-width">
-  <div class="collection__head"><h2 class="h-display h2">Try Our Best Sellers</h2></div>
-  ${carousel('giftCar',BEST,card)}
+<section class="richtext"><div class="page-width">
+  <h2 class="h-display h2">Authentic Latin Heritage</h2>
+  <p>From seed to cup, we partner directly with farmers across Latin America to deliver coffee with purpose. Authentic. Ethical. Exceptional.</p>
+  <a class="btn" href="#">Learn more</a>
 </div></section>
 
 <div class="sticky-atc">
@@ -5418,10 +5501,14 @@ document.addEventListener('click',e=>{
   if(A('[data-np-vclose]')){e.preventDefault();npVideoClose();return;}
   {const nv=A('[data-np-video]'); if(nv){e.preventDefault();npVideoOpen(nv.dataset.npVideo||NP_IG,nv.hasAttribute('data-np-wide'));return;}}
   /* ---- gift pack + build-your-own ---- */
-  {const ft=A('[data-farm]'); if(ft){e.preventDefault();
-    const [id,key]=ft.dataset.farm.split(':');
-    $$(`[data-farm^="${id}:"]`).forEach(b=>b.setAttribute('aria-pressed',b===ft));
-    $(`[data-farm-panel="${id}"]`).innerHTML=farmPanel(key); return;}}
+  {const ln=A('[data-lab-nav]'); if(ln){e.preventDefault();
+    LAB_IX=(LAB_IX+ +ln.dataset.labNav+COA_GIFT.length)%COA_GIFT.length;
+    $('[data-lab-panel]').innerHTML=labBody(LAB_IX); return;}}
+  {const fn=A('[data-farm-nav]'); if(fn){e.preventDefault();
+    const [id,dir]=fn.dataset.farmNav.split(':');
+    const keys=$(`#${id}`).dataset.farmKeys.split(',');
+    FARM_IX[id]=(FARM_IX[id]+ +dir+keys.length)%keys.length;
+    $(`[data-farm-panel="${id}"]`).innerHTML=farmPanel(keys[FARM_IX[id]]); return;}}
   {const gg=A('[data-gift-gal]'); if(gg){e.preventDefault();
     S.gift.media=(S.gift.media+ +gg.dataset.giftGal+GIFT_MEDIA.length)%GIFT_MEDIA.length; render(); return;}}
   {const gt=A('[data-gift-galto]'); if(gt){e.preventDefault();S.gift.media=+gt.dataset.giftGalto; render(); return;}}
