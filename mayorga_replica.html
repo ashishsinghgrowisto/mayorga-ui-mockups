@@ -3004,7 +3004,7 @@ const money=n=>'$'+n.toFixed(2);
    ================================================================== */
 const S={page:'home',vp:'desktop',cart:[],wish:new Set(),
   pdp:{size:0,grind:0,qty:1,media:0,plan:'sub'},
-  gift:{media:0,grind:0,qty:1}, build:{picks:[],grind:0},
+  gift:{media:0,qty:1}, build:{picks:[],grind:0},
   qa:{slug:null,size:0,grind:0,qty:1,plan:'sub',freq:'Deliver every month'},
   plp:{filters:new Set(),sort:'Featured',page:1}};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -3070,7 +3070,7 @@ function renderCart(){
        <p class="caption" style="margin-top:26px;opacity:.8">Have an account? <a href="#" style="text-decoration:underline">Log in</a> to check out faster.</p></div>`
     :S.cart.map((l,i)=>`<div class="cart-line">
         <img src="${P(l.img,200)}" alt="${l.n}">
-        <div><h4>${l.n}</h4><div class="var">${l.size} · ${l.grind}${l.plan==='sub'?` · Subscription −10%<br>${l.freq}`:''}</div>
+        <div><h4>${l.n}</h4><div class="var">${l.size}${l.grind?' · '+l.grind:''}${l.plan==='sub'?` · Subscription −10%<br>${l.freq}`:''}</div>
           <div class="lp">${money(l.unit)}</div>
           <button class="link-rm" data-rm="${i}">Remove</button></div>
         <div class="qty"><button data-cq="${i}:-1">−</button><input value="${l.q}" readonly><button data-cq="${i}:1">+</button></div>
@@ -5155,13 +5155,6 @@ function pageGift(){
         </div></details>
       </div>
 
-      <div class="vgroup">
-        <p class="lg">Grind — applied to all three bags</p>
-        <div class="pills">
-          ${GRINDS.map((x,i)=>`<span><input type="radio" name="gpgrind" id="gpg${i}" ${i===g.grind?'checked':''} data-gift-grind="${i}"><label for="gpg${i}">${x}</label></span>`).join('')}
-        </div>
-      </div>
-
       <div class="qty-wrap">
         <p class="lg">Quantity</p>
         <div class="qty qty--lg"><button data-gift-q="-1" aria-label="Decrease">−</button><input value="${g.qty}" readonly><button data-gift-q="1" aria-label="Increase">+</button></div>
@@ -5217,7 +5210,7 @@ ${labSectionGift()}
 
 <div class="sticky-atc">
   <img src="${P(bySlug('cubanoroast').img,160)}" alt="">
-  <div class="meta"><b>${GIFT.name}</b><small>3 × 12 oz · ${GRINDS[g.grind]}</small></div>
+  <div class="meta"><b>${GIFT.name}</b><small>3 × 12 oz</small></div>
   <strong id="stickyPrice" style="font-size:17px">${money(price)}</strong>
   <button class="btn" data-gift-add>Add to cart</button>
   <button class="btn btn--secondary" id="stickyBuy" data-gift-add data-gift-buy>Buy now</button>
@@ -5335,9 +5328,9 @@ function byAdd(){
   openDrawer('#cartDrawer');
 }
 function giftAdd(){
-  S.cart.push({key:'gift|top-sellers|'+GRINDS[S.gift.grind],
+  S.cart.push({key:'gift|top-sellers',
     slug:'gift-top-sellers', n:GIFT.name, img:bySlug('cubanoroast').img,
-    size:'3 × 12 oz', grind:GRINDS[S.gift.grind], plan:'one', freq:'',
+    size:'3 × 12 oz', grind:'', plan:'one', freq:'',
     unit:giftPrice(), q:S.gift.qty});
   renderCart(); toast(`${GIFT.name} added to your cart`);
   openDrawer('#cartDrawer');
@@ -5679,8 +5672,6 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{
   const t=e.target;
   /* gift pack + build-your-own: grind applies to every bag in the pack */
-  if(t.dataset.giftGrind!==undefined){S.gift.grind=+t.dataset.giftGrind;
-    const sm=document.querySelector('.sticky-atc small'); if(sm)sm.textContent='3 × 12 oz · '+GRINDS[S.gift.grind];return;}
   if(t.dataset.byGrind!==undefined){S.build.grind=Math.max(0,GRINDS.indexOf(t.value));return;}
   /* quick-add modal — patched in place, never rebuilt */
   if(t.dataset.qaSize!==undefined){S.qa.size=+t.dataset.qaSize;refreshQa();return;}
