@@ -2686,6 +2686,42 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-sp .cart-page{grid-template-columns:minmax(0,1fr);gap:26px}
 #stage.is-sp .cart-page__sum{position:static}
 
+
+/* ============================================================
+   NEW ARRIVALS + BLOG (homepage)
+   ============================================================ */
+.kit-card .card__media img{object-fit:cover}
+.kit-badge{background:var(--red);color:#fff}
+.kit-was{margin-left:8px;font-weight:400;opacity:.55;text-decoration:line-through}
+
+.bl-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+.bl-head h2{margin:0}
+.bl-all{font:800 13px/1 var(--font-body);letter-spacing:.5px;color:var(--brown);text-decoration:underline;
+  text-underline-offset:4px;white-space:nowrap}
+.bl-all:hover{color:var(--red)}
+#stage.vp-desktop #blogCar .track>li{flex:0 0 calc((100% - 64px)/3)}
+.bl-card{display:flex;flex-direction:column;height:100%}
+.bl-card__media{display:block;border-radius:var(--radius-lg);overflow:hidden;background:var(--panel);aspect-ratio:16/10}
+.bl-card__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease)}
+.bl-card__media:hover img{transform:scale(1.04)}
+.bl-card__meta{margin:14px 0 6px;font:700 11px/1 var(--font-body);letter-spacing:1.1px;text-transform:uppercase;opacity:.55}
+.bl-card__t{margin:0 0 8px;font:800 17px/1.3 var(--font-body);letter-spacing:.2px}
+.bl-card__t a{color:inherit;text-decoration:none}
+.bl-card__t a:hover{color:var(--red)}
+.bl-card__ex{margin:0 0 12px;font-size:14px;line-height:22px;opacity:.8}
+.bl-card__more{margin-top:auto;font:800 12.5px/1 var(--font-body);letter-spacing:.5px;color:var(--red);
+  text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1023.98px){
+  #blogCar .track>li{flex:0 0 100%}
+  .bl-head{flex-direction:column;align-items:flex-start;gap:10px}
+}
+#stage.is-sp #blogCar .track>li{flex:0 0 100%}
+#stage.is-sp .bl-head{flex-direction:column;align-items:flex-start;gap:10px}
+
+.kit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;max-width:760px;margin:0 auto}
+@media (max-width:1023.98px){.kit-grid{gap:14px}}
+#stage.is-sp .kit-grid{gap:14px}
+
 </style>
 </head>
 <body>
@@ -4038,6 +4074,11 @@ function pageHome(){return `
   <div class="center" style="margin-top:26px"><a class="btn btn--secondary" href="#" data-go="plp">View Collection</a></div>
 </div></section>
 
+<section class="collection"><div class="page-width">
+  <div class="collection__head"><h2 class="h-display h2">New Arrivals</h2></div>
+  <div class="kit-grid">${KITS.map(kitCard).join('')}</div>
+</div></section>
+
 ${subxSection()}
 
 <section class="collection"><div class="page-width">
@@ -4084,6 +4125,8 @@ ${subxSection()}
     </div>
   </div>
 </section>
+
+${blogSection()}
 
 <section class="collection"><div class="page-width">
   <div class="collection__head"><h2 class="h-display h2">Our Specialty Coffee</h2>
@@ -5559,6 +5602,102 @@ function pageCart(){
     </aside>
   </div>
 </div></section>`;}
+
+/* ==================================================================
+   NEW ARRIVALS — the kits we have built so far
+   ================================================================== */
+const KITS=[
+ {to:'gift', n:'Top Sellers Gift Pack', r:'3 × 12 oz · Cubano Roast, Artesano, Buenos Días',
+  img:'files/BienvenidoTrio.jpg?format=webp&quality=75&v=1718826486',
+  price:()=>giftPrice(), was:()=>giftList(), cta:'View gift pack'},
+ {to:'build', n:'Create Your Own 3-Pack', r:'Pick any three 12 oz bags · 10% off the trio',
+  img:'files/coffee-subscription.jpg?format=webp&quality=75&v=1747671018',
+  price:()=>+(bySlug('cubanoroast').p*3*(1-GIFT_OFF)).toFixed(2), was:null, cta:'Build your pack'}
+];
+function kitCard(k){
+  const was=k.was&&k.was();
+  return `<div class="card kit-card">
+    <div class="card__media">
+      <span class="card__badge kit-badge">New</span>
+      <a href="#" data-go="${k.to}"><img src="${P(k.img,533)}" alt="${k.n}" loading="lazy"></a>
+    </div>
+    <h3 class="card__title"><a href="#" data-go="${k.to}">${k.n}</a></h3>
+    <p class="card__roast">${k.r}</p>
+    <p class="card__price">${k.was?'':'From '}${money(k.price())}${was?`<span class="kit-was">${money(was)}</span>`:''}</p>
+    <button class="btn" data-go="${k.to}">${k.cta}</button>
+  </div>`;
+}
+
+/* ==================================================================
+   ORGULLO LATINO — the three newest posts, straight from the live blog
+   (titles, authors, publish dates and artwork as published; the section
+   sorts by date so the newest is always first)
+   ================================================================== */
+const BLOG_ALL='https://mayorgacoffee.com/blogs/news';
+const BLOG=[
+ {d:'2026-11-20', t:'Try This Maple Latte Recipe for a Sweet Thanksgiving Morning', a:'Bianca Lizano',
+  u:BLOG_ALL+'/try-this-maple-latte-recipe-for-a-sweet-thanksgiving-morning',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/Try_This_Maple_Latte_Recipe_for_a_Sweet_Thanksgiving_Morning_1_large.jpg?v=1795170068',
+  ex:'A maple latte combines rich espresso, creamy milk and pure maple syrup for a naturally sweet, comforting cup.'},
+ {d:'2026-11-20', t:'Coffee-to-Water Ratio: The Golden Ratio Explained', a:'Bianca Lizano',
+  u:BLOG_ALL+'/coffee-to-water-ratio-the-golden-ratio-explained',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/20_coffee_water_ratio_for_cold_brew_large.jpg?v=1795169588',
+  ex:'The golden ratio is a guideline for a balanced, flavorful cup — and the quickest fix for coffee that tastes thin or bitter.'},
+ {d:'2026-11-20', t:'What is a Ristretto Coffee &amp; How to Make it', a:'Karen Lopez Meza',
+  u:BLOG_ALL+'/what-is-a-ristretto-coffee-how-to-make-it',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/21__ristretto_shot.jpg?v=1795170447',
+  ex:'Ristretto is the most concentrated espresso-based drink you can make. Same coffee, half the water.'},
+ {d:'2025-03-11', t:'How Mayorga Operates Differently: We Don’t Have Investors', a:'Martin Mayorga',
+  u:BLOG_ALL+'/how-mayorga-operates-differently-we-don-t-have-investors',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/Jul2024_Farmers_image_2_1080x_ca339ab0-3846-463b-bce3-83831318badc_large.webp?v=1790768709',
+  ex:'In today’s business world, investor-backed companies dominate nearly every industry — including coffee.'},
+ {d:'2025-01-29', t:'Organic First: The Foundation for Regenerative Coffee Farming', a:'Martin Mayorga',
+  u:BLOG_ALL+'/organic-first-the-foundation-for-regenerative-coffee-farming',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/IMG_0005_3b2141ea-781b-4cae-8523-a1f8be11a612_large.jpg?v=1791278371',
+  ex:'Sustainability in the coffee industry has always been a hot topic, with many companies relying on buzzwords over true impact.'},
+ {d:'2024-12-10', t:'From the Roots: Why Mayorga Represents More Than Coffee', a:'Martin Mayorga',
+  u:BLOG_ALL+'/from-the-roots-why-mayorga-represents-more-than-coffee',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/Martin_Family_908f5d54-112f-43e5-af3d-21866e2deee3_large.jpg?v=1790820861',
+  ex:'In my early 20s I was grappling with my identity as a Latino immigrant and my desire to make an impact across Latin America.'},
+ {d:'2024-11-11', t:'The Importance of Latin American Representation in Specialty Coffee', a:'Martin Mayorga',
+  u:BLOG_ALL+'/the-importance-of-latin-american-representation-in-specialty-coffee',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/3c5bc392-3ce6-47c9-a4ea-847ef5933c73_c245b82f-a0c3-443b-b65b-addc90c0076a_large.jpg?v=1790821887',
+  ex:'Honoring our roots, an immigrant’s perspective: I was born in Zona 14 in Guatemala City, Guatemala.'},
+ {d:'2024-11-08', t:'How Coffee Companies Buying Farms Further Hurts Coffee-Growing Communities', a:'Martin Mayorga',
+  u:BLOG_ALL+'/how-coffee-companies-buying-farms-further-hurts-coffee-growing-communities',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/IMG_1191_large_4e4e36fb-1eb0-4bc0-8cf4-a57da96bd922_large.jpg?v=1791210025',
+  ex:'A trend touted as a positive development: US roasters’ vertical integration through opportunistic acquisition of coffee farms.'},
+ {d:'2023-08-21', t:'The Influence of Indigenous Farming Practices on Modern Coffee Production', a:'Kirsty Simpkins',
+  u:BLOG_ALL+'/indigenous-farming-practices-modern-coffee',
+  img:'https://mayorgacoffee.com/cdn/shop/articles/image1_01ac4d9a-fda0-42d0-9713-ee2c624b76f9_large.png?v=1690805132',
+  ex:'Have you ever considered the sustainable roots that lie beneath the cultivation of an excellent cup of coffee?'}
+];
+const blogDate=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+function blogCard(b){
+  return `<article class="bl-card">
+    <a class="bl-card__media" href="${b.u}" target="_blank" rel="noopener">
+      <img src="${b.img}" alt="${b.t}" loading="lazy">
+    </a>
+    <p class="bl-card__meta">${blogDate(b.d)} · ${b.a}</p>
+    <h3 class="bl-card__t"><a href="${b.u}" target="_blank" rel="noopener">${b.t}</a></h3>
+    <p class="bl-card__ex">${b.ex}</p>
+    <a class="bl-card__more" href="${b.u}" target="_blank" rel="noopener">Read more →</a>
+  </article>`;
+}
+function blogSection(){
+  const posts=BLOG.slice().sort((a,b)=>b.d.localeCompare(a.d));
+  return `
+<section class="section"><div class="page-width">
+  <div class="bl-head">
+    <div>
+      <p class="eyebrow">Orgullo Latino</p>
+      <h2 class="h-display h2">From the Blog</h2>
+    </div>
+    <a class="bl-all" href="${BLOG_ALL}" target="_blank" rel="noopener">View all blogs →</a>
+  </div>
+  ${carousel('blogCar',posts,blogCard)}
+</div></section>`;
+}
 
 function render(){
   main.innerHTML=S.page==='home'?pageHome():S.page==='plp'?pagePLP()
