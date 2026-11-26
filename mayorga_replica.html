@@ -2693,6 +2693,7 @@ ul,ol{list-style:none;margin:0;padding:0}
 
 .bl-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
 .bl-head h2{margin:0}
+.bl-sub{margin:8px 0 0;font-size:15px;line-height:23px;opacity:.78;max-width:520px}
 .bl-all{font:800 13px/1 var(--font-body);letter-spacing:.5px;color:var(--brown);text-decoration:underline;
   text-underline-offset:4px;white-space:nowrap}
 .bl-all:hover{color:var(--red)}
@@ -2718,10 +2719,21 @@ ul,ol{list-style:none;margin:0;padding:0}
 /* New Arrivals strip — one scrollable row of thumbnail tiles, the bundle
    tile first. Scrolls rather than wraps, so the row reads as a shelf. */
 .na-strip{background:var(--panel);border-radius:var(--radius-lg);padding:26px 22px 22px;margin-top:4px}
+.na-strip{position:relative}
+/* the row scrolls, but the scrollbar itself never shows: arrows drive it on
+   desktop, a finger drives it on touch */
 .na-row{display:flex;gap:26px;list-style:none;margin:0;padding:0 2px 4px;overflow-x:auto;
-  scroll-snap-type:x proximity;scrollbar-width:thin}
-.na-row::-webkit-scrollbar{height:6px}
-.na-row::-webkit-scrollbar-thumb{background:rgba(110,55,40,.28);border-radius:3px}
+  scroll-snap-type:x proximity;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+.na-row::-webkit-scrollbar{display:none}
+.na-nav{position:absolute;top:44px;z-index:2;width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(110,55,40,.25);background:rgba(255,255,255,.92);color:var(--brown);cursor:pointer;
+  display:none;place-items:center;padding:0;transition:.16s}
+.na-nav:hover:not(:disabled){background:#fff;border-color:var(--brown)}
+.na-nav:disabled{opacity:.3;cursor:default}
+.na-nav svg{width:15px;height:15px}
+.na-nav.prev{left:-14px}
+.na-nav.next{right:-14px}
+#stage.vp-desktop .na-nav{display:grid}
 .na-row>li{flex:0 0 108px;scroll-snap-align:start}
 .na-tile{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:var(--brown)}
 .na-tile__media{width:92px;height:92px;display:grid;place-items:center;border-radius:50%;background:#fff;
@@ -2736,11 +2748,13 @@ ul,ol{list-style:none;margin:0;padding:0}
 .na-tile:hover .na-tile__n{color:var(--red)}
 @media (max-width:1023.98px){
   .na-strip{padding:20px 14px 16px}
+  .na-nav{display:none}
   .na-row{gap:18px}
   .na-row>li{flex:0 0 92px}
   .na-tile__media{width:80px;height:80px}
 }
 #stage.is-sp .na-strip{padding:20px 14px 16px}
+#stage.is-sp .na-nav{display:none}
 #stage.is-sp .na-row{gap:18px}
 #stage.is-sp .na-row>li{flex:0 0 92px}
 #stage.is-sp .na-tile__media{width:80px;height:80px}
@@ -4099,7 +4113,11 @@ function pageHome(){return `
 
 <section class="section na"><div class="page-width">
   <div class="collection__head"><h2 class="h-display h2">New Arrivals</h2></div>
-  <div class="na-strip"><ul class="na-row">${NA_TILES().map(naTile).join('')}</ul></div>
+  <div class="na-strip">
+    <button class="na-nav prev" data-na-scroll="-1" aria-label="Previous items">${IC.chevL}</button>
+    <ul class="na-row" id="naRow">${NA_TILES().map(naTile).join('')}</ul>
+    <button class="na-nav next" data-na-scroll="1" aria-label="More items">${IC.chevR}</button>
+  </div>
 </div></section>
 
 ${subxSection()}
@@ -5642,6 +5660,21 @@ const naBadge='<svg class="na-badge" viewBox="0 0 100 100" aria-hidden="true">'
  +'<path fill="currentColor" d="M50.00 8.16A8.16 8.16 0 0 1 66.01 11.35A8.16 8.16 0 0 1 79.58 20.42A8.16 8.16 0 0 1 88.65 33.99A8.16 8.16 0 0 1 91.84 50.00A8.16 8.16 0 0 1 88.65 66.01A8.16 8.16 0 0 1 79.58 79.58A8.16 8.16 0 0 1 66.01 88.65A8.16 8.16 0 0 1 50.00 91.84A8.16 8.16 0 0 1 33.99 88.65A8.16 8.16 0 0 1 20.42 79.58A8.16 8.16 0 0 1 11.35 66.01A8.16 8.16 0 0 1 8.16 50.00A8.16 8.16 0 0 1 11.35 33.99A8.16 8.16 0 0 1 20.42 20.42A8.16 8.16 0 0 1 33.99 11.35A8.16 8.16 0 0 1 50.00 8.16Z"/>'
  +'<g fill="none" stroke="var(--cream)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(1.5)">'
  +'<path d="M24 6.5 12 1 0 6.5v11L12 23l12-5.5z"/><path d="M0 6.5 12 12l12-5.5"/><path d="M12 12v11"/></g></svg>';
+function naScroll(dir){
+  const row=$('#naRow'); if(!row)return;
+  const li=row.children[0];
+  const step=li?(li.getBoundingClientRect().width+parseFloat(getComputedStyle(row).columnGap||0)):120;
+  row.scrollBy({left:dir*step*Math.max(1,Math.floor(row.clientWidth/step)-1),behavior:'smooth'});
+}
+/* an arrow that cannot go anywhere shouldn't look live */
+function naSync(){
+  const row=$('#naRow'); if(!row)return;
+  const max=row.scrollWidth-row.clientWidth;
+  const p=$('.na-nav.prev'), n=$('.na-nav.next');
+  if(p)p.disabled=row.scrollLeft<=2;
+  if(n)n.disabled=row.scrollLeft>=max-2;
+}
+
 function naTile(x){
   const href=x.to?`data-go="${x.to}"`:`data-pdp="${x.pdp}"`;
   return `<li><a class="na-tile" href="#" ${href}>
@@ -5716,6 +5749,7 @@ function blogSection(){
     <div>
       <p class="eyebrow">Orgullo Latino</p>
       <h2 class="h-display h2">From the Blog</h2>
+      <p class="bl-sub">Origin stories, brewing guides, and roastery updates.</p>
     </div>
     <a class="bl-all" href="${BLOG_ALL}" target="_blank" rel="noopener">View all blogs →</a>
   </div>
@@ -5731,6 +5765,7 @@ function render(){
   renderFooter(); renderCart(); initCarousels();
   if(S.page==='cart')cartPageTotals();
   cartFit(false);
+  {const row=$('#naRow'); if(row){naSync(); row.addEventListener('scroll',naSync,{passive:true});}}
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
   if(S.page==='mold')stopJourney();
@@ -5913,6 +5948,7 @@ document.addEventListener('click',e=>{
   {const cg=A('[data-ce-grind]'); if(cg){e.preventDefault();CE.grind=+cg.dataset.ceGrind;cartRenderAll(false);return;}}
   {const cp=A('[data-ce-step]'); if(cp){e.preventDefault();CE.step=cp.dataset.ceStep;cartRenderAll(false);return;}}
   {const cb=A('[data-ce-submit]'); if(cb){e.preventDefault();ceSubmit();return;}}
+  {const na=A('[data-na-scroll]'); if(na&&!na.disabled){e.preventDefault();naScroll(+na.dataset.naScroll);return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
   const pd=A('[data-pdp]'); if(pd){e.preventDefault();S.pdp={size:0,grind:0,qty:1,media:0,plan:'sub'};go('pdp');return;}
   /* the About column routes to the brand story; everything else lands on the PLP */
