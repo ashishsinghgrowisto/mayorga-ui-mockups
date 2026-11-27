@@ -2761,6 +2761,43 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-sp .na-row>li{flex:0 0 92px}
 #stage.is-sp .na-tile__media{width:80px;height:80px}
 
+
+/* ============================================================
+   SOCIAL PROOF CARD — bottom-left, out of the way of the cart
+   drawer (right) and the sticky add-to-cart bar (raised state).
+   Follows the same fixed/absolute switch the toast uses so it
+   stays inside the framed phone preview.
+   ============================================================ */
+.sp{position:fixed;left:22px;bottom:26px;z-index:118;width:286px;max-width:calc(100% - 44px);
+  display:flex;align-items:stretch;gap:0;background:#fff;border:1px solid rgba(110,55,40,.18);
+  border-radius:14px;box-shadow:0 14px 34px rgba(110,55,40,.22);overflow:hidden;
+  transform:translateY(140%);opacity:0;pointer-events:none;
+  transition:transform .45s var(--ease),opacity .3s var(--ease)}
+.sp.on{transform:translateY(0);opacity:1;pointer-events:auto}
+.sp--raised{bottom:96px}
+#stage.vp-mobile .sp{position:absolute}
+.sp__body{display:flex;align-items:center;gap:12px;padding:11px 12px;text-decoration:none;color:var(--brown);
+  flex:1 1 auto;min-width:0}
+.sp__img{flex:0 0 46px;width:46px;height:46px;border-radius:10px;background:var(--panel);display:grid;
+  place-items:center;overflow:hidden}
+.sp__img img{width:100%;height:100%;object-fit:contain;padding:4px}
+.sp__txt{min-width:0}
+.sp__txt i{display:block;font-style:normal;font:700 9.5px/1 var(--font-body);letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--red)}
+.sp__txt b{display:block;margin:4px 0 2px;font:800 13.5px/1.2 var(--font-body);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp__txt small{display:block;font-size:11px;line-height:15px;opacity:.65}
+.sp__x{flex:0 0 auto;align-self:flex-start;border:0;background:transparent;color:var(--brown);opacity:.45;
+  font-size:17px;line-height:1;padding:8px 10px 6px;cursor:pointer}
+.sp__x:hover{opacity:1;color:var(--red)}
+@media (max-width:1023.98px){
+  #stage.vp-mobile .sp,#stage.vp-desktop .sp{position:fixed}
+  .sp{left:12px;bottom:16px;width:272px}
+  .sp--raised{bottom:84px}
+}
+#stage.is-sp .sp{left:12px;bottom:16px;width:252px}
+#stage.is-sp .sp--raised{bottom:84px}
+
 </style>
 </head>
 <body>
@@ -2979,6 +3016,7 @@ html.mg-locked,html.mg-locked body{overflow:hidden !important}
     <div class="ml-blends" id="mlBlendGrid"></div>
   </div>
 </div>
+  <aside class="sp" id="sprf" role="status" aria-live="polite"></aside>
   <div class="toast" id="toast"></div>
 </div>
 </div>
@@ -5759,6 +5797,61 @@ function blogSection(){
 </div></section>`;
 }
 
+/* ==================================================================
+   SOCIAL PROOF WIDGET
+   Top five sellers by orders per day, Oct 28 – Nov 26 2026, all sales
+   channels, each product's order total divided by 30 calendar days.
+   The figures count ORDERS CONTAINING the product, not bags, and an
+   order with several products counts toward each — so the card says
+   "orders a day", not "units sold", and names no individual buyer:
+   the source report has no customers, times or places in it.
+   Appears 10s after landing, holds for 4s, next one 10s later, loops.
+   ================================================================== */
+const SP_ITEMS=[
+ ['cubanoroast',   27.13],
+ ['artesano-blend',14.90],
+ ['winter-blend',  13.90],
+ ['decafcubano',    9.57],
+ ['muy-macho',      9.07]
+];
+const SP_WINDOW='last 30 days';
+const SP_DELAY=10000, SP_HOLD=4000;
+let spIdx=0, spHideT=null, spNextT=null, spOff=false;
+
+function spRender(){
+  const el=$('#sprf'); if(!el)return;
+  const [slug,rate]=SP_ITEMS[spIdx%SP_ITEMS.length];
+  const p=bySlug(slug); if(!p)return;
+  el.innerHTML=`
+    <a class="sp__body" href="#" data-pdp="${slug}">
+      <span class="sp__img"><img src="${P(p.img,160)}" alt=""></span>
+      <span class="sp__txt">
+        <i>Recently bought</i>
+        <b>${p.n}</b>
+        <small>${rate.toFixed(1)} orders a day · ${SP_WINDOW}</small>
+      </span>
+    </a>
+    <button class="sp__x" type="button" data-sp-close aria-label="Hide these updates">×</button>`;
+}
+function spShow(){
+  if(spOff)return;
+  const el=$('#sprf'); if(!el)return;
+  spRender(); spIdx++;
+  el.classList.add('on');
+  spHideT=setTimeout(()=>el.classList.remove('on'),SP_HOLD);
+  spNextT=setTimeout(spShow,SP_DELAY);
+}
+function spStop(){
+  spOff=true; clearTimeout(spHideT); clearTimeout(spNextT);
+  $('#sprf')?.classList.remove('on');
+}
+/* the passphrase gate owns the screen until it is dismissed, so the ten
+   seconds should start from the moment the page is actually visible */
+function spBoot(){
+  if(document.getElementById('mgGate')){setTimeout(spBoot,400);return;}
+  spNextT=setTimeout(spShow,SP_DELAY);
+}
+
 function render(){
   main.innerHTML=S.page==='home'?pageHome():S.page==='plp'?pagePLP()
                 :S.page==='napkin'?pageNapkin():S.page==='mold'?pageMold()
@@ -5768,6 +5861,7 @@ function render(){
   if(S.page==='cart')cartPageTotals();
   cartFit(false);
   {const row=$('#naRow'); if(row){naSync(); row.addEventListener('scroll',naSync,{passive:true});}}
+  $('#sprf')?.classList.toggle('sp--raised', S.page==='pdp'||S.page==='gift');
   if(S.page==='home'){startHero();subxRenderAll();} else stopHero();
   if(S.page==='napkin')startJourney(); else stopJourney();
   if(S.page==='mold')stopJourney();
@@ -5951,6 +6045,7 @@ document.addEventListener('click',e=>{
   {const cp=A('[data-ce-step]'); if(cp){e.preventDefault();CE.step=cp.dataset.ceStep;cartRenderAll(false);return;}}
   {const cb=A('[data-ce-submit]'); if(cb){e.preventDefault();ceSubmit();return;}}
   {const na=A('[data-na-scroll]'); if(na&&!na.disabled){e.preventDefault();naScroll(+na.dataset.naScroll);return;}}
+  {const sx=A('[data-sp-close]'); if(sx){e.preventDefault();spStop();return;}}
   const g=A('[data-go]'); if(g){e.preventDefault();go(g.dataset.go);return;}
   const pd=A('[data-pdp]'); if(pd){e.preventDefault();S.pdp={size:0,grind:0,qty:1,media:0,plan:'sub'};go('pdp');return;}
   /* the About column routes to the brand story; everything else lands on the PLP */
@@ -6165,6 +6260,8 @@ buildScroller();
 renderNav(); renderFilters(); render(); syncViewportMode();
 window.addEventListener('load',()=>{syncChromeHeight();syncPhoneClass();syncFrameScale();
   initCarousels();subxFitViewport();});
+spBoot();
+
 </script>
 </body>
 </html>
