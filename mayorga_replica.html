@@ -2809,11 +2809,12 @@ ul,ol{list-style:none;margin:0;padding:0}
    ============================================================ */
 @media (max-width:1023.98px){
   .pdp__info{display:flex;flex-direction:column}
-  .pdp__info>.acc{order:1}
+  /* it now follows the pickup block, so it needs its own breathing room */
+  .pdp__info>.acc{order:1;margin-top:24px}
   .pdp__info>.trust{order:2}
 }
 #stage.is-sp .pdp__info{display:flex;flex-direction:column}
-#stage.is-sp .pdp__info>.acc{order:1}
+#stage.is-sp .pdp__info>.acc{order:1;margin-top:24px}
 #stage.is-sp .pdp__info>.trust{order:2}
 
 </style>
