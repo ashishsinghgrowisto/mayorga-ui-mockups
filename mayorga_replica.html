@@ -2798,6 +2798,24 @@ ul,ol{list-style:none;margin:0;padding:0}
 #stage.is-sp .sp{left:12px;bottom:16px;width:252px}
 #stage.is-sp .sp--raised{bottom:84px}
 
+
+/* ============================================================
+   PDP, narrow screens only: the Description / Origin / Tasting
+   Profile / 3rd Party Tested accordion drops below the pickup
+   block, so the buy decision (variants, quantity, add to cart)
+   comes first and the reading material follows it. Order is
+   flipped with flex order rather than duplicated markup, so the
+   DOM — and the desktop column — stay exactly as they were.
+   ============================================================ */
+@media (max-width:1023.98px){
+  .pdp__info{display:flex;flex-direction:column}
+  .pdp__info>.acc{order:1}
+  .pdp__info>.trust{order:2}
+}
+#stage.is-sp .pdp__info{display:flex;flex-direction:column}
+#stage.is-sp .pdp__info>.acc{order:1}
+#stage.is-sp .pdp__info>.trust{order:2}
+
 </style>
 </head>
 <body>
